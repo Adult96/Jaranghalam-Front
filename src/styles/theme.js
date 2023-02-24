@@ -50,7 +50,15 @@ const borderRadius = {
   small: '0.5rem',
 };
 
+const Screen = {
+  desktp: '1600px',
+  tablet_h: '1024px',
+  tablet_v: '768px',
+  mobile: '480px',
+};
+
 const light = {
+  Screen,
   fontWeight,
   fontSize,
   borderRadius,
@@ -64,6 +72,7 @@ const light = {
 };
 
 const dark = {
+  Screen,
   fontWeight,
   fontSize,
   borderRadius,
