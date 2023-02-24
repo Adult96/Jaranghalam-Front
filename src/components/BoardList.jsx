@@ -28,6 +28,17 @@ export default function BoardList({ boards }) {
 
 const BoardContainer = styled.ul`
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
   gap: 1rem;
+
+  @media (min-width: ${props => props.theme.screen.mobile}) {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  @media (min-width: ${props => props.theme.screen.tablet_v}) {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+
+  @media (min-width: ${props => props.theme.screen.tablet_h}) {
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+  }
 `;
