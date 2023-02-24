@@ -9,21 +9,25 @@ import {
 import { BiLogIn } from 'react-icons/bi';
 
 export default function Navbar() {
+  const handleNavbar = e => {
+    console.log(e.target.id, e.target.innerText);
+  };
+
   return (
-    <NavbarContainer>
+    <NavbarContainer onClick={handleNavbar}>
       <IconContainer>
         <Title>
-          <AiFillInstagram />
+          <AiFillInstagram id='Jaranghalem' />
           <TitleText>
             <span>Jaranghalem</span>
           </TitleText>
         </Title>
         <TabIcon>
-          <AiFillHome />
-          <AiOutlineHeart />
-          <AiOutlinePlusSquare />
+          <AiFillHome id='홈' />
+          <AiOutlineHeart id='좋아요' />
+          <AiOutlinePlusSquare id='추가' />
         </TabIcon>
-        <BiLogIn />
+        <BiLogIn id='Login' />
       </IconContainer>
       <TextContainer>
         <span>Jaranghalem</span>
