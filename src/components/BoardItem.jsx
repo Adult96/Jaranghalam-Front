@@ -12,14 +12,15 @@ export default function BoardItem({
 
   return (
     <BoardContainer>
-      <div>
-        <span>{nickName}</span>
-        <span>{setDate(createdAt)}</span>
-      </div>
+      <Title>
+        <h3>{nickName}</h3>
+        <Date>{setDate(createdAt)}</Date>
+      </Title>
       <Img src={imageUrl} alt='userimg' />
       <AiOutlineHeart />
       <AiFillHeart />
-      <h3>{title}</h3>
+      <p>{`좋아요 ${10}개`}</p>
+      <h4>{`${nickName} ${title}`}</h4>
       <p>{content}</p>
     </BoardContainer>
   );
@@ -28,13 +29,26 @@ export default function BoardItem({
 const BoardContainer = styled.div`
   width: 100%;
   height: 100%;
-  :hover {
+  border-bottom: 1px solid ${props => props.theme.borderColor};
+
+  :hover > Img {
     opacity: 0.5;
   }
 `;
 
+const Title = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  margin: 1rem 0;
+`;
+
+const Date = styled.h4`
+  color: ${props => props.theme.dateColor};
+`;
+
 const Img = styled.img`
   width: 100%;
-  height: 75%;
+  height: 60%;
   object-fit: cover;
 `;

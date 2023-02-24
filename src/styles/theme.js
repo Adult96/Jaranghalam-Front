@@ -60,6 +60,7 @@ const screen = {
 };
 
 const light = {
+  color,
   screen,
   fontWeight,
   fontSize,
@@ -71,9 +72,11 @@ const light = {
   innerText: 'Light',
   bgBtnColor: color.light_white,
   bgInputColor: color.light_white,
+  dateColor: color.dark_white,
 };
 
 const dark = {
+  color,
   screen,
   fontWeight,
   fontSize,
@@ -85,6 +88,7 @@ const dark = {
   innerText: 'Dark',
   bgBtnColor: color.shark_blue,
   bgInputColor: color.shark_blue,
+  dateColor: color.light_grey,
 };
 
 export const lightTheme = { ...light };
