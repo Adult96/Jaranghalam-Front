@@ -72,6 +72,8 @@ export default function Home() {
 const HomeWrapper = styled.main`
   width: 100%;
   height: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
 
   @media (max-width: ${props => props.theme.screen.tablet_v}) {
     border-top: 1px solid ${props => props.theme.bgBorderColor};
