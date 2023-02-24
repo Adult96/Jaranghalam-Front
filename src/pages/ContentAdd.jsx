@@ -40,7 +40,7 @@ function ContentAdd() {
 
   const dispatch = useDispatch();
 
-  const formHandler = (e) => {
+  const form = (e) => {
     e.preventDefault();
   };
 
@@ -57,6 +57,8 @@ function ContentAdd() {
       };
       // 생성된 게시물 데이터를 서버에 전송
       dispatch(__postContent(post));
+      setTitle('');
+      setContent('');
     });
   };
 
@@ -65,7 +67,7 @@ function ContentAdd() {
       <StContentAddBox>
         <GlobalStyle />
         <ThemeMode darkMode={darkMode} onDarkMode={setDarkMode} />
-        <StInputForm onSubmit={formHandler} enctype="multipart/form-data">
+        <StInputForm onSubmit={form} enctype="multipart/form-data">
           <StInputBox
             type="text"
             value={title}
