@@ -5,6 +5,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
 import App from './App';
 import Home from './pages/Home';
+import ContentAdd from './pages/ContentAdd';
 
 const router = createBrowserRouter([
   {
@@ -16,6 +17,10 @@ const router = createBrowserRouter([
         element: <Home />,
       },
     ],
+  },
+  {
+    path: 'ContentAdd',
+    element: <ContentAdd />,
   },
 ]);
 
