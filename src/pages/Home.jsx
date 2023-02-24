@@ -8,5 +8,4 @@ export default function Home() {
 const HomeContainer = styled.main`
   width: 100%;
   height: 100%;
-  background-color: aqua;
 `;

@@ -30,7 +30,9 @@ const fontSize = {
   xxlarge: '5rem',
   xlarge: '4rem',
   large: '3rem',
+  large_medium: '2.5rem',
   medium: '1.75rem',
+  large_regular: '1.5rem',
   regular: '1.125rem',
   small: '1rem',
   micro: '0.875rem',
@@ -50,7 +52,7 @@ const borderRadius = {
   small: '0.5rem',
 };
 
-const Screen = {
+const screen = {
   desktp: '1600px',
   tablet_h: '1024px',
   tablet_v: '768px',
@@ -58,7 +60,7 @@ const Screen = {
 };
 
 const light = {
-  Screen,
+  screen,
   fontWeight,
   fontSize,
   borderRadius,
@@ -72,7 +74,7 @@ const light = {
 };
 
 const dark = {
-  Screen,
+  screen,
   fontWeight,
   fontSize,
   borderRadius,

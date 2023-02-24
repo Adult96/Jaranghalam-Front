@@ -26,11 +26,11 @@ const Wrapper = styled.div`
   display: grid;
   width: 100%;
   height: 100%;
-  @media (max-width: 768px) {
+  @media (max-width: ${props => props.theme.screen.tablet_v}) {
     grid-template-rows: 100px 1fr;
   }
-  @media (min-width: 768px) {
-    grid-template-columns: 1fr 5fr;
+  @media (min-width: ${props => props.theme.screen.tablet_v}) {
+    grid-template-columns: 1fr 6fr;
   }
 `;
 
