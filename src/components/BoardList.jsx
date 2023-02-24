@@ -29,7 +29,7 @@ export default function BoardList({ boards }) {
 const BoardContainer = styled.ul`
   display: grid;
   gap: 1rem;
-
+  padding: 1rem;
   @media (min-width: ${props => props.theme.screen.mobile}) {
     grid-template-columns: 1fr 1fr;
   }
