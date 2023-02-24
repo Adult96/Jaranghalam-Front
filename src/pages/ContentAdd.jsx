@@ -5,6 +5,8 @@ import styled, { ThemeProvider } from 'styled-components';
 import { darkTheme, lightTheme } from '../styles/theme';
 import ThemeMode from '../components/ThemeMode';
 import { Btn } from '../elements/Button';
+import { useDispatch } from 'react-redux';
+import { __postContent } from '../utils/redux/modules/postAdd';
 
 const StContentAddBox = styled.div`
   display: flex;
@@ -28,8 +30,16 @@ function ContentAdd() {
   const [darkMode, setDarkMode] = useState(true);
   const theme = darkMode ? darkTheme : lightTheme;
   const [title, setTitle] = useState('');
-  const [content, setContent] = useState('');
+  const [content, setContent] = useState('hi');
   const [img, setImg] = useState('');
+
+  const dispatch = useDispatch();
+
+  const onSubmitAddButtonHandler = (a, b) => {
+    const result = dispatch(__postContent({ title, content }));
+    alert('d');
+    console.log('result', result);
+  };
 
   return (
     <ThemeProvider theme={theme}>
@@ -51,7 +61,9 @@ function ContentAdd() {
               setContent(e.target.value);
             }}
           />
-          <Btn type="button">꾺꾺</Btn>
+          <Btn type="button" onClick={() => onSubmitAddButtonHandler(title, content)}>
+            꾺꾺
+          </Btn>
         </StInputForm>
       </StContentAddBox>
     </ThemeProvider>
