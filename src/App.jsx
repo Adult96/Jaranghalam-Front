@@ -8,7 +8,7 @@ import ThemeMode from './components/ThemeMode';
 import Navbar from './components/Navbar';
 
 function App() {
-  const [darkMode, setDarkMode] = useState(true);
+  const [darkMode, setDarkMode] = useState(false);
   const theme = darkMode ? darkTheme : lightTheme;
   return (
     <ThemeProvider theme={theme}>
