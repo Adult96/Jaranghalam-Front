@@ -2,9 +2,11 @@ import React from 'react';
 import styled from 'styled-components';
 import formatAgo from '../utils/date';
 import { AiOutlineHeart, AiFillHeart } from 'react-icons/ai';
+import Button from '../elements/Button';
 
 export default function BoardDetail({
   board: { nickName, title, content, imageUrl, createdAt },
+  onBackClick,
 }) {
   const setDate = date => {
     return formatAgo(date);
@@ -14,8 +16,13 @@ export default function BoardDetail({
     <>
       <DetailContainer>
         <Title>
-          <h3>{nickName}</h3>
-          <Date>{setDate(createdAt)}</Date>
+          <TitleText>
+            <h3>{nickName}</h3>
+            <Date>{setDate(createdAt)}</Date>
+          </TitleText>
+          <Button width='4rem' height='1.5rem' type='sort' click={onBackClick}>
+            Back
+          </Button>
         </Title>
         <Img src={imageUrl} alt='userimg' />
         <AiOutlineHeart />
@@ -48,9 +55,15 @@ const DetailContainer = styled.div`
 
 const Title = styled.div`
   display: flex;
+  justify-content: space-between;
   align-items: center;
   gap: 0.3rem;
   margin: 1rem 0;
+`;
+
+const TitleText = styled.div`
+  display: flex;
+  gap: 0.3rem;
 `;
 
 const Date = styled.h4`

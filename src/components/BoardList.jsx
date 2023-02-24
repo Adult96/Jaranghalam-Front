@@ -15,6 +15,10 @@ export default function BoardList({ boards }) {
     setDetailData({ ...board });
   };
 
+  const handleBackClick = () => {
+    setShowDetail(false);
+  };
+
   return (
     <>
       <BoardSort />
@@ -31,7 +35,9 @@ export default function BoardList({ boards }) {
             </li>
           ))}
         </BoardContainer>
-        {showDetail && <BoardDetail board={detailData} />}
+        {showDetail && (
+          <BoardDetail board={detailData} onBackClick={handleBackClick} />
+        )}
       </BoardWrapper>
     </>
   );
