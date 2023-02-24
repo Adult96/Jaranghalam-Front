@@ -19,7 +19,7 @@ export default function Navbar() {
         <Title>
           <AiFillInstagram id='Jaranghalem' />
           <TitleText>
-            <span>Jaranghalem</span>
+            <span>Jaranghalam</span>
           </TitleText>
         </Title>
         <TabIcon>
@@ -30,7 +30,7 @@ export default function Navbar() {
         <BiLogIn id='Login' />
       </IconContainer>
       <TextContainer>
-        <span>Jaranghalem</span>
+        <span>Jaranghalam</span>
         <TabText>
           <span>홈</span>
           <span>좋아요</span>

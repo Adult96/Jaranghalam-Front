@@ -1,9 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
-import { AiOutlineHeart, AiFillHeart } from 'react-icons/ai';
 import formatAgo from '../utils/date';
+import { AiOutlineHeart, AiFillHeart } from 'react-icons/ai';
 
-export default function BoardItem({
+export default function BoardDetail({
   board: { nickName, title, content, imageUrl, createdAt },
 }) {
   const setDate = date => {
@@ -11,7 +11,7 @@ export default function BoardItem({
   };
 
   return (
-    <BoardContainer>
+    <DetailContainer>
       <Title>
         <h3>{nickName}</h3>
         <Date>{setDate(createdAt)}</Date>
@@ -22,19 +22,14 @@ export default function BoardItem({
       <p>{`좋아요 ${10}개`}</p>
       <h4>{`${nickName} ${title}`}</h4>
       <p>{content}</p>
-    </BoardContainer>
+    </DetailContainer>
   );
 }
 
-const BoardContainer = styled.div`
-  width: 100%;
-  height: 100%;
-  min-height: 25rem;
-  border-bottom: 1px solid ${props => props.theme.borderColor};
-
-  :hover > Img {
-    opacity: 0.5;
-  }
+const DetailContainer = styled.div`
+  width: 100vw;
+  height: 100vh;
+  background-color: aqua;
 `;
 
 const Title = styled.div`

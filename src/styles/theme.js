@@ -53,7 +53,9 @@ const borderRadius = {
 };
 
 const screen = {
-  desktp: '1600px',
+  fullWideDesktop: '1600px',
+  wide_desktop: '1400px',
+  desktop: '1200px',
   tablet_h: '1024px',
   tablet_v: '768px',
   mobile: '480px',
