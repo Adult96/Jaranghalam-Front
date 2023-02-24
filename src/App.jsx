@@ -5,6 +5,7 @@ import GlobalStyle from './styles/globalStyle';
 import styled, { ThemeProvider } from 'styled-components';
 import { darkTheme, lightTheme } from './styles/theme';
 import ThemeMode from './components/ThemeMode';
+import Navbar from './components/Navbar';
 
 function App() {
   const [darkMode, setDarkMode] = useState(true);
@@ -13,9 +14,24 @@ function App() {
     <ThemeProvider theme={theme}>
       <GlobalStyle />
       <ThemeMode darkMode={darkMode} onDarkMode={setDarkMode} />
-      <Outlet />
+      <Wrapper>
+        <Navbar />
+        <Outlet />
+      </Wrapper>
     </ThemeProvider>
   );
 }
+
+const Wrapper = styled.div`
+  display: grid;
+  width: 100%;
+  height: 100%;
+  @media (max-width: 768px) {
+    grid-template-rows: 100px 1fr;
+  }
+  @media (min-width: 768px) {
+    grid-template-columns: 1fr 5fr;
+  }
+`;
 
 export default App;
