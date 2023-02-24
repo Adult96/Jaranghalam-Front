@@ -12,27 +12,27 @@ export default function Navbar() {
   return (
     <NavbarContainer>
       <IconContainer>
-        <TitleContainer>
+        <Title>
           <AiFillInstagram />
-          <TitleTextContainer>
-            <span>자랑할램</span>
-          </TitleTextContainer>
-        </TitleContainer>
-        <TabIconContainer>
+          <TitleText>
+            <span>Jaranghalem</span>
+          </TitleText>
+        </Title>
+        <TabIcon>
           <AiFillHome />
           <AiOutlineHeart />
           <AiOutlinePlusSquare />
-        </TabIconContainer>
+        </TabIcon>
         <BiLogIn />
       </IconContainer>
       <TextContainer>
-        <span>자랑할램</span>
-        <TabTextContainer>
+        <span>Jaranghalem</span>
+        <TabText>
           <span>홈</span>
           <span>좋아요</span>
           <span>추가</span>
-        </TabTextContainer>
-        <LoginContainer>Login</LoginContainer>
+        </TabText>
+        <Login>Login</Login>
       </TextContainer>
     </NavbarContainer>
   );
@@ -64,27 +64,26 @@ const IconContainer = styled.div`
   }
 `;
 
-const TitleContainer = styled.div`
+const Title = styled.div`
   display: flex;
 `;
 
-const TitleTextContainer = styled.div`
+const TitleText = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  font-family: 'Stylish', sans-serif;
+  font-family: 'Satisfy', cursive;
 
   @media (min-width: ${props => props.theme.screen.tablet_v}) {
     display: none;
   }
 `;
 
-const TabIconContainer = styled.div`
+const TabIcon = styled.div`
   display: flex;
   margin: 10vh 0;
   gap: 3rem;
   flex-direction: column;
-  justify-content: space-between;
 
   @media (max-width: ${props => props.theme.screen.tablet_v}) {
     margin: 0;
@@ -92,30 +91,30 @@ const TabIconContainer = styled.div`
   }
 `;
 
-const LoginContainer = styled.div`
-  display: flex;
-  gap: 3rem;
-  flex-direction: column;
-  justify-content: space-between;
-`;
-
 const TextContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  font-family: 'Stylish', sans-serif;
+  font-family: 'Satisfy', cursive;
 
   @media (max-width: 1450px) {
     display: none;
   }
 `;
 
-const TabTextContainer = styled.div`
+const TabText = styled.div`
   display: flex;
   margin: 10vh 1rem;
   gap: 4rem;
   font-size: ${props => props.theme.fontSize.large_regular};
   flex-direction: column;
   justify-content: space-between;
+  font-family: 'Roboto', sans-serif;
+`;
+
+const Login = styled.div`
+  display: flex;
+  margin: 0.5rem;
+  font-size: 1rem;
   font-family: 'Roboto', sans-serif;
 `;
