@@ -6,7 +6,7 @@ import { darkTheme, lightTheme } from '../styles/theme';
 import ThemeMode from '../components/ThemeMode';
 import { Btn } from '../elements/Button';
 import { useDispatch } from 'react-redux';
-import { __postContent } from '../utils/redux/modules/postAdd';
+import { __postContent } from '../utils/redux/modules/board/postAdd';
 
 const StContentAddBox = styled.div`
   display: flex;
