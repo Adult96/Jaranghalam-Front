@@ -62,6 +62,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
   background-color: ${props => props.theme.bg};
   color: ${props => props.theme.text};
+  overflow: hidden;
 }
 
 * {
