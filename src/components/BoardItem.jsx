@@ -17,4 +17,6 @@ export default function BoardItem({
   );
 }
 
-const BoardContainer = styled.div``;
+const BoardContainer = styled.div`
+  width: 100%;
+`;
