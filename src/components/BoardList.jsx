@@ -38,22 +38,16 @@ export default function BoardList({ boards }) {
 }
 
 const BoardWrapper = styled.ul`
+  position: relative;
   display: flex;
   width: 100%;
-  height: 100%;
+  height: auto;
 `;
 
 const BoardContainer = styled.div`
   display: grid;
   gap: 1rem;
   padding: 1rem;
-
-  @media (min-width: ${props => props.theme.screen.mobile}) {
-    ${props =>
-      props.media === 'true'
-        ? 'grid-template-columns: 1fr '
-        : 'grid-template-columns: 1fr'}
-  }
 
   @media (min-width: ${props => props.theme.screen.tablet_v}) {
     ${props =>
@@ -62,14 +56,14 @@ const BoardContainer = styled.div`
         : 'grid-template-columns: 1fr 1fr;'}
   }
 
-  @media (min-width: ${props => props.theme.screen.tablet_h}) {
+  @media (min-width: 1024px) {
     ${props =>
       props.media === 'true'
         ? 'grid-template-columns: 1fr 1fr '
         : 'grid-template-columns: 1fr 1fr 1fr '}
   }
 
-  @media (min-width: ${props => props.theme.screen.wide_desktop}) {
+  @media (min-width: 1400px) {
     ${props =>
       props.media === 'true'
         ? 'grid-template-columns: 1fr 1fr 1fr;'

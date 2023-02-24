@@ -11,25 +11,39 @@ export default function BoardDetail({
   };
 
   return (
-    <DetailContainer>
-      <Title>
-        <h3>{nickName}</h3>
-        <Date>{setDate(createdAt)}</Date>
-      </Title>
-      <Img src={imageUrl} alt='userimg' />
-      <AiOutlineHeart />
-      <AiFillHeart />
-      <p>{`좋아요 ${10}개`}</p>
-      <h4>{`${nickName} ${title}`}</h4>
-      <p>{content}</p>
-    </DetailContainer>
+    <>
+      <DetailContainer>
+        <Title>
+          <h3>{nickName}</h3>
+          <Date>{setDate(createdAt)}</Date>
+        </Title>
+        <Img src={imageUrl} alt='userimg' />
+        <AiOutlineHeart />
+        <AiFillHeart />
+        <p>{`좋아요 ${10}개`}</p>
+        <h4>{`${nickName} ${title}`}</h4>
+        <p>{content}</p>
+      </DetailContainer>
+    </>
   );
 }
 
 const DetailContainer = styled.div`
-  width: 100vw;
+  position: sticky;
+  top: 0;
+  right: 0;
+  width: 30vw;
+  min-width: 25rem;
   height: 100vh;
-  background-color: aqua;
+
+  @media (max-width: ${props => props.theme.screen.mobile_h}) {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 1rem;
+    background-color: ${props => props.theme.bg};
+  }
 `;
 
 const Title = styled.div`

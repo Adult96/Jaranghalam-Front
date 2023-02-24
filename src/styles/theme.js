@@ -58,7 +58,8 @@ const screen = {
   desktop: '1200px',
   tablet_h: '1024px',
   tablet_v: '768px',
-  mobile: '480px',
+  mobile_h: '600px',
+  mobile_v: '480px',
 };
 
 const light = {
