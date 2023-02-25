@@ -9,7 +9,7 @@ import {
 } from 'react-icons/ai';
 import { BiLogIn } from 'react-icons/bi';
 
-export default function IconBar() {
+export default function IconBar({ onClickLogin }) {
   return (
     <IconContainer>
       <Title>
@@ -23,7 +23,7 @@ export default function IconBar() {
         <AiOutlineHeart id='좋아요' />
         <AiOutlinePlusSquare id='추가' />
       </TabIcon>
-      <BiLogIn id='Login' />
+      <BiLogIn id='Login' onClick={onClickLogin} />
     </IconContainer>
   );
 }

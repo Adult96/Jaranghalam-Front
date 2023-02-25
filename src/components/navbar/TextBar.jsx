@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-export default function TextBar() {
+export default function TextBar({ onClickLogin }) {
   return (
     <TextContainer>
       <span>Jaranghalam</span>
@@ -10,7 +10,7 @@ export default function TextBar() {
         <span>좋아요</span>
         <span>추가</span>
       </TabText>
-      <Login>Login</Login>
+      <Login onClick={onClickLogin}>Login</Login>
     </TextContainer>
   );
 }

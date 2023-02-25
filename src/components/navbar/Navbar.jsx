@@ -1,17 +1,23 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import IconBar from './IconBar';
 import TextBar from './TextBar';
 
 export default function Navbar() {
+  const navigate = useNavigate();
   const handleNavbar = e => {
     console.log(e.target.id, e.target.innerText);
   };
 
+  const handleClickLogin = () => {
+    navigate('/login');
+  };
+
   return (
     <NavbarContainer onClick={handleNavbar}>
-      <IconBar />
-      <TextBar />
+      <IconBar onClickLogin={handleClickLogin} />
+      <TextBar onClickLogin={handleClickLogin} />
     </NavbarContainer>
   );
 }
