@@ -1,9 +1,9 @@
 import { configureStore } from '@reduxjs/toolkit';
-import postContentSlice from '../modules/board/postAdd';
+import getHome from '../modules/home/getHome';
 
 const store = configureStore({
   reducer: {
-    postContentSlice,
+    getHome,
   },
 });
 

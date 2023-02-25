@@ -1,4 +1,5 @@
 import React from 'react';
+import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
 import BoardList from '../components/BoardList';
 
@@ -63,6 +64,8 @@ const boards = [
 ];
 
 export default function Home() {
+  const dispatch = useDispatch();
+
   return (
     <HomeWrapper>
       <BoardList boards={boards} />

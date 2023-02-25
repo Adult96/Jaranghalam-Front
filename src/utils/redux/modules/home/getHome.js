@@ -10,7 +10,7 @@ const initialState = {
   error: null,
 };
 
-const axios = new Axios(process.env.REACT_APP_LOGIN_URL_KEY);
+const axios = new Axios(process.env.REACT_APP_LOCAL_HOST_URL);
 
 export const __getHome = createAsyncThunk(
   'GET_HOME',
@@ -26,7 +26,7 @@ export const __getHome = createAsyncThunk(
   }
 );
 
-const getLoginSlice = createSlice({
+const getHomeSlice = createSlice({
   name: 'getHome',
   initialState,
   reducers: {},
@@ -48,4 +48,4 @@ const getLoginSlice = createSlice({
   },
 });
 
-export default getLoginSlice.reducer;
+export default getHomeSlice.reducer;
