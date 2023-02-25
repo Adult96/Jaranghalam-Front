@@ -44,8 +44,8 @@ const Title = styled.h5`
 
 const TabText = styled.div`
   display: flex;
-  margin: 10vh 1rem;
-  gap: 3rem;
+  margin: 0 0 1rem 0.5rem;
+  gap: 3.2rem;
   font-size: ${props => props.theme.fontSize.large_regular};
   flex-direction: column;
   justify-content: space-between;
@@ -58,17 +58,9 @@ const Home = styled.span`
   cursor: pointer;
 `;
 
-const Like = styled.span`
-  margin: 0.5rem;
-  font-size: ${props => props.theme.fontSize.large_regular};
-  cursor: pointer;
-`;
+const Like = styled(Home)``;
 
-const Add = styled.span`
-  margin: 0.5rem;
-  font-size: ${props => props.theme.fontSize.large_regular};
-  cursor: pointer;
-`;
+const Add = styled(Home)``;
 
 const Login = styled.div`
   display: flex;
