@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -7,6 +7,10 @@ import Button from '../elements/Button';
 
 export default function Comment({ comment, loginName }) {
   const textAreaRef = useRef();
+
+  useEffect(() => {
+    textAreaRef.current.focus();
+  }, []);
 
   const handleResizeText = () => {
     const ref = textAreaRef.current;
