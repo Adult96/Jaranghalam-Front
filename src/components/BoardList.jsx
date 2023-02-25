@@ -6,6 +6,19 @@ import BoardDetail from './BoardDetail';
 import BoardItem from './BoardItem';
 import BoardSort from './BoardSort';
 
+const comment = [
+  { comment: '멋지다 연진아' },
+  { comment: '멋지다 연진아' },
+  { comment: '멋지다 연진아' },
+  { comment: '멋지다 연진아' },
+  { comment: '멋지다 연진아' },
+  { comment: '멋지다 연진아' },
+  { comment: '멋지다 연진아' },
+  { comment: '멋지다 연진아' },
+  { comment: '멋지다 연진아' },
+  { comment: '멋지다 연진아' },
+];
+
 export default function BoardList({ boards }) {
   const [showDetail, setShowDetail] = useState(false);
   const [detailData, setDetailData] = useState({});
@@ -36,7 +49,11 @@ export default function BoardList({ boards }) {
           ))}
         </BoardContainer>
         {showDetail && (
-          <BoardDetail board={detailData} onBackClick={handleBackClick} />
+          <BoardDetail
+            comment={comment}
+            board={detailData}
+            onBackClick={handleBackClick}
+          />
         )}
       </BoardWrapper>
     </>

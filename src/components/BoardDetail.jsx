@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import formatAgo from '../utils/date';
 import { AiOutlineHeart, AiFillHeart } from 'react-icons/ai';
@@ -6,16 +6,27 @@ import Button from '../elements/Button';
 
 export default function BoardDetail({
   board: { nickName, title, content, imageUrl, createdAt },
+  comment,
   onBackClick,
 }) {
+  const [showComment, setShowComment] = useState(false);
+
   const setDate = date => {
     return formatAgo(date);
   };
 
+  const handleComment = () => {
+    setShowComment(true);
+  };
+
+  useEffect(() => {
+    return () => setShowComment(false);
+  }, [title, content, imageUrl, createdAt]);
+
   return (
     <>
       <DetailContainer>
-        <Title>
+        <Header>
           <TitleText>
             <h3>{nickName}</h3>
             <Date>{setDate(createdAt)}</Date>
@@ -23,13 +34,25 @@ export default function BoardDetail({
           <Button width='4rem' height='1.5rem' type='sort' click={onBackClick}>
             Back
           </Button>
-        </Title>
+        </Header>
         <Img src={imageUrl} alt='userimg' />
         <AiOutlineHeart />
         <AiFillHeart />
         <p>{`좋아요 ${10}개`}</p>
-        <h4>{`${nickName} ${title}`}</h4>
-        <p>{content}</p>
+        <Title>{`${nickName} ${title}`}</Title>
+        <Content>{content}</Content>
+        <Button
+          click={handleComment}
+          height='1.5rem'
+          type='sort'
+        >{`댓글 ${10}개 모두보기`}</Button>
+        {showComment && (
+          <Comment>
+            {comment.map(v => (
+              <p>{v.comment}</p>
+            ))}
+          </Comment>
+        )}
       </DetailContainer>
     </>
   );
@@ -42,7 +65,7 @@ const DetailContainer = styled.div`
   width: 30vw;
   min-width: 25rem;
   height: 100vh;
-
+  overflow-y: scroll;
   @media (max-width: ${props => props.theme.screen.mobile_h}) {
     position: fixed;
     top: 0;
@@ -53,7 +76,7 @@ const DetailContainer = styled.div`
   }
 `;
 
-const Title = styled.div`
+const Header = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -75,4 +98,27 @@ const Img = styled.img`
   height: 60%;
   border-radius: 0.5rem;
   object-fit: cover;
+`;
+
+const Title = styled.h4`
+  display: -webkit-box;
+
+  height: 1.08rem;
+  white-space: normal;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+`;
+
+const Content = styled.p`
+  display: -webkit-box;
+
+  white-space: normal;
+  -webkit-line-clamp: 8;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+`;
+
+const Comment = styled.div`
+  height: 20rem;
 `;
