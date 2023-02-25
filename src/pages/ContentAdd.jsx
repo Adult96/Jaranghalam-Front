@@ -8,37 +8,33 @@ import { __postContent } from '../utils/redux/modules/board/postAdd';
 import axios from 'axios';
 
 const StH3 = styled.h3`
-  margin-bottom: 50px;
-  color: red;
-  border-bottom: 2px solid ${(props) => props.theme.text};
+  color: black;
+  border-bottom: 2px solid ${(props) => props.theme.borderRadius.text};
 `;
 
 const StInputForm = styled.form`
   display: flex;
   flex-direction: row-reverse;
-  justify-content: space-around;
-  margin-left: 60px;
+  justify-content: center;
+  align-items: center;
   margin-top: 50px;
   gap: 30px;
 `;
 
-const StTitleContentInputBox = styled.div`
+const StTextArea = styled.textarea`
+  width: 130px;
+  height: 200px;
+  column-gap: 10px;
   overflow: auto;
-  border-radius: ${(props) => props.theme.borderRadius.medium};
-  padding-top: 20px;
+  color: ${(props) => props.theme.text};
 `;
 
-const StTextAreaBox = styled.textarea`
-  margin-top: 20px;
-`;
-
-const StFileInputBox = styled.div`
-  padding-top: 20px;
-  overflow: auto;
+const StFile = styled.div`
+  margin-bottom: 234px;
 `;
 
 //모달 css
-export const StModalBackground = styled.div`
+const StModalBackground = styled.div`
   display: flex;
   position: fixed;
   inset: 0;
@@ -46,11 +42,11 @@ export const StModalBackground = styled.div`
   height: 100%;
   justify-content: center;
   align-items: center;
-  background: #ebe1e18a;
+  background: #f0ededc5;
   backdrop-filter: blur(3px);
 `;
 
-export const StModalContainer = styled.div`
+const StModalContainer = styled.div`
   display: flex !important;
   flex-direction: column;
   justify-content: center;
@@ -83,6 +79,7 @@ function ContentAdd({ toggleModal }) {
       dispatch(__postContent(post));
       setTitle('');
       setContent('');
+      alert('완료!!!!!!');
       toggleModal();
     });
   };
@@ -91,39 +88,42 @@ function ContentAdd({ toggleModal }) {
     <StModalBackground>
       <StModalContainer>
         <StH3>새 게시물 만들기</StH3>
-        <form
+        <StInputForm
           onSubmit={(e) => {
             e.preventDefault();
           }}
-          enctype="multipart/form-data"
+          encType="multipart/form-data"
         >
           <div>
             <Input
-              type="text"
+              type={'text'}
               value={title}
               onChange={(e) => {
                 setTitle(e.target.value);
               }}
-              placeholder="title"
+              placeholder={'title'}
+              width={'130px'}
             />
-            <textarea
-              type="text"
+            <StTextArea
+              type={'text'}
               value={content}
               onChange={(e) => {
                 setContent(e.target.value);
               }}
-              placeholder="content"
+              placeholder={'content'}
             />
-            <p style={{ marginLeft: '150px' }}>
-              <Button test onClick={onConfirmButtonHandler}>
-                꾺
-              </Button>
-            </p>
+            <Button test onClick={onConfirmButtonHandler}>
+              꾺
+            </Button>
           </div>
-          <div>
-            <Input type="file" onChange={(e) => setSelectedFile(e.target.files[0])} />
-          </div>
-        </form>
+          <StFile>
+            <Input
+              type={'file'}
+              width={'150px'}
+              onChange={(e) => setSelectedFile(e.target.files[0])}
+            />
+          </StFile>
+        </StInputForm>
       </StModalContainer>
     </StModalBackground>
   );
