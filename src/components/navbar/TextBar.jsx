@@ -1,16 +1,27 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
-export default function TextBar({ onClickLogin }) {
+import ROUTER from '../../constants/router';
+
+export default function TextBar({ showLoginIcon, onClickLogin }) {
   return (
     <TextContainer>
       <Title>Jaranghalam</Title>
-      <TabText>
-        <Home>HOME</Home>
-        <Like>LIKE</Like>
-        <Add>ADD</Add>
-      </TabText>
-      <Login onClick={onClickLogin}>Login</Login>
+      {showLoginIcon && (
+        <TabText>
+          <Home>HOME</Home>
+          <Like>LIKE</Like>
+          <Add>ADD</Add>
+        </TabText>
+      )}
+      <Login>
+        {showLoginIcon ? (
+          <Link to={ROUTER.PATH.LOGIN}>Login</Link>
+        ) : (
+          <Link to={ROUTER.PATH.BACK}>Back</Link>
+        )}
+      </Login>
     </TextContainer>
   );
 }

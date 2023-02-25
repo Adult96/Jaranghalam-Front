@@ -7,9 +7,12 @@ import {
   AiOutlineHeart,
   AiOutlinePlusSquare,
 } from 'react-icons/ai';
-import { BiLogIn } from 'react-icons/bi';
+import { BiLogIn, BiArrowBack } from 'react-icons/bi';
+import { Link } from 'react-router-dom';
 
-export default function IconBar({ onClickLogin }) {
+import ROUTER from '../../constants/router';
+
+export default function IconBar({ showLoginIcon }) {
   return (
     <IconContainer>
       <Title>
@@ -18,19 +21,29 @@ export default function IconBar({ onClickLogin }) {
           <span>Jaranghalam</span>
         </TitleText>
       </Title>
-      <TabIcon>
-        <Home id='홈'>
-          <AiFillHome />
-        </Home>
-        <Like id='좋아요'>
-          <AiOutlineHeart />
-        </Like>
-        <Add id='추가'>
-          <AiOutlinePlusSquare />
-        </Add>
-      </TabIcon>
-      <Login id='Login' onClick={onClickLogin}>
-        <BiLogIn />
+      {showLoginIcon && (
+        <TabIcon>
+          <Home id='홈'>
+            <AiFillHome />
+          </Home>
+          <Like id='좋아요'>
+            <AiOutlineHeart />
+          </Like>
+          <Add id='추가'>
+            <AiOutlinePlusSquare />
+          </Add>
+        </TabIcon>
+      )}
+      <Login>
+        {showLoginIcon ? (
+          <Link to={ROUTER.PATH.LOGIN}>
+            <BiLogIn />
+          </Link>
+        ) : (
+          <Link to={ROUTER.PATH.BACK}>
+            <BiArrowBack />
+          </Link>
+        )}
       </Login>
     </IconContainer>
   );

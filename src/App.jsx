@@ -1,21 +1,31 @@
-import { useState } from 'react';
-import { Outlet } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { Outlet, useLocation } from 'react-router-dom';
 
 import GlobalStyle from './styles/globalStyle';
 import styled, { ThemeProvider } from 'styled-components';
 import { darkTheme, lightTheme } from './styles/theme';
 import ThemeMode from './components/ThemeMode';
 import Navbar from './components/navbar/Navbar';
+import ROUTER from './constants/router';
 
 function App() {
+  const { pathname } = useLocation();
   const [darkMode, setDarkMode] = useState(false);
+  const [showLoginIcon, setShowLoginIcon] = useState(false);
   const theme = darkMode ? darkTheme : lightTheme;
+
+  useEffect(() => {
+    pathname === ROUTER.PATH.LOGIN
+      ? setShowLoginIcon(false)
+      : setShowLoginIcon(true);
+  }, [pathname]);
+
   return (
     <ThemeProvider theme={theme}>
       <GlobalStyle />
       <ThemeMode darkMode={darkMode} onDarkMode={setDarkMode} />
       <Wrapper>
-        <Navbar />
+        <Navbar showLoginIcon={showLoginIcon} />
         <Outlet />
       </Wrapper>
     </ThemeProvider>

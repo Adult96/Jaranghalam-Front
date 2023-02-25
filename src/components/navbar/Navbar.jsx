@@ -1,20 +1,13 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import IconBar from './IconBar';
 import TextBar from './TextBar';
 
-export default function Navbar() {
-  const navigate = useNavigate();
-
-  const handleClickLogin = () => {
-    navigate('/login');
-  };
-
+export default function Navbar({ showLoginIcon }) {
   return (
     <NavbarContainer>
-      <IconBar onClickLogin={handleClickLogin} />
-      <TextBar onClickLogin={handleClickLogin} />
+      <IconBar showLoginIcon={showLoginIcon} />
+      <TextBar showLoginIcon={showLoginIcon} />
     </NavbarContainer>
   );
 }

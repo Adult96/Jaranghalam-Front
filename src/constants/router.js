@@ -2,6 +2,8 @@ const PATH = {
   LOGIN: '/login',
   ADD: '/add',
   HOME: '/',
+  BACK: -1,
+  FRONT: 1,
 };
 
 const NAME = {
