@@ -1,24 +1,111 @@
+import ALERT from '../constants/alert';
+
 const Valid = {
-  title(text) {
-    if (text.length <= 0) return false;
+  signUp(id, pw, pwCheck, nickName) {
+    if (!formEmpty(id, pw, pwCheck, nickName)) {
+      alert(ALERT.CHECK_EMPTY);
+      return false;
+    }
+    if (!pwDifferentCheck(pw, pwCheck)) {
+      alert(ALERT.CHECK_DIFF_PW);
+      return false;
+    }
+    if (!idLength(id)) {
+      alert('아이디는 4글자 이상 10이하만 입력 가능 합니다.');
+      return false;
+    }
+    if (!idType(id)) {
+      alert('아이디는 숫자, 문자만 입력 가능 합니다.');
+      return false;
+    }
+    if (!nickNameLength(nickName)) {
+      alert('닉네임은 2글자 이상 10글자 이하만 입력 가능 합니다.');
+      return false;
+    }
+    if (!pwLength(pw)) {
+      alert('비밀번호는 8글자 이상 15글자 이하만 입력 가능 합니다.');
+      return false;
+    }
+    if (!pwType(pw)) {
+      alert('비밀번호는 숫자, 문자, 대문자 특수문자만 입력 가능 합니다.');
+      return false;
+    }
+
     return true;
   },
 
-  content(text) {
-    if (text.length <= 0) return false;
-    return true;
-  },
+  login(id, pw) {
+    if (!Valid.formEmpty(id, pw)) {
+      alert(ALERT.CHECK_EMPTY);
+      return false;
+    }
+    if (!idLength(id)) {
+      alert('아이디는 4글자 이상 10이하만 입력 가능 합니다.');
+      return false;
+    }
+    if (!idType(id)) {
+      alert('아이디는 숫자, 문자만 입력 가능 합니다.');
+      return false;
+    }
+    if (!pwLength(pw)) {
+      alert('비밀번호는 8글자 이상 15글자 이하만 입력 가능 합니다.');
+      return false;
+    }
+    if (!pwType(pw)) {
+      alert('비밀번호는 숫자, 문자, 대문자 특수문자만 입력 가능 합니다.');
+      return false;
+    }
 
-  formEmpty(...text) {
-    const textArr = text.filter(v => v === '');
-    if (textArr.length !== 0) return false;
-    return true;
-  },
-
-  pwDifferentCheck(...text) {
-    if (new Set([...text]).size === text.length) return false;
     return true;
   },
 };
+
+function title(text) {
+  if (text.length <= 0) return false;
+  return true;
+}
+
+function content(text) {
+  if (text.length <= 0) return false;
+  return true;
+}
+
+function formEmpty(...text) {
+  const textArr = text.filter(v => v === '');
+  if (textArr.length !== 0) return false;
+  return true;
+}
+
+function idLength(id) {
+  if (id.length < 4 || id.length > 10) return false;
+  return true;
+}
+
+function idType(id) {
+  if (!/[a-zA-Z0-9]/.test(id)) return false;
+  return true;
+}
+
+function nickNameLength(nickName) {
+  console.log(nickName.length, nickName.length < 2, nickName.length > 10);
+  if (nickName.length < 2 || nickName.length > 10) return false;
+  return true;
+}
+
+function pwLength(pw) {
+  if (pw.length < 8 || pw.length > 15) return false;
+  return true;
+}
+
+function pwType(pw) {
+  const regExp = /[?.,;:|*~`!^\-_+<>@#$%&]/g;
+  if (!/[a-zA-Z0-9]/gi.test(pw) && !regExp.test(pw)) return false;
+  return true;
+}
+
+function pwDifferentCheck(...text) {
+  if (new Set([...text]).size === text.length) return false;
+  return true;
+}
 
 export default Valid;

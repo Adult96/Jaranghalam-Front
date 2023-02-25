@@ -13,6 +13,7 @@ export default function Login() {
   const [id, setId] = useState('');
   const [pw, setPw] = useState('');
   const [pwCheck, setPwCheck] = useState('');
+  const [nickName, setNickName] = useState('');
   const [signUp, setSignUp] = useState(false);
   const [showPw, setShowPw] = useState(false);
 
@@ -20,15 +21,12 @@ export default function Login() {
     e.preventDefault();
 
     if (signUp) {
-      if (!Valid.formEmpty(id, pw, pwCheck)) {
-        return alert(ALERT.CHECK_EMPTY);
-      }
-      if (!Valid.pwDifferentCheck(pw, pwCheck)) {
-        return alert(ALERT.CHECK_DIFF_PW);
+      if (!Valid.signUp(id, pw, pwCheck, nickName)) {
+        return;
       }
     } else {
-      if (!Valid.formEmpty(id, pw)) {
-        return alert(ALERT.CHECK_EMPTY);
+      if (!Valid.login(id, pw)) {
+        return;
       }
     }
 
@@ -63,15 +61,6 @@ export default function Login() {
           autoFocus={true}
         />
         <Input
-          type='text'
-          width='20rem'
-          height='2.5rem'
-          fontSize='1.3rem'
-          value={pw}
-          onChange={e => setPw(e.target.value)}
-          placeholder='PW'
-        />
-        <Input
           type={showPw ? 'text' : 'password'}
           width='20rem'
           height='2.5rem'
@@ -89,6 +78,17 @@ export default function Login() {
             value={pwCheck}
             onChange={e => setPwCheck(e.target.value)}
             placeholder='PW CHECK'
+          />
+        )}
+        {signUp && (
+          <Input
+            type='text'
+            width='20rem'
+            height='2.5rem'
+            fontSize='1.3rem'
+            value={nickName}
+            onChange={e => setNickName(e.target.value)}
+            placeholder='NiCK NAME'
           />
         )}
         <ShowPasswordContainer>

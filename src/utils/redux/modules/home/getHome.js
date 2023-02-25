@@ -10,16 +10,15 @@ const initialState = {
   error: null,
 };
 
-const axios = new Axios(process.env.REACT_APP_URL);
+const axios = new Axios(process.env.REACT_APP_LOCAL_HOST_URL);
 
 export const __getHome = createAsyncThunk(
   'GET_HOME',
   async (payload, thunkAPI) => {
     try {
-      const response = await axios.get(
-        `/api/post?page=1&size=16&sortBy=postLikeCount`
-      );
-      return thunkAPI.fulfillWithValue(response.data.result);
+      const response = await axios.get('/board');
+      // return thunkAPI.fulfillWithValue(response.data.result);
+      return thunkAPI.fulfillWithValue(response.data);
     } catch (error) {
       console.log(error);
       return thunkAPI.rejectWithValue();
