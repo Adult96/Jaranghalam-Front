@@ -5,10 +5,9 @@ import formatAgo from '../utils/formatDate';
 import formatLike from '../utils/formatLike';
 
 export default function BoardItem({
-  board: { nickName, title, content, imageUrl, createdAt, like, postLikeCount },
+  board: { userName, title, content, imageUrl, createdAt, like, postLikeCount },
 }) {
   const setDate = date => {
-    console.log(like, postLikeCount);
     return formatAgo(date);
   };
 
@@ -19,7 +18,7 @@ export default function BoardItem({
   return (
     <BoardContainer>
       <Header>
-        <h3>{nickName}</h3>
+        <h3>{userName}</h3>
         <Date>{setDate(createdAt)}</Date>
       </Header>
       <Img src={imageUrl} alt='userimg' />
@@ -33,13 +32,15 @@ export default function BoardItem({
         </Heart>
       )}
       <Like>{setformatLike(postLikeCount)}</Like>
-      <Title>{`${nickName} ${title}`}</Title>
+      <Title>{`${userName} ${title}`}</Title>
       <Content>{content}</Content>
     </BoardContainer>
   );
 }
 
 const BoardContainer = styled.div`
+  display: flex;
+  flex-direction: column;
   width: 100%;
   height: 100%;
   min-height: 25rem;

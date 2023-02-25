@@ -67,33 +67,14 @@ export default function BoardList({ boards }) {
 const BoardWrapper = styled.ul`
   position: relative;
   display: flex;
+  justify-content: center;
   width: 100%;
   height: auto;
 `;
 
 const BoardContainer = styled.div`
-  display: grid;
+  display: block;
   gap: 1rem;
   padding: 1rem;
-
-  @media (min-width: ${props => props.theme.screen.tablet_v}) {
-    ${props =>
-      props.media === 'true'
-        ? 'grid-template-columns: 1fr;'
-        : 'grid-template-columns: 1fr 1fr;'}
-  }
-
-  @media (min-width: 1024px) {
-    ${props =>
-      props.media === 'true'
-        ? 'grid-template-columns: 1fr 1fr '
-        : 'grid-template-columns: 1fr 1fr 1fr '}
-  }
-
-  @media (min-width: 1400px) {
-    ${props =>
-      props.media === 'true'
-        ? 'grid-template-columns: 1fr 1fr 1fr;'
-        : 'grid-template-columns: 1fr 1fr 1fr 1fr;'}
-  }
+  width: 45rem;
 `;

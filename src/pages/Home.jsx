@@ -28,7 +28,6 @@ const HomeWrapper = styled.main`
   width: 100%;
   height: 100%;
   overflow-x: hidden;
-  overflow-y: auto;
   &::-webkit-scrollbar {
     width: 8px;
     height: 8px;
