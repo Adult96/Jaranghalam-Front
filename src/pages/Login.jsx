@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { AiFillLock } from 'react-icons/ai';
+import { AiFillLock, AiOutlineCheck } from 'react-icons/ai';
 import { HiOutlineUserAdd } from 'react-icons/hi';
 import styled from 'styled-components';
 
@@ -45,6 +45,7 @@ export default function Login() {
   const loginProcess = async () => {
     const signUpData = { userName: id, userNickName: nickName, password: pw };
     const loginData = { userName: id, password: pw };
+
     await loginAxios(loginData, signUpData);
 
     const token = getCookie('myToken');
@@ -72,16 +73,32 @@ export default function Login() {
     <LoginWrapper>
       <LoginForm onSubmit={handleSubmit}>
         <h1>{signUp ? <HiOutlineUserAdd /> : <AiFillLock />}</h1>
-        <Input
-          name='id'
-          width='20rem'
-          height='2.5rem'
-          fontSize='1.3rem'
-          placeholder='ID'
-          value={id}
-          onChange={e => setId(e.target.value)}
-          autoFocus={true}
-        />
+        <Label>
+          <Input
+            name='id'
+            width='20rem'
+            height='2.5rem'
+            fontSize='1.3rem'
+            placeholder='ID'
+            value={id}
+            onChange={e => setId(e.target.value)}
+            autoFocus={true}
+          />
+          <span>
+            <AiOutlineCheck />
+          </span>
+        </Label>
+        {signUp && (
+          <Input
+            type='text'
+            width='20rem'
+            height='2.5rem'
+            fontSize='1.3rem'
+            value={nickName}
+            onChange={e => setNickName(e.target.value)}
+            placeholder='NiCK NAME'
+          />
+        )}
         <Input
           type={showPw ? 'text' : 'password'}
           width='20rem'
@@ -102,17 +119,7 @@ export default function Login() {
             placeholder='PW CHECK'
           />
         )}
-        {signUp && (
-          <Input
-            type='text'
-            width='20rem'
-            height='2.5rem'
-            fontSize='1.3rem'
-            value={nickName}
-            onChange={e => setNickName(e.target.value)}
-            placeholder='NiCK NAME'
-          />
-        )}
+
         <ShowPasswordContainer>
           <Input
             type='checkbox'
@@ -172,4 +179,17 @@ const ButtonContainer = styled.div`
   justify-content: center;
   align-items: center;
   gap: 10px;
+`;
+
+const Label = styled.label`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  span {
+    position: absolute;
+    right: 5px;
+    color: ${props => props.theme.color.dark_mint};
+    font-size: ${props => props.theme.fontSize.medium};
+  }
 `;
