@@ -32,9 +32,13 @@ export default function BoardList({ boards }) {
     setShowDetail(false);
   };
 
+  const handleSortClick = e => {
+    console.log(e.target.innerText);
+  };
+
   return (
     <>
-      <BoardSort />
+      <BoardSort click={handleSortClick} />
       <BoardWrapper>
         <BoardContainer media={`${showDetail}`}>
           {boards.map(board => (

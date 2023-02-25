@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
+import { v4 as uuidv4 } from 'uuid';
 import formatAgo from '../utils/date';
 import { AiOutlineHeart, AiFillHeart } from 'react-icons/ai';
 import Button from '../elements/Button';
@@ -49,7 +50,7 @@ export default function BoardDetail({
         {showComment && (
           <Comment>
             {comment.map(v => (
-              <p>{v.comment}</p>
+              <p key={uuidv4()}>{v.comment}</p>
             ))}
           </Comment>
         )}
