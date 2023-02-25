@@ -1,5 +1,5 @@
 const COOKIE = {
-  COOKIE_NAME: '',
+  COOKIE_NAME: 'myToken',
 };
 
 const AXIOS_PATH = {

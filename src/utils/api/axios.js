@@ -1,10 +1,28 @@
 import axios from 'axios';
+import QUERY from '../../constants/query';
+import { setCookie } from '../cookie';
 
 export default class Axios {
   constructor(url) {
     this.instance = axios.create({
       baseURL: url,
     });
+
+    this.instance.interceptors.response.use(
+      response => {
+        const token = response.headers.authorization;
+        if (token) {
+          const [, parseToken] = token.split(' ');
+          setCookie(QUERY.COOKIE.COOKIE_NAME, parseToken);
+        }
+
+        return response;
+      },
+      error => {
+        alert(error.message);
+        return Promise.reject(error);
+      }
+    );
   }
 
   async get(path, option) {

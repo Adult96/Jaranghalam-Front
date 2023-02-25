@@ -1,5 +1,5 @@
 import QUERY from '../../../../constants/query';
-import Axios from '../../../axios';
+import Axios from '../../../api/axios';
 
 const { createSlice, createAsyncThunk } = require('@reduxjs/toolkit');
 
