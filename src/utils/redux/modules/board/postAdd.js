@@ -33,7 +33,7 @@ const postContentSlice = createSlice({
       .addCase(__postContent.fulfilled, (state, action) => {
         console.log(action.payload);
         console.log(postContentSlice);
-        state.board = state.action;
+        state.board = action.payload;
         state.isLoading = false;
       })
       .addCase(__postContent.pending, (state, action) => {
