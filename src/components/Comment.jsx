@@ -61,27 +61,30 @@ const Content = styled.div`
 `;
 
 const NickName = styled.span`
-  font-weight: ${props => props.theme.fontWeight.bold};
   margin-right: 0.5rem;
+  font-weight: ${props => props.theme.fontWeight.bold};
 `;
 
 const Time = styled.p`
-  font-size: ${props => props.theme.fontSize.micro};
   color: ${props => props.theme.dateColor};
+  font-size: ${props => props.theme.fontSize.micro};
 `;
 
 const InputContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
+  color: ${props => props.theme.text};
   margin: 0 1rem;
 `;
 
 const TextArea = styled.textarea`
   width: 100%;
   height: 1.6rem;
-  font-size: ${props => props.theme.fontSize.small};
+  background-color: transparent;
+  border: none;
   outline: none;
+  font-size: ${props => props.theme.fontSize.small};
   resize: none;
   overflow: hidden;
 `;
