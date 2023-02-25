@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import formatAgo from '../utils/date';
+import formatAgo from '../utils/formatDate';
 import { AiOutlineHeart, AiFillHeart } from 'react-icons/ai';
 import Button from '../elements/Button';
 import Comment from './Comment';

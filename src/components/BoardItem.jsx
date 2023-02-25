@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { AiOutlineHeart, AiFillHeart } from 'react-icons/ai';
-import formatAgo from '../utils/date';
+import formatAgo from '../utils/formatDate';
 import formatLike from '../utils/formatLike';
 
 export default function BoardItem({
@@ -32,7 +32,7 @@ export default function BoardItem({
           <AiOutlineHeart />
         </Heart>
       )}
-      <p>{setformatLike(postLikeCount)}</p>
+      <Like>{setformatLike(postLikeCount)}</Like>
       <Title>{`${nickName} ${title}`}</Title>
       <Content>{content}</Content>
     </BoardContainer>
@@ -66,6 +66,10 @@ const Img = styled.img`
   height: 60%;
   border-radius: 0.5rem;
   object-fit: cover;
+`;
+
+const Like = styled.h4`
+  margin: 1rem 0;
 `;
 
 const Title = styled.h4`
