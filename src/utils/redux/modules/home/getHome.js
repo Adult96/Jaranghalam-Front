@@ -16,7 +16,7 @@ export const __getHome = createAsyncThunk(
   'GET_HOME',
   async (payload, thunkAPI) => {
     try {
-      const response = await axios.get(QUERY.AXIOS_PATH.USER);
+      const response = await axios.get(QUERY.AXIOS_PATH.LOCAL);
       console.log(response);
       return thunkAPI.fulfillWithValue();
     } catch (error) {
