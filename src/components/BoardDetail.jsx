@@ -112,7 +112,7 @@ const Img = styled.img`
   width: 100%;
   height: 60%;
   border-radius: 0.5rem;
-  object-fit: cover;
+  background-size: cover;
 `;
 
 const Like = styled.h4`

@@ -42,7 +42,7 @@ const BoardContainer = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
-  height: 100%;
+  height: 37rem;
   min-height: 25rem;
   border-bottom: 1px solid ${props => props.theme.borderColor};
 
@@ -66,7 +66,7 @@ const Img = styled.img`
   width: 100%;
   height: 60%;
   border-radius: 0.5rem;
-  object-fit: cover;
+  background-size: cover;
 `;
 
 const Like = styled.h4`
