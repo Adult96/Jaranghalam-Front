@@ -9,13 +9,16 @@ export default function TextBar({ showLoginIcon, showLogOut, onLogOut }) {
   return (
     <TextContainer>
       <Title>Jaranghalam</Title>
-      {showLoginIcon && (
-        <TabText>
-          <Home>HOME</Home>
-          <Like>LIKE</Like>
-          <Add>ADD</Add>
-        </TabText>
-      )}
+
+      <TabText>
+        {showLoginIcon && <Home>HOME</Home>}
+        {showLogOut && (
+          <>
+            <Like>LIKE</Like>
+            <Add>ADD</Add>
+          </>
+        )}
+      </TabText>
       <Login>
         {showLogOut && <div onClick={onLogOut}>LogOut</div>}
         {showLoginIcon && !showLogOut && (

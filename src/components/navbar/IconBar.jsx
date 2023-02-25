@@ -22,19 +22,23 @@ export default function IconBar({ showLoginIcon, showLogOut, onLogOut }) {
           <span>Jaranghalam</span>
         </TitleText>
       </Title>
-      {showLoginIcon && (
-        <TabIcon>
+      <TabIcon>
+        {showLoginIcon && (
           <Home id='홈'>
             <AiFillHome />
           </Home>
-          <Like id='좋아요'>
-            <AiOutlineHeart />
-          </Like>
-          <Add id='추가'>
-            <AiOutlinePlusSquare />
-          </Add>
-        </TabIcon>
-      )}
+        )}
+        {showLogOut && (
+          <>
+            <Like id='좋아요'>
+              <AiOutlineHeart />
+            </Like>
+            <Add id='추가'>
+              <AiOutlinePlusSquare />
+            </Add>
+          </>
+        )}
+      </TabIcon>
       <Login>
         {showLogOut && <BiLogIn onClick={onLogOut} />}
         {showLoginIcon && !showLogOut && (
