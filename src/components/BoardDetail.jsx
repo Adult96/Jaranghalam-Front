@@ -59,6 +59,16 @@ const DetailContainer = styled.div`
   min-width: 25rem;
   height: 100vh;
   overflow-y: scroll;
+  &::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+    border-radius: 6px;
+    background: transparent;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: transparent;
+  }
+
   @media (max-width: ${props => props.theme.screen.mobile_h}) {
     position: fixed;
     top: 0;
