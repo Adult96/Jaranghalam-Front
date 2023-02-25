@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { v4 as uuidv4 } from 'uuid';
 import formatAgo from '../utils/date';
 import { AiOutlineHeart, AiFillHeart } from 'react-icons/ai';
 import Button from '../elements/Button';
+import Comment from './Comment';
 
 export default function BoardDetail({
   board: { nickName, title, content, imageUrl, createdAt },
@@ -47,13 +47,7 @@ export default function BoardDetail({
           height='1.5rem'
           type='sort'
         >{`댓글 ${10}개 모두보기`}</Button>
-        {showComment && (
-          <Comment>
-            {comment.map(v => (
-              <p key={uuidv4()}>{v.comment}</p>
-            ))}
-          </Comment>
-        )}
+        {showComment && <Comment comment={comment} loginName={nickName} />}
       </DetailContainer>
     </>
   );
@@ -118,8 +112,4 @@ const Content = styled.p`
   -webkit-line-clamp: 8;
   -webkit-box-orient: vertical;
   overflow: hidden;
-`;
-
-const Comment = styled.div`
-  height: 20rem;
 `;

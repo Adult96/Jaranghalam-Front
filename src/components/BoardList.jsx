@@ -7,16 +7,16 @@ import BoardItem from './BoardItem';
 import BoardSort from './BoardSort';
 
 const comment = [
-  { comment: '멋지다 연진아' },
-  { comment: '멋지다 연진아' },
-  { comment: '멋지다 연진아' },
-  { comment: '멋지다 연진아' },
-  { comment: '멋지다 연진아' },
-  { comment: '멋지다 연진아' },
-  { comment: '멋지다 연진아' },
-  { comment: '멋지다 연진아' },
-  { comment: '멋지다 연진아' },
-  { comment: '멋지다 연진아' },
+  { comment: '멋지다 연진아', nickName: 'sungin' },
+  { comment: '멋지다 연진아', nickName: 'zoo' },
+  { comment: '멋지다 연진아', nickName: 'zoo' },
+  { comment: '멋지다 연진아', nickName: 'zoo' },
+  { comment: '멋지다 연진아', nickName: 'zoo' },
+  { comment: '멋지다 연진아', nickName: 'zoo' },
+  { comment: '멋지다 연진아', nickName: 'zoo' },
+  { comment: '멋지다 연진아', nickName: 'zoo' },
+  { comment: '멋지다 연진아', nickName: 'zoo' },
+  { comment: '멋지다 연진아', nickName: 'zoo' },
 ];
 
 export default function BoardList({ boards }) {
