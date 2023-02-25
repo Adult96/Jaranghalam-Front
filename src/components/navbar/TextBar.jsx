@@ -11,7 +11,11 @@ export default function TextBar({ showLoginIcon, showLogOut, onLogOut }) {
       <Title>Jaranghalam</Title>
 
       <TabText>
-        {showLoginIcon && <Home>HOME</Home>}
+        {showLoginIcon && (
+          <Home>
+            <Link to='/'>HOME</Link>
+          </Home>
+        )}
         {showLogOut && (
           <>
             <Like>LIKE</Like>

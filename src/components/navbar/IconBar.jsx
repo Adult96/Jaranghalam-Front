@@ -25,7 +25,9 @@ export default function IconBar({ showLoginIcon, showLogOut, onLogOut }) {
       <TabIcon>
         {showLoginIcon && (
           <Home id='홈'>
-            <AiFillHome />
+            <Link to='/'>
+              <AiFillHome />
+            </Link>
           </Home>
         )}
         {showLogOut && (
