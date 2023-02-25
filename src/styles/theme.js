@@ -2,6 +2,7 @@ const color = {
   white: '#ffffff',
   light_white: '#eeeeee',
   dark_white: '#bdbdbd',
+  red: '#dc1a13',
   pink: '#fe918d',
   dark_pink: '#ff6863',
   ligth_pink: '#fab1a0',

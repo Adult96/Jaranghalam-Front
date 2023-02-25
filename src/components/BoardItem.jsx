@@ -4,9 +4,10 @@ import { AiOutlineHeart, AiFillHeart } from 'react-icons/ai';
 import formatAgo from '../utils/date';
 
 export default function BoardItem({
-  board: { nickName, title, content, imageUrl, createdAt },
+  board: { nickName, title, content, imageUrl, createdAt, like, postLikeCount },
 }) {
   const setDate = date => {
+    console.log(like, postLikeCount);
     return formatAgo(date);
   };
 
@@ -17,8 +18,15 @@ export default function BoardItem({
         <Date>{setDate(createdAt)}</Date>
       </Header>
       <Img src={imageUrl} alt='userimg' />
-      <AiOutlineHeart />
-      <AiFillHeart />
+      {like ? (
+        <HeartEmpty>
+          <AiFillHeart />
+        </HeartEmpty>
+      ) : (
+        <Heart>
+          <AiOutlineHeart />
+        </Heart>
+      )}
       <p>{`좋아요 ${10}개`}</p>
       <Title>{`${nickName} ${title}`}</Title>
       <Content>{content}</Content>
@@ -72,4 +80,13 @@ const Content = styled.p`
   -webkit-line-clamp: 2; /* 텍스트를 자를 때 원하는 단위 ex) 3줄 */
   -webkit-box-orient: vertical;
   overflow: hidden;
+`;
+
+const Heart = styled.div`
+  margin-top: 1rem;
+  font-size: ${props => props.theme.fontSize.medium};
+`;
+
+const HeartEmpty = styled(Heart)`
+  color: ${props => props.theme.color.red};
 `;
