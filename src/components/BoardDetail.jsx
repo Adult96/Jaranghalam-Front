@@ -4,9 +4,10 @@ import formatAgo from '../utils/formatDate';
 import { AiOutlineHeart, AiFillHeart } from 'react-icons/ai';
 import Button from '../elements/Button';
 import Comment from './Comment';
+import formatLike from '../utils/formatLike';
 
 export default function BoardDetail({
-  board: { nickName, title, content, imageUrl, createdAt },
+  board: { nickName, title, content, imageUrl, createdAt, like, postLikeCount },
   comment,
   onBackClick,
 }) {
@@ -14,6 +15,10 @@ export default function BoardDetail({
 
   const setDate = date => {
     return formatAgo(date);
+  };
+
+  const setformatLike = cnt => {
+    return formatLike(cnt);
   };
 
   const handleShowComment = () => {
@@ -37,9 +42,16 @@ export default function BoardDetail({
           </Button>
         </Header>
         <Img src={imageUrl} alt='userimg' />
-        <AiOutlineHeart />
-        <AiFillHeart />
-        <p>{`좋아요 ${10}개`}</p>
+        {like ? (
+          <HeartEmpty>
+            <AiFillHeart />
+          </HeartEmpty>
+        ) : (
+          <Heart>
+            <AiOutlineHeart />
+          </Heart>
+        )}
+        <Like>{setformatLike(postLikeCount)}</Like>
         <Title>{`${nickName} ${title}`}</Title>
         <Content>{content}</Content>
         <Button click={handleShowComment} height='1.5rem' type='sort'>
@@ -103,6 +115,10 @@ const Img = styled.img`
   object-fit: cover;
 `;
 
+const Like = styled.h4`
+  margin: 1rem 0;
+`;
+
 const Title = styled.h4`
   display: -webkit-box;
 
@@ -120,4 +136,13 @@ const Content = styled.p`
   -webkit-line-clamp: 8;
   -webkit-box-orient: vertical;
   overflow: hidden;
+`;
+
+const Heart = styled.div`
+  margin-top: 1rem;
+  font-size: ${props => props.theme.fontSize.medium};
+`;
+
+const HeartEmpty = styled(Heart)`
+  color: ${props => props.theme.color.red};
 `;
