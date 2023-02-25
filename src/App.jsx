@@ -5,7 +5,7 @@ import GlobalStyle from './styles/globalStyle';
 import styled, { ThemeProvider } from 'styled-components';
 import { darkTheme, lightTheme } from './styles/theme';
 import ThemeMode from './components/ThemeMode';
-import Navbar from './components/Navbar';
+import Navbar from './components/navbar/Navbar';
 
 function App() {
   const [darkMode, setDarkMode] = useState(false);
