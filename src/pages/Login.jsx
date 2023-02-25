@@ -8,6 +8,9 @@ import Input from '../elements/Input';
 
 import Valid from '../validation/inputValidation';
 import { postLogin, postSignUp } from '../utils/api/login';
+import { getCookie } from '../utils/cookie';
+import { useNavigate } from 'react-router-dom';
+import ROUTER from '../constants/router';
 
 export default function Login() {
   const [id, setId] = useState('');
@@ -16,6 +19,7 @@ export default function Login() {
   const [nickName, setNickName] = useState('');
   const [signUp, setSignUp] = useState(false);
   const [showPw, setShowPw] = useState(false);
+  const navigate = useNavigate();
 
   const handleSubmit = e => {
     e.preventDefault();
@@ -42,6 +46,9 @@ export default function Login() {
     const signUpData = { userName: id, userNickName: nickName, password: pw };
     const loginData = { userName: id, password: pw };
     await loginAxios(loginData, signUpData);
+
+    const token = getCookie('myToken');
+    token && navigate(ROUTER.PATH.BACK);
   };
 
   const loginAxios = async (loginData, signUpData) => {

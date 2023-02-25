@@ -16,7 +16,6 @@ export default function Home() {
 
   if (isLoading) return <p>로딩</p>;
   if (isError) return <p>에러</p>;
-  console.log(getHome);
   return (
     <HomeWrapper>
       <BoardList boards={getHome} />

@@ -6,13 +6,14 @@ import {
   AiFillHome,
   AiOutlineHeart,
   AiOutlinePlusSquare,
+  AiOutlineUser,
 } from 'react-icons/ai';
 import { BiLogIn, BiArrowBack } from 'react-icons/bi';
 import { Link } from 'react-router-dom';
 
 import ROUTER from '../../constants/router';
 
-export default function IconBar({ showLoginIcon }) {
+export default function IconBar({ showLoginIcon, showLogOut, onLogOut }) {
   return (
     <IconContainer>
       <Title>
@@ -35,11 +36,13 @@ export default function IconBar({ showLoginIcon }) {
         </TabIcon>
       )}
       <Login>
-        {showLoginIcon ? (
+        {showLogOut && <BiLogIn onClick={onLogOut} />}
+        {showLoginIcon && !showLogOut && (
           <Link to={ROUTER.PATH.LOGIN}>
-            <BiLogIn />
+            <AiOutlineUser />
           </Link>
-        ) : (
+        )}
+        {!showLoginIcon && !showLogOut && (
           <Link to={ROUTER.PATH.BACK}>
             <BiArrowBack />
           </Link>

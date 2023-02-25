@@ -4,7 +4,8 @@ import styled from 'styled-components';
 
 import ROUTER from '../../constants/router';
 
-export default function TextBar({ showLoginIcon, onClickLogin }) {
+export default function TextBar({ showLoginIcon, showLogOut, onLogOut }) {
+  console.log(showLogOut);
   return (
     <TextContainer>
       <Title>Jaranghalam</Title>
@@ -16,9 +17,11 @@ export default function TextBar({ showLoginIcon, onClickLogin }) {
         </TabText>
       )}
       <Login>
-        {showLoginIcon ? (
+        {showLogOut && <div onClick={onLogOut}>LogOut</div>}
+        {showLoginIcon && !showLogOut && (
           <Link to={ROUTER.PATH.LOGIN}>Login</Link>
-        ) : (
+        )}
+        {!showLoginIcon && !showLogOut && (
           <Link to={ROUTER.PATH.BACK}>Back</Link>
         )}
       </Login>
