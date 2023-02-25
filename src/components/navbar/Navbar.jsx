@@ -6,16 +6,13 @@ import TextBar from './TextBar';
 
 export default function Navbar() {
   const navigate = useNavigate();
-  const handleNavbar = e => {
-    console.log(e.target.id, e.target.innerText);
-  };
 
   const handleClickLogin = () => {
     navigate('/login');
   };
 
   return (
-    <NavbarContainer onClick={handleNavbar}>
+    <NavbarContainer>
       <IconBar onClickLogin={handleClickLogin} />
       <TextBar onClickLogin={handleClickLogin} />
     </NavbarContainer>

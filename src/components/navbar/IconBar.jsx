@@ -19,11 +19,19 @@ export default function IconBar({ onClickLogin }) {
         </TitleText>
       </Title>
       <TabIcon>
-        <AiFillHome id='홈' />
-        <AiOutlineHeart id='좋아요' />
-        <AiOutlinePlusSquare id='추가' />
+        <Home id='홈'>
+          <AiFillHome />
+        </Home>
+        <Like id='좋아요'>
+          <AiOutlineHeart />
+        </Like>
+        <Add id='추가'>
+          <AiOutlinePlusSquare />
+        </Add>
       </TabIcon>
-      <BiLogIn id='Login' onClick={onClickLogin} />
+      <Login id='Login' onClick={onClickLogin}>
+        <BiLogIn />
+      </Login>
     </IconContainer>
   );
 }
@@ -68,3 +76,13 @@ const TabIcon = styled.div`
     flex-direction: row;
   }
 `;
+
+const Home = styled.span`
+  cursor: pointer;
+`;
+
+const Like = styled(Home)``;
+
+const Add = styled(Home)``;
+
+const Login = styled(Home)``;
