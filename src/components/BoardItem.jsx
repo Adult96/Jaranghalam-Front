@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { AiOutlineHeart, AiFillHeart } from 'react-icons/ai';
 import formatAgo from '../utils/date';
+import formatLike from '../utils/formatLike';
 
 export default function BoardItem({
   board: { nickName, title, content, imageUrl, createdAt, like, postLikeCount },
@@ -9,6 +10,10 @@ export default function BoardItem({
   const setDate = date => {
     console.log(like, postLikeCount);
     return formatAgo(date);
+  };
+
+  const setformatLike = cnt => {
+    return formatLike(cnt);
   };
 
   return (
@@ -27,7 +32,7 @@ export default function BoardItem({
           <AiOutlineHeart />
         </Heart>
       )}
-      <p>{`좋아요 ${10}개`}</p>
+      <p>{setformatLike(postLikeCount)}</p>
       <Title>{`${nickName} ${title}`}</Title>
       <Content>{content}</Content>
     </BoardContainer>
