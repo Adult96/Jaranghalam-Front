@@ -63,6 +63,15 @@ export default function Login() {
           autoFocus={true}
         />
         <Input
+          type='text'
+          width='20rem'
+          height='2.5rem'
+          fontSize='1.3rem'
+          value={pw}
+          onChange={e => setPw(e.target.value)}
+          placeholder='PW'
+        />
+        <Input
           type={showPw ? 'text' : 'password'}
           width='20rem'
           height='2.5rem'
