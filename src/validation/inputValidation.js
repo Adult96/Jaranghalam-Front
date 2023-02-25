@@ -35,7 +35,7 @@ const Valid = {
   },
 
   login(id, pw) {
-    if (!Valid.formEmpty(id, pw)) {
+    if (!formEmpty(id, pw)) {
       alert(ALERT.CHECK_EMPTY);
       return false;
     }

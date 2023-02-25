@@ -7,7 +7,7 @@ import Button from '../elements/Button';
 import Input from '../elements/Input';
 
 import Valid from '../validation/inputValidation';
-import ALERT from '../constants/alert';
+import { postLogin, postSignUp } from '../utils/api/login';
 
 export default function Login() {
   const [id, setId] = useState('');
@@ -38,7 +38,22 @@ export default function Login() {
     setSignUp(v => !v);
   };
 
-  const loginProcess = async () => {};
+  const loginProcess = async () => {
+    const signUpData = { userName: id, userNickName: nickName, password: pw };
+    const loginData = { userName: id, password: pw };
+    await loginAxios(loginData, signUpData);
+  };
+
+  const loginAxios = async (loginData, signUpData) => {
+    if (signUp) {
+      await postSignUp(signUpData);
+      resetLoginInput();
+      setSignUp(false);
+    } else {
+      await postLogin(loginData);
+      resetLoginInput();
+    }
+  };
 
   const resetLoginInput = () => {
     setId('');
