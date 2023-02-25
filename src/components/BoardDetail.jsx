@@ -16,8 +16,8 @@ export default function BoardDetail({
     return formatAgo(date);
   };
 
-  const handleComment = () => {
-    setShowComment(true);
+  const handleShowComment = () => {
+    setShowComment(state => !state);
   };
 
   useEffect(() => {
@@ -42,11 +42,9 @@ export default function BoardDetail({
         <p>{`좋아요 ${10}개`}</p>
         <Title>{`${nickName} ${title}`}</Title>
         <Content>{content}</Content>
-        <Button
-          click={handleComment}
-          height='1.5rem'
-          type='sort'
-        >{`댓글 ${10}개 모두보기`}</Button>
+        <Button click={handleShowComment} height='1.5rem' type='sort'>
+          {showComment ? `댓글 가리기` : `댓글 ${10}개 모두보기`}
+        </Button>
         {showComment && <Comment comment={comment} loginName={nickName} />}
       </DetailContainer>
     </>

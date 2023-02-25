@@ -7,7 +7,6 @@ import Button from '../elements/Button';
 
 export default function Comment({ comment, loginName }) {
   const textAreaRef = useRef();
-  const [textHeight, setTextHeight] = useState(0);
 
   const handleResizeText = () => {
     const ref = textAreaRef.current;
