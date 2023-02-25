@@ -15,14 +15,10 @@ const axios = new Axios(process.env.REACT_APP_LOCAL_HOST_URL);
 export const __getHome = createAsyncThunk(
   'GET_HOME',
   async (payload, thunkAPI) => {
-    try {
-      const response = await axios.get('/board');
-      // return thunkAPI.fulfillWithValue(response.data.result);
-      return thunkAPI.fulfillWithValue(response.data);
-    } catch (error) {
-      console.log(error);
-      return thunkAPI.rejectWithValue();
-    }
+    return await axios
+      .get('/board')
+      .then(response => thunkAPI.fulfillWithValue(response.data))
+      .catch(error => thunkAPI.rejectWithValue());
   }
 );
 
