@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { AiFillLock, AiOutlineCheck } from 'react-icons/ai';
+import { AiFillLock, AiOutlineCheck, AiOutlineClose } from 'react-icons/ai';
 import { HiOutlineUserAdd } from 'react-icons/hi';
 import styled from 'styled-components';
 
@@ -11,6 +11,8 @@ import { postLogin, postSignUp } from '../utils/api/login';
 import { getCookie } from '../utils/cookie';
 import { useNavigate } from 'react-router-dom';
 import ROUTER from '../constants/router';
+import { useDispatch, useSelector } from 'react-redux';
+import { __getCheckId } from '../utils/redux/modules/inputCheck/getId';
 
 export default function Login() {
   const [id, setId] = useState('');
@@ -20,6 +22,10 @@ export default function Login() {
   const [signUp, setSignUp] = useState(false);
   const [showPw, setShowPw] = useState(false);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { isIdDone, isIdLoading, isIdError } = useSelector(
+    state => state.getCheckId
+  );
 
   const handleSubmit = e => {
     e.preventDefault();
@@ -63,6 +69,10 @@ export default function Login() {
     }
   };
 
+  const handleIdCheck = id => {
+    dispatch(__getCheckId());
+  };
+
   const resetLoginInput = () => {
     setId('');
     setPw('');
@@ -76,7 +86,7 @@ export default function Login() {
         <Label>
           <Input
             name='id'
-            width='20rem'
+            width={signUp ? '16rem' : '20rem'}
             height='2.5rem'
             fontSize='1.3rem'
             placeholder='ID'
@@ -84,9 +94,31 @@ export default function Login() {
             onChange={e => setId(e.target.value)}
             autoFocus={true}
           />
-          <span>
-            <AiOutlineCheck />
-          </span>
+          {signUp && (
+            <Button
+              type='button'
+              width='4rem'
+              height='100%'
+              click={() => handleIdCheck(id)}
+            >
+              중복 검사
+            </Button>
+          )}
+          {isIdLoading && (
+            <Loding>
+              <img src='/img/spinner.gif' alt='spinner' />
+            </Loding>
+          )}
+          {isIdDone && (
+            <Done>
+              <AiOutlineCheck />
+            </Done>
+          )}
+          {isIdError && (
+            <Error>
+              <AiOutlineClose />
+            </Error>
+          )}
         </Label>
         {signUp && (
           <Input
@@ -186,10 +218,25 @@ const Label = styled.label`
   justify-content: center;
   align-items: center;
   position: relative;
-  span {
-    position: absolute;
-    right: 5px;
-    color: ${props => props.theme.color.dark_mint};
-    font-size: ${props => props.theme.fontSize.medium};
+`;
+
+const Loding = styled.div`
+  position: absolute;
+  right: -2rem;
+  display: flex;
+  align-items: center;
+  img {
+    width: 2rem;
+    height: 2rem;
   }
+`;
+
+const Done = styled(Loding)`
+  right: -1.5rem;
+  color: ${props => props.theme.color.dark_mint};
+`;
+
+const Error = styled(Loding)`
+  right: -1.5rem;
+  color: ${props => props.theme.color.red};
 `;

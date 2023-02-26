@@ -20,6 +20,7 @@ export default class Axios {
       },
       error => {
         alert(error.message);
+        console.log(error);
         return Promise.reject(error);
       }
     );
