@@ -13,6 +13,7 @@ import { useNavigate } from 'react-router-dom';
 import ROUTER from '../constants/router';
 import { useDispatch, useSelector } from 'react-redux';
 import { __getCheckId } from '../utils/redux/modules/inputCheck/getId';
+import { __getCheckNickName } from '../utils/redux/modules/inputCheck/getNickName';
 
 export default function Login() {
   const [id, setId] = useState('');
@@ -25,6 +26,9 @@ export default function Login() {
   const dispatch = useDispatch();
   const { isIdDone, isIdLoading, isIdError } = useSelector(
     state => state.getCheckId
+  );
+  const { isNickNameDone, isNickNameLoading, isNickNameError } = useSelector(
+    state => state.getCheckNickName
   );
 
   const handleSubmit = e => {
@@ -70,7 +74,11 @@ export default function Login() {
   };
 
   const handleIdCheck = id => {
-    dispatch(__getCheckId());
+    dispatch(__getCheckId(id));
+  };
+
+  const handleNickNameCheck = nickName => {
+    dispatch(__getCheckNickName(nickName));
   };
 
   const resetLoginInput = () => {
@@ -121,15 +129,42 @@ export default function Login() {
           )}
         </Label>
         {signUp && (
-          <Input
-            type='text'
-            width='20rem'
-            height='2.5rem'
-            fontSize='1.3rem'
-            value={nickName}
-            onChange={e => setNickName(e.target.value)}
-            placeholder='NiCK NAME'
-          />
+          <Label>
+            <Input
+              type='text'
+              width={signUp ? '16rem' : '20rem'}
+              height='2.5rem'
+              fontSize='1.3rem'
+              value={nickName}
+              onChange={e => setNickName(e.target.value)}
+              placeholder='NiCK NAME'
+            />
+            {signUp && (
+              <Button
+                type='button'
+                width='4rem'
+                height='100%'
+                click={() => handleNickNameCheck(nickName)}
+              >
+                중복 검사
+              </Button>
+            )}
+            {isNickNameLoading && (
+              <Loding>
+                <img src='/img/spinner.gif' alt='spinner' />
+              </Loding>
+            )}
+            {isNickNameDone && (
+              <Done>
+                <AiOutlineCheck />
+              </Done>
+            )}
+            {isNickNameError && (
+              <Error>
+                <AiOutlineClose />
+              </Error>
+            )}
+          </Label>
         )}
         <Input
           type={showPw ? 'text' : 'password'}
