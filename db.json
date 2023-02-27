@@ -1,5 +1,6 @@
 {
-  "title": "안녕하세세요",
-  "content": "안녕",
-  "img": "img"
+  "board": {
+    "title": "",
+    "content": "ㅀ"
+  }
 }

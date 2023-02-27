@@ -27,6 +27,7 @@ const StTextArea = styled.textarea`
   column-gap: 10px;
   overflow: auto;
   color: ${(props) => props.theme.text};
+  background-color: ${(props) => props.theme.bg};
 `;
 
 const StFile = styled.div`
