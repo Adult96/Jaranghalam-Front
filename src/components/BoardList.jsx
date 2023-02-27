@@ -9,6 +9,8 @@ import { __getDetail } from '../utils/redux/modules/home/getDetail';
 import BoardDetail from './BoardDetail';
 import BoardItem from './BoardItem';
 import ROUTER from '../constants/router';
+import { deleteBoard } from '../utils/api/myBoard';
+import { __getMy } from '../utils/redux/modules/my/getMy';
 
 export default function BoardList({ boards }) {
   const [showDetail, setShowDetail] = useState(false);
@@ -28,11 +30,15 @@ export default function BoardList({ boards }) {
     setShowDetail(false);
   };
 
-  const handleEdit = () => {};
-  const handleDelete = () => {};
-
   const dispatchDetail = boardId => {
     dispatch(__getDetail(boardId));
+  };
+
+  const handleEdit = postid => {};
+
+  const handleDelete = postid => {
+    deleteBoard(postid);
+    dispatch(__getMy());
   };
 
   if (isLoading) return <p>로딩</p>;

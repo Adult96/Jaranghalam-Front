@@ -6,7 +6,16 @@ import formatLike from '../utils/formatLike';
 import Button from '../elements/Button';
 
 export default function BoardItem({
-  board: { userName, title, content, imageUrl, createdAt, like, postLikeCount },
+  board: {
+    id,
+    userName,
+    title,
+    content,
+    imageUrl,
+    createdAt,
+    like,
+    postLikeCount,
+  },
   path,
   handleEdit,
   handleDelete,
@@ -28,10 +37,20 @@ export default function BoardItem({
         </HeaderTitle>
         {path && (
           <ButtonContainer>
-            <Button type="sort" click={handleEdit}>
+            <Button
+              type="sort"
+              click={() => {
+                handleEdit(id);
+              }}
+            >
               수정
             </Button>
-            <Button type="sort" click={handleDelete}>
+            <Button
+              type="sort"
+              click={() => {
+                handleDelete(id);
+              }}
+            >
               삭제
             </Button>
           </ButtonContainer>
