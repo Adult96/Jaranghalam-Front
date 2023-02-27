@@ -16,10 +16,7 @@ export const __getDetail = createAsyncThunk(
   async (payload, thunkAPI) => {
     return await axios
       .get(`/api/post/${payload}`)
-      .then(response => {
-        console.log(response);
-        return thunkAPI.fulfillWithValue(response.data.result);
-      })
+      .then(response => thunkAPI.fulfillWithValue(response.data.result))
       .catch(error => thunkAPI.rejectWithValue());
   },
 );

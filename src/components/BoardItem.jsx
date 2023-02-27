@@ -21,7 +21,7 @@ export default function BoardItem({
         <h3>{userName}</h3>
         <Date>{setDate(createdAt)}</Date>
       </Header>
-      <Img src={imageUrl} alt='userimg' />
+      <Img src={imageUrl} alt="userimg" />
       {like ? (
         <HeartEmpty>
           <AiFillHeart />

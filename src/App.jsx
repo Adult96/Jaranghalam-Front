@@ -36,6 +36,7 @@ function App() {
   const handleLogOut = () => {
     removeCookie('myToken');
     setShowLogOut(false);
+    navigate(ROUTER.PATH.HOME);
   };
 
   return (
