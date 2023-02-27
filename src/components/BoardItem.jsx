@@ -1,11 +1,13 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { AiOutlineHeart, AiFillHeart } from 'react-icons/ai';
 import formatAgo from '../utils/formatDate';
 import formatLike from '../utils/formatLike';
+import Button from '../elements/Button';
 
 export default function BoardItem({
   board: { userName, title, content, imageUrl, createdAt, like, postLikeCount },
+  path,
 }) {
   const setDate = date => {
     return formatAgo(date);
@@ -16,10 +18,18 @@ export default function BoardItem({
   };
 
   return (
-    <BoardContainer>
+    <BoardContainer path={!path}>
       <Header>
-        <h3>{userName}</h3>
-        <Date>{setDate(createdAt)}</Date>
+        <HeaderTitle>
+          <h3>{userName}</h3>
+          <Date>{setDate(createdAt)}</Date>
+        </HeaderTitle>
+        {path && (
+          <ButtonContainer>
+            <Button type="sort">수정</Button>
+            <Button type="sort">삭제</Button>
+          </ButtonContainer>
+        )}
       </Header>
       <Img src={imageUrl} alt="userimg" />
       {like ? (
@@ -46,20 +56,34 @@ const BoardContainer = styled.div`
   min-height: 25rem;
   border-bottom: 1px solid ${props => props.theme.borderColor};
 
-  :hover > Img {
-    opacity: 0.5;
-  }
+  ${props =>
+    props.path &&
+    css`
+      :hover > Img {
+        opacity: 0.5;
+      }
+    `}
 `;
 
 const Header = styled.div`
   display: flex;
   align-items: center;
+  justify-content: space-between;
   gap: 0.3rem;
   margin: 1rem 0;
 `;
 
 const Date = styled.h4`
   color: ${props => props.theme.dateColor};
+`;
+
+const HeaderTitle = styled.div`
+  display: flex;
+`;
+
+const ButtonContainer = styled.div`
+  display: flex;
+  gap: 0.5rem;
 `;
 
 const Img = styled.img`

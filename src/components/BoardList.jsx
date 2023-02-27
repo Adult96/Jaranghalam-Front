@@ -1,18 +1,23 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useLocation } from 'react-router-dom';
+
 import styled from 'styled-components';
 import { v4 as uuidv4 } from 'uuid';
 import { __getDetail } from '../utils/redux/modules/home/getDetail';
-import BoardDetail from './BoardDetail';
 
+import BoardDetail from './BoardDetail';
 import BoardItem from './BoardItem';
+import ROUTER from '../constants/router';
 
 export default function BoardList({ boards }) {
   const [showDetail, setShowDetail] = useState(false);
+  const { pathname } = useLocation();
   const dispatch = useDispatch();
   const { getDetail, isLoading, isError } = useSelector(
     state => state.getDetail,
   );
+  const path = pathname === ROUTER.PATH.MY ? true : false;
 
   const handleBoardClick = boardId => {
     setShowDetail(true);
@@ -40,7 +45,7 @@ export default function BoardList({ boards }) {
                 handleBoardClick(board.id);
               }}
             >
-              <BoardItem board={board} />
+              <BoardItem board={board} path={path} />
             </li>
           ))}
         </BoardContainer>
