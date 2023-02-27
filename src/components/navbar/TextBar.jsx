@@ -5,7 +5,6 @@ import styled from 'styled-components';
 import ROUTER from '../../constants/router';
 
 export default function TextBar({ showLoginIcon, showLogOut, onLogOut }) {
-  console.log(showLogOut);
   return (
     <TextContainer>
       <Title>Jaranghalam</Title>
@@ -13,12 +12,15 @@ export default function TextBar({ showLoginIcon, showLogOut, onLogOut }) {
       <TabText>
         {showLoginIcon && (
           <Home>
-            <Link to='/'>HOME</Link>
+            <Link to="/">HOME</Link>
           </Home>
         )}
         {showLogOut && (
           <>
             <Like>LIKE</Like>
+            <My>
+              <Link to="/my">MY</Link>
+            </My>
             <Add>ADD</Add>
           </>
         )}
@@ -69,6 +71,8 @@ const Home = styled.span`
 `;
 
 const Like = styled(Home)``;
+
+const My = styled(Home)``;
 
 const Add = styled(Home)``;
 

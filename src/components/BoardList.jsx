@@ -9,7 +9,6 @@ import BoardItem from './BoardItem';
 
 export default function BoardList({ boards }) {
   const [showDetail, setShowDetail] = useState(false);
-  const [detailData, setDetailData] = useState({});
   const dispatch = useDispatch();
   const { getDetail, isLoading, isError } = useSelector(
     state => state.getDetail,
