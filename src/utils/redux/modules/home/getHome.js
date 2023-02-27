@@ -14,11 +14,12 @@ const axios = new Axios(process.env.REACT_APP_URL);
 export const __getHome = createAsyncThunk(
   'GET_HOME',
   async (payload, thunkAPI) => {
+    console.log(payload);
     return await axios
-      .get(`/api/post?page=${1}&size=16&sortBy=postLikeCount`)
+      .get(`/api/post?page=${payload.page}&size=16${payload.query}`)
       .then(response => thunkAPI.fulfillWithValue(response.data.result))
       .catch(error => thunkAPI.rejectWithValue());
-  }
+  },
 );
 
 const getHomeSlice = createSlice({

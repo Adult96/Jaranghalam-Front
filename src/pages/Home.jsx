@@ -12,11 +12,16 @@ export default function Home() {
   const { getHome, isLoading, isError } = useSelector(state => state.getHome);
 
   useEffect(() => {
-    dispatch(__getHome());
+    dispatch(__getHome({ page: 1, query: '' }));
   }, [dispatch]);
 
   const handleSortClick = e => {
-    console.log(e.target.innerText);
+    const innerText = e.target.innerText;
+    if (innerText === 'Recent') {
+      dispatch(__getHome({ page: 1, query: '' }));
+    } else if (innerText === 'Popular') {
+      dispatch(__getHome({ page: 1, query: '&sortBy=postLikeCount' }));
+    }
   };
 
   if (isLoading) return <p>로딩</p>;
