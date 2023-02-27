@@ -33,11 +33,15 @@ export default class Axios {
     return this.instance.post(path, payload);
   }
 
-  async delete(path, payload) {
-    return this.instance.delete(`${path}/${payload}`);
+  async delete(path, option) {
+    return this.instance.delete(`${path}`, option);
   }
 
   async patch(path, payload, option) {
     return this.instance.patch(`${path}/${payload}`, option);
+  }
+
+  async put(path, payload, option) {
+    return this.instance.put(`${path}`, payload, option);
   }
 }

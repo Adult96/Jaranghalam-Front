@@ -28,6 +28,9 @@ export default function BoardList({ boards }) {
     setShowDetail(false);
   };
 
+  const handleEdit = () => {};
+  const handleDelete = () => {};
+
   const dispatchDetail = boardId => {
     dispatch(__getDetail(boardId));
   };
@@ -45,7 +48,12 @@ export default function BoardList({ boards }) {
                 handleBoardClick(board.id);
               }}
             >
-              <BoardItem board={board} path={path} />
+              <BoardItem
+                board={board}
+                path={path}
+                handleEdit={handleEdit}
+                handleDelete={handleDelete}
+              />
             </li>
           ))}
         </BoardContainer>

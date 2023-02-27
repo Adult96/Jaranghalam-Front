@@ -8,6 +8,8 @@ import Button from '../elements/Button';
 export default function BoardItem({
   board: { userName, title, content, imageUrl, createdAt, like, postLikeCount },
   path,
+  handleEdit,
+  handleDelete,
 }) {
   const setDate = date => {
     return formatAgo(date);
@@ -26,8 +28,12 @@ export default function BoardItem({
         </HeaderTitle>
         {path && (
           <ButtonContainer>
-            <Button type="sort">수정</Button>
-            <Button type="sort">삭제</Button>
+            <Button type="sort" click={handleEdit}>
+              수정
+            </Button>
+            <Button type="sort" click={handleDelete}>
+              삭제
+            </Button>
           </ButtonContainer>
         )}
       </Header>
