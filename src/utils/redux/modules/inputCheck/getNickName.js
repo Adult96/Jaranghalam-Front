@@ -20,7 +20,13 @@ export const __getCheckNickName = createAsyncThunk(
 const getCheckNickNameSlice = createSlice({
   name: 'getCheckNickName',
   initialState,
-  reducers: {},
+  reducers: {
+    initNickName: (state, action) => {
+      state.isNickNameLoading = false;
+      state.isNickNameError = false;
+      state.isNickNameDone = false;
+    },
+  },
   extraReducers: bulider => {
     bulider.addCase(__getCheckNickName.pending, (state, _) => {
       state.isNickNameLoading = true;
@@ -39,5 +45,5 @@ const getCheckNickNameSlice = createSlice({
     });
   },
 });
-
+export const { initNickName } = getCheckNickNameSlice.actions;
 export default getCheckNickNameSlice.reducer;

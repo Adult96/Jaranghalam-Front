@@ -22,7 +22,6 @@ const getCheckIdSlice = createSlice({
   initialState,
   reducers: {
     initID: (state, action) => {
-      console.log('init');
       state.isIdLoading = false;
       state.isIdError = false;
       state.isIdDone = false;

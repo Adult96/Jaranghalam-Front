@@ -13,7 +13,10 @@ import { useNavigate } from 'react-router-dom';
 import ROUTER from '../constants/router';
 import { useDispatch, useSelector } from 'react-redux';
 import { initID, __getCheckId } from '../utils/redux/modules/inputCheck/getId';
-import { __getCheckNickName } from '../utils/redux/modules/inputCheck/getNickName';
+import {
+  initNickName,
+  __getCheckNickName,
+} from '../utils/redux/modules/inputCheck/getNickName';
 
 export default function Login() {
   const [id, setId] = useState('');
@@ -87,6 +90,7 @@ export default function Login() {
     setPw('');
     setPwCheck('');
     dispatch(initID());
+    dispatch(initNickName());
   };
 
   return (
