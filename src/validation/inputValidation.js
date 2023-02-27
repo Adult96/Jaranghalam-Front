@@ -35,6 +35,7 @@ const Valid = {
       alert('아이디 중복 체크 확인 바랍니다.');
       return false;
     }
+
     if (!nickNameDoneCheck(isNickNameDone)) {
       alert('닉네임 중복 체크 확인 바랍니다.');
       return false;
@@ -66,6 +67,13 @@ const Valid = {
     }
 
     return true;
+  },
+
+  emptyDoneCheck(...input) {
+    if (!formEmpty(...input)) {
+      alert('공백은 검사할수 없습니다.');
+      return false;
+    }
   },
 };
 

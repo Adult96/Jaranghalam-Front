@@ -77,10 +77,12 @@ export default function Login() {
   };
 
   const handleIdCheck = id => {
+    if (!Valid.emptyDoneCheck(id)) return;
     dispatch(__getCheckId(id));
   };
 
   const handleNickNameCheck = nickName => {
+    if (!Valid.emptyDoneCheck(nickName)) return;
     dispatch(__getCheckNickName(nickName));
   };
 

@@ -1,4 +1,3 @@
-import QUERY from '../../../../constants/query';
 import Axios from '../../../api/axios';
 
 const { createSlice, createAsyncThunk } = require('@reduxjs/toolkit');
@@ -10,14 +9,14 @@ const initialState = {
   error: null,
 };
 
-const axios = new Axios(process.env.REACT_APP_LOCAL_HOST_URL);
+const axios = new Axios(process.env.REACT_APP_URL);
 
 export const __getHome = createAsyncThunk(
   'GET_HOME',
   async (payload, thunkAPI) => {
     return await axios
-      .get('/board')
-      .then(response => thunkAPI.fulfillWithValue(response.data))
+      .get(`/api/post?page=${1}&size=16&sortBy=postLikeCount`)
+      .then(response => thunkAPI.fulfillWithValue(response.data.result))
       .catch(error => thunkAPI.rejectWithValue());
   }
 );
