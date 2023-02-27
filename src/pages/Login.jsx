@@ -12,7 +12,7 @@ import { getCookie } from '../utils/cookie';
 import { useNavigate } from 'react-router-dom';
 import ROUTER from '../constants/router';
 import { useDispatch, useSelector } from 'react-redux';
-import { __getCheckId } from '../utils/redux/modules/inputCheck/getId';
+import { initID, __getCheckId } from '../utils/redux/modules/inputCheck/getId';
 import { __getCheckNickName } from '../utils/redux/modules/inputCheck/getNickName';
 
 export default function Login() {
@@ -83,8 +83,10 @@ export default function Login() {
 
   const resetLoginInput = () => {
     setId('');
+    setNickName('');
     setPw('');
     setPwCheck('');
+    dispatch(initID());
   };
 
   return (

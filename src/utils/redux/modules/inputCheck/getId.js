@@ -20,7 +20,14 @@ export const __getCheckId = createAsyncThunk(
 const getCheckIdSlice = createSlice({
   name: 'getCheckId',
   initialState,
-  reducers: {},
+  reducers: {
+    initID: (state, action) => {
+      console.log('init');
+      state.isIdLoading = false;
+      state.isIdError = false;
+      state.isIdDone = false;
+    },
+  },
   extraReducers: bulider => {
     bulider.addCase(__getCheckId.pending, (state, _) => {
       state.isIdLoading = true;
@@ -39,5 +46,5 @@ const getCheckIdSlice = createSlice({
     });
   },
 });
-
+export const { initID } = getCheckIdSlice.actions;
 export default getCheckIdSlice.reducer;
