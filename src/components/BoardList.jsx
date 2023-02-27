@@ -21,7 +21,9 @@ export default function BoardList({ boards }) {
   );
   const path = pathname === ROUTER.PATH.MY ? true : false;
 
-  const handleBoardClick = boardId => {
+  const handleBoardClick = (e, boardId) => {
+    const innerText = e.target.innerText;
+    if (innerText === '수정' || innerText === '삭제') return;
     setShowDetail(true);
     dispatchDetail(boardId);
   };
@@ -36,8 +38,8 @@ export default function BoardList({ boards }) {
 
   const handleEdit = postid => {};
 
-  const handleDelete = postid => {
-    deleteBoard(postid);
+  const handleDelete = async postid => {
+    await deleteBoard(postid);
     dispatch(__getMy());
   };
 
@@ -50,8 +52,8 @@ export default function BoardList({ boards }) {
           {boards.map(board => (
             <li
               key={uuidv4()}
-              onClick={() => {
-                handleBoardClick(board.id);
+              onClick={e => {
+                handleBoardClick(e, board.id);
               }}
             >
               <BoardItem
