@@ -1,17 +1,17 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import { v4 as uuidv4 } from 'uuid';
 
 import { RxCross1 } from 'react-icons/rx';
 import Button from '../elements/Button';
 import { postComment } from '../utils/api/comment';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { __getComment } from '../utils/redux/modules/comment/getComment';
 
 export default function Comment({ id, comment, loginName }) {
+  const [commentText, setCommentText] = useState('');
   const textAreaRef = useRef();
   const dispatch = useDispatch();
-  const a = useSelector(state => state);
 
   useEffect(() => {
     textAreaRef.current.focus();
@@ -23,14 +23,12 @@ export default function Comment({ id, comment, loginName }) {
     ref.style.height = ref.scrollHeight + 'px';
   };
 
-  const handleAddComment = () => {
-    const text = textAreaRef.current.value;
-    postComment(id, { content: text });
+  const handleAddComment = async () => {
+    await postComment(id, { content: commentText });
+    dispatch(__getComment(id));
+    setCommentText('');
   };
 
-  // if (isLoading) return;
-  // if (isError) return;
-  console.log(a);
   return (
     <CommentContainer>
       {comment.map(v => (
@@ -48,7 +46,9 @@ export default function Comment({ id, comment, loginName }) {
       <InputContainer>
         <TextArea
           ref={textAreaRef}
-          onChange={handleResizeText}
+          value={commentText}
+          onChange={e => setCommentText(e.target.value)}
+          onKeyUp={handleResizeText}
           placeholder="댓글 달기... "
         ></TextArea>
         <Button width="4rem" type="update" click={handleAddComment}>

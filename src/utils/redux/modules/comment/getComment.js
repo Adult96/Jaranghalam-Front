@@ -31,7 +31,6 @@ const getCommentSlice = createSlice({
       state.isError = false;
     });
     bulider.addCase(__getComment.fulfilled, (state, action) => {
-      console.log(action.payload);
       state.isLoading = false;
       state.isError = false;
       state.getComment = action.payload;

@@ -5,6 +5,8 @@ import { AiOutlineHeart, AiFillHeart } from 'react-icons/ai';
 import Button from '../elements/Button';
 import Comment from './Comment';
 import formatLike from '../utils/formatLike';
+import { useDispatch, useSelector } from 'react-redux';
+import { __getComment } from '../utils/redux/modules/comment/getComment';
 
 export default function BoardDetail({
   board: {
@@ -16,11 +18,20 @@ export default function BoardDetail({
     createdAt,
     liked,
     postLikeCount,
-    commentList,
+    // commentList,
   },
   onBackClick,
 }) {
   const [showComment, setShowComment] = useState(false);
+  const { getComment, isLoading, isError } = useSelector(
+    state => state.getComment,
+  );
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(__getComment(id));
+  }, [dispatch, id]);
 
   const setDate = date => {
     return formatAgo(date);
@@ -63,17 +74,17 @@ export default function BoardDetail({
         <Like>{setformatLike(postLikeCount)}</Like>
         <Title>{`${userName} ${title}`}</Title>
         <Content>{content}</Content>
-        {commentList.length ? (
+        {getComment.length ? (
           <Button click={handleShowComment} height="1.5rem" type="sort">
             {showComment
               ? `댓글 가리기`
-              : `댓글 ${commentList.length}개 모두보기`}
+              : `댓글 ${getComment.length}개 모두보기`}
           </Button>
         ) : (
-          <Comment id={id} comment={commentList} loginName="hi1234" />
+          <Comment id={id} comment={getComment} loginName="hi1234" />
         )}
         {showComment && (
-          <Comment id={id} comment={commentList} loginName="hi1234" />
+          <Comment id={id} comment={getComment} loginName="hi1234" />
         )}
       </DetailContainer>
     </>
