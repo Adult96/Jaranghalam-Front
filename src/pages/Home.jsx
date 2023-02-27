@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import styled from 'styled-components';
 
+import BoardSort from '../components/BoardSort';
 import BoardList from '../components/BoardList';
 import { __getHome } from '../utils/redux/modules/home/getHome';
 
@@ -14,10 +15,15 @@ export default function Home() {
     dispatch(__getHome());
   }, [dispatch]);
 
+  const handleSortClick = e => {
+    console.log(e.target.innerText);
+  };
+
   if (isLoading) return <p>로딩</p>;
   if (isError) return <p>에러</p>;
   return (
     <HomeWrapper>
+      <BoardSort click={handleSortClick} />
       <BoardList boards={getHome} />
     </HomeWrapper>
   );

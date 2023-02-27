@@ -4,7 +4,6 @@ import { v4 as uuidv4 } from 'uuid';
 import BoardDetail from './BoardDetail';
 
 import BoardItem from './BoardItem';
-import BoardSort from './BoardSort';
 
 const comment = [
   { comment: '멋지다 연진아', nickName: 'sungin' },
@@ -32,13 +31,8 @@ export default function BoardList({ boards }) {
     setShowDetail(false);
   };
 
-  const handleSortClick = e => {
-    console.log(e.target.innerText);
-  };
-
   return (
     <>
-      <BoardSort click={handleSortClick} />
       <BoardWrapper>
         <BoardContainer media={`${showDetail}`}>
           {boards.map(board => (
