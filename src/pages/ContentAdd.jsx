@@ -112,7 +112,7 @@ function ContentAdd({ toggleModal }) {
               }}
               placeholder={'content'}
             />
-            <Button test onClick={onConfirmButtonHandler}>
+            <Button click={onConfirmButtonHandler} width={'100px'} radius={'30px'}>
               꾺
             </Button>
           </div>
