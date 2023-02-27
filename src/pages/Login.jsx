@@ -35,7 +35,7 @@ export default function Login() {
     e.preventDefault();
 
     if (signUp) {
-      if (!Valid.signUp(id, pw, pwCheck, nickName)) {
+      if (!Valid.signUp(id, pw, pwCheck, nickName, isIdDone, isNickNameDone)) {
         return;
       }
     } else {
@@ -112,17 +112,17 @@ export default function Login() {
               중복 검사
             </Button>
           )}
-          {isIdLoading && (
+          {isIdLoading && signUp && (
             <Loding>
               <img src='/img/spinner.gif' alt='spinner' />
             </Loding>
           )}
-          {isIdDone && (
+          {isIdDone && signUp && (
             <Done>
               <AiOutlineCheck />
             </Done>
           )}
-          {isIdError && (
+          {isIdError && signUp && (
             <Error>
               <AiOutlineClose />
             </Error>

@@ -1,7 +1,7 @@
 import ALERT from '../constants/alert';
 
 const Valid = {
-  signUp(id, pw, pwCheck, nickName) {
+  signUp(id, pw, pwCheck, nickName, isIdDone, isNickNameDone) {
     if (!formEmpty(id, pw, pwCheck, nickName)) {
       alert(ALERT.CHECK_EMPTY);
       return false;
@@ -28,6 +28,15 @@ const Valid = {
     }
     if (!pwType(pw)) {
       alert('비밀번호는 숫자, 문자, 대문자 특수문자만 입력 가능 합니다.');
+      return false;
+    }
+
+    if (!idDoneCheck(isIdDone)) {
+      alert('아이디 중복 체크 확인 바랍니다.');
+      return false;
+    }
+    if (!nickNameDoneCheck(isNickNameDone)) {
+      alert('닉네임 중복 체크 확인 바랍니다.');
       return false;
     }
 
@@ -105,6 +114,16 @@ function pwType(pw) {
 
 function pwDifferentCheck(...text) {
   if (new Set([...text]).size === text.length) return false;
+  return true;
+}
+
+function idDoneCheck(id) {
+  if (!id) return false;
+  return true;
+}
+
+function nickNameDoneCheck(nickName) {
+  if (!nickName) return false;
   return true;
 }
 
