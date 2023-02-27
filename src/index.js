@@ -1,12 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+import { Provider } from 'react-redux';
 
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
 import App from './App';
 import Home from './pages/Home';
-import ContentAdd from './pages/ContentAdd';
-import { Provider } from 'react-redux';
+import Login from './pages/Login';
+import My from './pages/My';
 import store from './utils/redux/config/configStore';
 
 const router = createBrowserRouter([
@@ -19,8 +20,12 @@ const router = createBrowserRouter([
         element: <Home />,
       },
       {
-        path: '/ContentAdd',
-        element: <ContentAdd />,
+        path: '/login',
+        element: <Login />,
+      },
+      {
+        path: '/my',
+        element: <My />,
       },
     ],
   },
@@ -28,7 +33,9 @@ const router = createBrowserRouter([
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <Provider store={store}>
-    <RouterProvider router={router} />
-  </Provider>
+  <React.StrictMode>
+    <Provider store={store}>
+      <RouterProvider router={router} />
+    </Provider>
+  </React.StrictMode>,
 );

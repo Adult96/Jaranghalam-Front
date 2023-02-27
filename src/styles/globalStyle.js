@@ -3,7 +3,8 @@ import { createGlobalStyle } from 'styled-components';
 const GlobalStyle = createGlobalStyle`
 html,
 body,
-div{
+div,
+ul{
   margin: 0;
   padding: 0;
   border: 0;
@@ -53,6 +54,10 @@ h1,h2,h3,h4,h5,h6{
   padding: 0;
 }
 
+path{
+  pointer-events: none;
+}
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -62,6 +67,8 @@ body {
   -moz-osx-font-smoothing: grayscale;
   background-color: ${props => props.theme.bg};
   color: ${props => props.theme.text};
+  overflow: hidden;
+  
 }
 
 * {
@@ -73,6 +80,11 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+#root{
+  width: 100vw;
+  height: 100vh;
 }
 
 

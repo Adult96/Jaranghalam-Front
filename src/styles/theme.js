@@ -2,6 +2,7 @@ const color = {
   white: '#ffffff',
   light_white: '#eeeeee',
   dark_white: '#bdbdbd',
+  red: '#dc1a13',
   pink: '#fe918d',
   dark_pink: '#ff6863',
   ligth_pink: '#fab1a0',
@@ -30,7 +31,9 @@ const fontSize = {
   xxlarge: '5rem',
   xlarge: '4rem',
   large: '3rem',
+  large_medium: '2.5rem',
   medium: '1.75rem',
+  large_regular: '1.5rem',
   regular: '1.125rem',
   small: '1rem',
   micro: '0.875rem',
@@ -50,7 +53,19 @@ const borderRadius = {
   small: '0.5rem',
 };
 
+const screen = {
+  fullWideDesktop: '1600px',
+  wide_desktop: '1400px',
+  desktop: '1200px',
+  tablet_h: '1024px',
+  tablet_v: '768px',
+  mobile_h: '600px',
+  mobile_v: '480px',
+};
+
 const light = {
+  color,
+  screen,
   fontWeight,
   fontSize,
   borderRadius,
@@ -61,9 +76,12 @@ const light = {
   innerText: 'Light',
   bgBtnColor: color.light_white,
   bgInputColor: color.light_white,
+  dateColor: color.dark_white,
 };
 
 const dark = {
+  color,
+  screen,
   fontWeight,
   fontSize,
   borderRadius,
@@ -74,6 +92,7 @@ const dark = {
   innerText: 'Dark',
   bgBtnColor: color.shark_blue,
   bgInputColor: color.shark_blue,
+  dateColor: color.light_grey,
 };
 
 export const lightTheme = { ...light };
