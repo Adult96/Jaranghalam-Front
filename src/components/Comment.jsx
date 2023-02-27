@@ -4,9 +4,14 @@ import { v4 as uuidv4 } from 'uuid';
 
 import { RxCross1 } from 'react-icons/rx';
 import Button from '../elements/Button';
+import { postComment } from '../utils/api/comment';
+import { useDispatch, useSelector } from 'react-redux';
+import { __getComment } from '../utils/redux/modules/comment/getComment';
 
-export default function Comment({ comment, loginName }) {
+export default function Comment({ id, comment, loginName }) {
   const textAreaRef = useRef();
+  const dispatch = useDispatch();
+  const a = useSelector(state => state);
 
   useEffect(() => {
     textAreaRef.current.focus();
@@ -18,16 +23,24 @@ export default function Comment({ comment, loginName }) {
     ref.style.height = ref.scrollHeight + 'px';
   };
 
+  const handleAddComment = () => {
+    const text = textAreaRef.current.value;
+    postComment(id, { content: text });
+  };
+
+  // if (isLoading) return;
+  // if (isError) return;
+  console.log(a);
   return (
     <CommentContainer>
       {comment.map(v => (
         <CommentText key={uuidv4()}>
           <Content>
             <span>
-              <NickName>{v.nickName}</NickName>
-              {v.comment}
+              <NickName>{v.userName}</NickName>
+              {v.content}
             </span>
-            <span>{v.nickName === loginName && <RxCross1 />}</span>
+            <span>{v.userName === loginName && <RxCross1 />}</span>
           </Content>
           <Time>{'1시간전'}</Time>
         </CommentText>
@@ -36,9 +49,9 @@ export default function Comment({ comment, loginName }) {
         <TextArea
           ref={textAreaRef}
           onChange={handleResizeText}
-          placeholder='댓글 달기... '
+          placeholder="댓글 달기... "
         ></TextArea>
-        <Button width='4rem' type='update'>
+        <Button width="4rem" type="update" click={handleAddComment}>
           게시
         </Button>
       </InputContainer>

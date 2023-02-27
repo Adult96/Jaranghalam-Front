@@ -8,6 +8,7 @@ import formatLike from '../utils/formatLike';
 
 export default function BoardDetail({
   board: {
+    id,
     userName,
     title,
     content,
@@ -69,9 +70,11 @@ export default function BoardDetail({
               : `댓글 ${commentList.length}개 모두보기`}
           </Button>
         ) : (
-          <Comment comment={commentList} />
+          <Comment id={id} comment={commentList} loginName="hi1234" />
         )}
-        {showComment && <Comment comment={commentList} />}
+        {showComment && (
+          <Comment id={id} comment={commentList} loginName="hi1234" />
+        )}
       </DetailContainer>
     </>
   );

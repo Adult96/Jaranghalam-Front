@@ -4,32 +4,32 @@ import Axios from './axios';
 
 const axios = new Axios(process.env.REACT_APP_URL);
 
-export const postBoard = async payload => {
+export const postComment = async (postId, payload) => {
   const cookie = getCookie(QUERY.COOKIE.COOKIE_NAME);
   const option = {
     headers: {
       Authorization: `Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJoaTEyMzQiLCJleHAiOjE3MDg5NTIwMDksImlhdCI6MTY3NzQxNjAwOX0.BQ1kWVIs-x7nfTBJ6l8s360nppayIhxUDMIik5p29YY`,
     },
   };
-  return await axios.post(`/api/post`, payload, option);
+  return await axios.post(`/api/comment/${postId}`, payload, option);
 };
 
-export const deleteBoard = async postId => {
+export const deleteComment = async postId => {
   const cookie = getCookie(QUERY.COOKIE.COOKIE_NAME);
   const option = {
     headers: {
       Authorization: `Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJoaTEyMzQiLCJleHAiOjE3MDg5NTIwMDksImlhdCI6MTY3NzQxNjAwOX0.BQ1kWVIs-x7nfTBJ6l8s360nppayIhxUDMIik5p29YY`,
     },
   };
-  return await axios.delete(`/api/post/${postId}`, option);
+  return await axios.delete(`/api/comment/${postId}`, option);
 };
 
-export const putBoard = async (postId, payload) => {
+export const putComment = async (postId, payload) => {
   const cookie = getCookie(QUERY.COOKIE.COOKIE_NAME);
   const option = {
     headers: {
       Authorization: `Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJoaTEyMzQiLCJleHAiOjE3MDg5NTIwMDksImlhdCI6MTY3NzQxNjAwOX0.BQ1kWVIs-x7nfTBJ6l8s360nppayIhxUDMIik5p29YY`,
     },
   };
-  return await axios.put(`/api/post/${postId}`, payload, option);
+  return await axios.put(`/api/comment/${postId}`, payload, option);
 };

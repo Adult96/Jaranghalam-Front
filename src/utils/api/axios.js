@@ -29,8 +29,8 @@ export default class Axios {
     return this.instance.get(path, option);
   }
 
-  async post(path, payload) {
-    return this.instance.post(path, payload);
+  async post(path, payload, option) {
+    return this.instance.post(path, payload, option);
   }
 
   async delete(path, option) {

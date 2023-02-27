@@ -12,7 +12,7 @@ const initialState = {
 const axios = new Axios(process.env.REACT_APP_URL);
 
 export const __getComment = createAsyncThunk(
-  'GET_HOME',
+  'GET_COMMENT',
   async (payload, thunkAPI) => {
     return await axios
       .get(`/api/comment/${payload}`)
@@ -31,9 +31,10 @@ const getCommentSlice = createSlice({
       state.isError = false;
     });
     bulider.addCase(__getComment.fulfilled, (state, action) => {
+      console.log(action.payload);
       state.isLoading = false;
       state.isError = false;
-      state.getMy = action.payload;
+      state.getComment = action.payload;
     });
     bulider.addCase(__getComment.rejected, (state, action) => {
       state.isLoading = false;

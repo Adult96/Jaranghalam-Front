@@ -13,21 +13,18 @@ const initialState = {
 
 const axios = new Axios(process.env.REACT_APP_URL);
 
-export const __getMy = createAsyncThunk(
-  'GET_HOME',
-  async (payload, thunkAPI) => {
-    const cookie = getCookie(QUERY.COOKIE.COOKIE_NAME);
-    const option = {
-      headers: {
-        Authorization: `Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJoaTEyMzQiLCJleHAiOjE3MDg5NTIwMDksImlhdCI6MTY3NzQxNjAwOX0.BQ1kWVIs-x7nfTBJ6l8s360nppayIhxUDMIik5p29YY`,
-      },
-    };
-    return await axios
-      .get(`/api/post/myPostList`, option)
-      .then(response => thunkAPI.fulfillWithValue(response.data.result))
-      .catch(error => thunkAPI.rejectWithValue());
-  },
-);
+export const __getMy = createAsyncThunk('GET_MY', async (payload, thunkAPI) => {
+  const cookie = getCookie(QUERY.COOKIE.COOKIE_NAME);
+  const option = {
+    headers: {
+      Authorization: `Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJoaTEyMzQiLCJleHAiOjE3MDg5NTIwMDksImlhdCI6MTY3NzQxNjAwOX0.BQ1kWVIs-x7nfTBJ6l8s360nppayIhxUDMIik5p29YY`,
+    },
+  };
+  return await axios
+    .get(`/api/post/myPostList`, option)
+    .then(response => thunkAPI.fulfillWithValue(response.data.result))
+    .catch(error => thunkAPI.rejectWithValue());
+});
 
 const getMySlice = createSlice({
   name: 'getMy',
