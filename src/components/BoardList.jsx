@@ -1,36 +1,35 @@
 import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { v4 as uuidv4 } from 'uuid';
+import { __getDetail } from '../utils/redux/modules/home/getDetail';
 import BoardDetail from './BoardDetail';
 
 import BoardItem from './BoardItem';
 
-const comment = [
-  { comment: '멋지다 연진아', nickName: 'sungin' },
-  { comment: '멋지다 연진아', nickName: 'zoo' },
-  { comment: '멋지다 연진아', nickName: 'zoo' },
-  { comment: '멋지다 연진아', nickName: 'zoo' },
-  { comment: '멋지다 연진아', nickName: 'zoo' },
-  { comment: '멋지다 연진아', nickName: 'zoo' },
-  { comment: '멋지다 연진아', nickName: 'zoo' },
-  { comment: '멋지다 연진아', nickName: 'zoo' },
-  { comment: '멋지다 연진아', nickName: 'zoo' },
-  { comment: '멋지다 연진아', nickName: 'zoo' },
-];
-
 export default function BoardList({ boards }) {
   const [showDetail, setShowDetail] = useState(false);
   const [detailData, setDetailData] = useState({});
+  const dispatch = useDispatch();
+  const { getDetail, isLoading, isError } = useSelector(
+    state => state.getDetail,
+  );
 
-  const handleBoardClick = board => {
+  const handleBoardClick = boardId => {
     setShowDetail(true);
-    setDetailData({ ...board });
+    dispatchDetail(boardId);
   };
 
   const handleBackClick = () => {
     setShowDetail(false);
   };
 
+  const dispatchDetail = boardId => {
+    dispatch(__getDetail(boardId));
+  };
+
+  if (isLoading) return <p>로딩</p>;
+  if (isError) return <p>에러</p>;
   return (
     <>
       <BoardWrapper>
@@ -39,7 +38,7 @@ export default function BoardList({ boards }) {
             <li
               key={uuidv4()}
               onClick={() => {
-                handleBoardClick(board);
+                handleBoardClick(board.id);
               }}
             >
               <BoardItem board={board} />
@@ -47,11 +46,7 @@ export default function BoardList({ boards }) {
           ))}
         </BoardContainer>
         {showDetail && (
-          <BoardDetail
-            comment={comment}
-            board={detailData}
-            onBackClick={handleBackClick}
-          />
+          <BoardDetail board={getDetail} onBackClick={handleBackClick} />
         )}
       </BoardWrapper>
     </>

@@ -7,8 +7,16 @@ import Comment from './Comment';
 import formatLike from '../utils/formatLike';
 
 export default function BoardDetail({
-  board: { nickName, title, content, imageUrl, createdAt, like, postLikeCount },
-  comment,
+  board: {
+    userName,
+    title,
+    content,
+    imageUrl,
+    createdAt,
+    liked,
+    postLikeCount,
+    commentList,
+  },
   onBackClick,
 }) {
   const [showComment, setShowComment] = useState(false);
@@ -34,15 +42,15 @@ export default function BoardDetail({
       <DetailContainer>
         <Header>
           <TitleText>
-            <h3>{nickName}</h3>
+            <h3>{userName}</h3>
             <Date>{setDate(createdAt)}</Date>
           </TitleText>
-          <Button width='4rem' height='1.5rem' type='sort' click={onBackClick}>
+          <Button width="4rem" height="1.5rem" type="sort" click={onBackClick}>
             Back
           </Button>
         </Header>
-        <Img src={imageUrl} alt='userimg' />
-        {like ? (
+        <Img src={imageUrl} alt="userimg" />
+        {liked ? (
           <HeartEmpty>
             <AiFillHeart />
           </HeartEmpty>
@@ -52,12 +60,18 @@ export default function BoardDetail({
           </Heart>
         )}
         <Like>{setformatLike(postLikeCount)}</Like>
-        <Title>{`${nickName} ${title}`}</Title>
+        <Title>{`${userName} ${title}`}</Title>
         <Content>{content}</Content>
-        <Button click={handleShowComment} height='1.5rem' type='sort'>
-          {showComment ? `댓글 가리기` : `댓글 ${10}개 모두보기`}
-        </Button>
-        {showComment && <Comment comment={comment} loginName={nickName} />}
+        {commentList.length ? (
+          <Button click={handleShowComment} height="1.5rem" type="sort">
+            {showComment
+              ? `댓글 가리기`
+              : `댓글 ${commentList.length}개 모두보기`}
+          </Button>
+        ) : (
+          <Comment comment={commentList} />
+        )}
+        {showComment && <Comment comment={commentList} />}
       </DetailContainer>
     </>
   );
