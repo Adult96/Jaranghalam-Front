@@ -30,4 +30,5 @@ const StyleMode = styled.div`
   bottom: 0;
   right: 0;
   margin: 1rem;
+  z-index: 1000;
 `;
