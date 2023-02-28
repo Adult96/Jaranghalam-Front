@@ -1,0 +1,54 @@
+import QUERY from '../../../../constants/query';
+import Axios from '../../../api/axios';
+import { getCookie } from '../../../cookie';
+
+const { createSlice, createAsyncThunk } = require('@reduxjs/toolkit');
+
+const initialState = {
+  getMyComment: [],
+  isLoading: false,
+  isError: false,
+  error: null,
+};
+
+const axios = new Axios(process.env.REACT_APP_URL);
+
+export const __getMyComment = createAsyncThunk(
+  'GET_MY_COMMENT',
+  async (payload, thunkAPI) => {
+    const cookie = getCookie(QUERY.COOKIE.COOKIE_NAME);
+    const option = {
+      headers: {
+        Authorization: `Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJoaTEyMzQiLCJleHAiOjE3MDg5NTIwMDksImlhdCI6MTY3NzQxNjAwOX0.BQ1kWVIs-x7nfTBJ6l8s360nppayIhxUDMIik5p29YY`,
+      },
+    };
+    return await axios
+      .get(`/api/comments/my-comment-list`, option)
+      .then(response => thunkAPI.fulfillWithValue(response.data.result))
+      .catch(error => thunkAPI.rejectWithValue());
+  },
+);
+
+const getMyCommentSlice = createSlice({
+  name: 'getMyComment',
+  initialState,
+  reducers: {},
+  extraReducers: bulider => {
+    bulider.addCase(__getMyComment.pending, (state, _) => {
+      state.isLoading = true;
+      state.isError = false;
+    });
+    bulider.addCase(__getMyComment.fulfilled, (state, action) => {
+      state.isLoading = false;
+      state.isError = false;
+      state.getMyComment = action.payload;
+    });
+    bulider.addCase(__getMyComment.rejected, (state, action) => {
+      state.isLoading = false;
+      state.isError = true;
+      state.error = action.payload;
+    });
+  },
+});
+
+export default getMyCommentSlice.reducer;

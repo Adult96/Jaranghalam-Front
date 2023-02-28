@@ -7,10 +7,14 @@ import BoardList from '../components/BoardList';
 import BoardSort from '../components/BoardSort';
 import Error from '../components/Error';
 import { __getMy } from '../utils/redux/modules/my/getMy';
+import { __getMyComment } from '../utils/redux/modules/my/getMyComment';
 
 export default function My() {
   const dispatch = useDispatch();
   const { getMy, isLoading, isError } = useSelector(state => state.getMy);
+  const { getMyComment, isLoading, isError } = useSelector(
+    state => state.getMyComment,
+  );
 
   useEffect(() => {
     dispatch(__getMy());
@@ -19,9 +23,9 @@ export default function My() {
   const handleSortClick = e => {
     const innerText = e.target.innerText;
     if (innerText === 'My') {
-      // dispatch(__getMy({ page: 1, query: '' }));
+      dispatch(__getMy());
     } else if (innerText === 'MyComment') {
-      // dispatch(__getMyComment({ page: 1, query: '&sortBy=postLikeCount' }));
+      dispatch(__getMyComment());
     }
   };
 
