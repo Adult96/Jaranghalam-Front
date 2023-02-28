@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import styled from 'styled-components';
 
+import BoardSort from '../components/BoardSort';
 import BoardList from '../components/BoardList';
 import { __getHome } from '../utils/redux/modules/home/getHome';
 
@@ -11,13 +12,23 @@ export default function Home() {
   const { getHome, isLoading, isError } = useSelector(state => state.getHome);
 
   useEffect(() => {
-    dispatch(__getHome());
+    dispatch(__getHome({ page: 1, query: '' }));
   }, [dispatch]);
+
+  const handleSortClick = e => {
+    const innerText = e.target.innerText;
+    if (innerText === 'Recent') {
+      dispatch(__getHome({ page: 1, query: '' }));
+    } else if (innerText === 'Popular') {
+      dispatch(__getHome({ page: 1, query: '&sortBy=postLikeCount' }));
+    }
+  };
 
   if (isLoading) return <p>로딩</p>;
   if (isError) return <p>에러</p>;
   return (
     <HomeWrapper>
+      <BoardSort click={handleSortClick} />
       <BoardList boards={getHome} />
     </HomeWrapper>
   );

@@ -9,6 +9,8 @@ import {
   AiOutlineUser,
 } from 'react-icons/ai';
 import { BiLogIn, BiArrowBack } from 'react-icons/bi';
+import { MdContactPage } from 'react-icons/md';
+
 import { Link } from 'react-router-dom';
 
 import ROUTER from '../../constants/router';
@@ -17,25 +19,30 @@ export default function IconBar({ showLoginIcon, showLogOut, onLogOut }) {
   return (
     <IconContainer>
       <Title>
-        <AiFillInstagram id='Jaranghalem' />
+        <AiFillInstagram id="Jaranghalem" />
         <TitleText>
           <span>Jaranghalam</span>
         </TitleText>
       </Title>
       <TabIcon>
         {showLoginIcon && (
-          <Home id='홈'>
-            <Link to='/'>
+          <Home id="홈">
+            <Link to="/">
               <AiFillHome />
             </Link>
           </Home>
         )}
         {showLogOut && (
           <>
-            <Like id='좋아요'>
+            <Like id="좋아요">
               <AiOutlineHeart />
             </Like>
-            <Add id='추가'>
+            <My>
+              <Link to="/my">
+                <MdContactPage />
+              </Link>
+            </My>
+            <Add id="추가">
               <AiOutlinePlusSquare />
             </Add>
           </>
@@ -104,6 +111,8 @@ const Home = styled.span`
 `;
 
 const Like = styled(Home)``;
+
+const My = styled(Home)``;
 
 const Add = styled(Home)``;
 

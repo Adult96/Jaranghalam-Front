@@ -1,12 +1,20 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import { v4 as uuidv4 } from 'uuid';
 
+import { AiOutlineEdit } from 'react-icons/ai';
 import { RxCross1 } from 'react-icons/rx';
-import Button from '../elements/Button';
 
-export default function Comment({ comment, loginName }) {
+import Button from '../elements/Button';
+import { deleteComment, postComment } from '../utils/api/comment';
+import { useDispatch } from 'react-redux';
+import { __getComment } from '../utils/redux/modules/comment/getComment';
+
+export default function Comment({ id, comment, loginName }) {
+  const [commentText, setCommentText] = useState('');
   const textAreaRef = useRef();
+
+  const dispatch = useDispatch();
 
   useEffect(() => {
     textAreaRef.current.focus();
@@ -18,16 +26,39 @@ export default function Comment({ comment, loginName }) {
     ref.style.height = ref.scrollHeight + 'px';
   };
 
+  const handleAddComment = async () => {
+    await postComment(id, { content: commentText });
+    dispatch(__getComment(id));
+    setCommentText('');
+  };
+
+  const handleDeleteComment = async e => {
+    const commentId = e.target.parentElement.id;
+    await deleteComment(commentId);
+    dispatch(__getComment(id));
+  };
+
   return (
     <CommentContainer>
       {comment.map(v => (
         <CommentText key={uuidv4()}>
           <Content>
             <span>
-              <NickName>{v.nickName}</NickName>
-              {v.comment}
+              <NickName>{v.userName}</NickName>
+              {v.content}
             </span>
-            <span>{v.nickName === loginName && <RxCross1 />}</span>
+            <span>
+              {v.userName === loginName && (
+                <User>
+                  <Edit onClick={handleDeleteComment}>
+                    <AiOutlineEdit />
+                  </Edit>
+                  <Delete id={v.id} onClick={handleDeleteComment}>
+                    <RxCross1 />
+                  </Delete>
+                </User>
+              )}
+            </span>
           </Content>
           <Time>{'1시간전'}</Time>
         </CommentText>
@@ -35,10 +66,12 @@ export default function Comment({ comment, loginName }) {
       <InputContainer>
         <TextArea
           ref={textAreaRef}
-          onChange={handleResizeText}
-          placeholder='댓글 달기... '
+          value={commentText}
+          onChange={e => setCommentText(e.target.value)}
+          onKeyUp={handleResizeText}
+          placeholder="댓글 달기... "
         ></TextArea>
-        <Button width='4rem' type='update'>
+        <Button width="4rem" type="update" click={handleAddComment}>
           게시
         </Button>
       </InputContainer>
@@ -47,7 +80,8 @@ export default function Comment({ comment, loginName }) {
 }
 
 const CommentContainer = styled.div`
-  margin-bottom: 3rem;
+  margin-bottom: 5rem;
+  scroll-margin: 5rem;
 `;
 
 const CommentText = styled.div`
@@ -87,4 +121,23 @@ const TextArea = styled.textarea`
   font-size: ${props => props.theme.fontSize.small};
   resize: none;
   overflow: hidden;
+`;
+
+const User = styled.div`
+  display: flex;
+  gap: 0.5rem;
+`;
+
+const Edit = styled.div`
+  :hover {
+    color: ${props => props.theme.color.dark_mint};
+    transform: scale(1.2);
+  }
+`;
+
+const Delete = styled.div`
+  :hover {
+    color: ${props => props.theme.color.red};
+    transform: scale(1.2);
+  }
 `;

@@ -21,7 +21,7 @@ export default class Axios {
       error => {
         alert(error.response.data.errorMessage);
         return Promise.reject(error);
-      }
+      },
     );
   }
 
@@ -29,15 +29,19 @@ export default class Axios {
     return this.instance.get(path, option);
   }
 
-  async post(path, payload) {
-    return this.instance.post(path, payload);
+  async post(path, payload, option) {
+    return this.instance.post(path, payload, option);
   }
 
-  async delete(path, payload) {
-    return this.instance.delete(`${path}/${payload}`);
+  async delete(path, option) {
+    return this.instance.delete(`${path}`, option);
   }
 
   async patch(path, payload, option) {
     return this.instance.patch(`${path}/${payload}`, option);
+  }
+
+  async put(path, payload, option) {
+    return this.instance.put(`${path}`, payload, option);
   }
 }

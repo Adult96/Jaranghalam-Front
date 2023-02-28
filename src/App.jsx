@@ -30,12 +30,15 @@ function App() {
       navigate(ROUTER.PATH.HOME);
     } else if (cookie && pathname === ROUTER.PATH.HOME) {
       setShowLogOut(true);
+    } else if (cookie && pathname === ROUTER.PATH.MY) {
+      setShowLogOut(true);
     }
   }, [navigate, pathname]);
 
   const handleLogOut = () => {
     removeCookie('myToken');
     setShowLogOut(false);
+    navigate(ROUTER.PATH.HOME);
   };
 
   return (
