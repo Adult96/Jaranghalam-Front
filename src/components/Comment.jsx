@@ -6,7 +6,7 @@ import { AiOutlineEdit } from 'react-icons/ai';
 import { RxCross1 } from 'react-icons/rx';
 
 import Button from '../elements/Button';
-import { deleteComment, postComment } from '../utils/api/comment';
+import { deleteComment, postComment, putComment } from '../utils/api/comment';
 import { useDispatch } from 'react-redux';
 import { __getComment } from '../utils/redux/modules/comment/getComment';
 import Input from '../elements/Input';
@@ -15,9 +15,6 @@ export default function Comment({ id, comment, loginName }) {
   const [commentText, setCommentText] = useState('');
   const textAreaRef = useRef();
   const labelRef = useRef([]);
-  const addToRefs = el => {
-    labelRef.current.push(el);
-  };
 
   const dispatch = useDispatch();
 
@@ -57,6 +54,13 @@ export default function Comment({ id, comment, loginName }) {
     e.target.parentElement.style.display = 'none';
   };
 
+  const handleEdit = async (e, id) => {
+    const commentId = e.target.parentElement.id;
+    const editValue = e.target.parentElement.firstChild.value;
+    await putComment(commentId, { content: editValue });
+    dispatch(__getComment(id));
+  };
+
   return (
     <CommentContainer>
       {comment.map(v => (
@@ -81,7 +85,7 @@ export default function Comment({ id, comment, loginName }) {
           </Content>
           <Time>{'1시간전'}</Time>
           {v.userName === loginName && (
-            <Label id={v.id} ref={addToRefs}>
+            <Label id={v.id} ref={e => (labelRef.current[v.id] = e)}>
               <Input
                 width="100%"
                 height="2rem"
@@ -89,7 +93,7 @@ export default function Comment({ id, comment, loginName }) {
                 mode="comment"
                 placeholder="Edit Comment..."
               />
-              <Button width="3rem" type="update">
+              <Button width="3rem" type="update" click={e => handleEdit(e, id)}>
                 Edit
               </Button>
               <Button width="2.5rem" type="update" click={handleEditClose}>
