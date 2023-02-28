@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useCallback, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 
@@ -12,7 +12,7 @@ import ROUTER from '../constants/router';
 import { deleteBoard } from '../utils/api/myBoard';
 import { __getMy } from '../utils/redux/modules/my/getMy';
 
-export default function BoardList({ boards }) {
+export default React.memo(function BoardList({ boards }) {
   const [showDetail, setShowDetail] = useState(false);
   const { pathname } = useLocation();
   const dispatch = useDispatch();
@@ -21,19 +21,19 @@ export default function BoardList({ boards }) {
   );
   const path = pathname === ROUTER.PATH.MY ? true : false;
 
-  const handleBoardClick = (e, boardId) => {
+  const handleBoardClick = async (e, boardId) => {
     const innerText = e.target.innerText;
     if (innerText === '수정' || innerText === '삭제') return;
+    await dispatchDetail(boardId);
     setShowDetail(true);
-    dispatchDetail(boardId);
   };
 
   const handleBackClick = () => {
     setShowDetail(false);
   };
 
-  const dispatchDetail = boardId => {
-    dispatch(__getDetail(boardId));
+  const dispatchDetail = async boardId => {
+    await dispatch(__getDetail(boardId));
   };
 
   const handleEdit = postid => {};
@@ -43,8 +43,6 @@ export default function BoardList({ boards }) {
     dispatch(__getMy());
   };
 
-  if (isLoading) return <p>로딩</p>;
-  if (isError) return <p>에러</p>;
   return (
     <>
       <BoardWrapper>
@@ -66,12 +64,16 @@ export default function BoardList({ boards }) {
           ))}
         </BoardContainer>
         {showDetail && (
-          <BoardDetail board={getDetail} onBackClick={handleBackClick} />
+          <BoardDetail
+            board={getDetail}
+            path={path}
+            onBackClick={handleBackClick}
+          />
         )}
       </BoardWrapper>
     </>
   );
-}
+});
 
 const BoardWrapper = styled.ul`
   position: relative;

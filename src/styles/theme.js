@@ -2,6 +2,7 @@ const color = {
   white: '#ffffff',
   light_white: '#eeeeee',
   dark_white: '#bdbdbd',
+  apple_white: '#e8e8e8',
   red: '#dc1a13',
   pink: '#fe918d',
   dark_pink: '#ff6863',
@@ -70,13 +71,16 @@ const light = {
   fontSize,
   borderRadius,
   bg: color.white,
-  bgHover: color.light_white,
+  bgHover: color.light_grey,
   text: color.black,
   borderColor: color.black,
   innerText: 'Light',
   bgBtnColor: color.light_white,
   bgInputColor: color.light_white,
   dateColor: color.dark_white,
+  commentHoverColor: color.apple_white,
+  shadowColorTop: '#bebebe',
+  shadowColorBottom: '#ffffff',
 };
 
 const dark = {
@@ -86,13 +90,16 @@ const dark = {
   fontSize,
   borderRadius,
   bg: color.deep_blue,
-  bgHover: color.shark_blue,
+  bgHover: color.light_grey,
   text: color.white,
   borderColor: color.light_grey,
   innerText: 'Dark',
   bgBtnColor: color.shark_blue,
   bgInputColor: color.shark_blue,
   dateColor: color.light_grey,
+  commentHoverColor: color.shark_light_blue,
+  shadowColorTop: '#363346',
+  shadowColorBottom: '#282634',
 };
 
 export const lightTheme = { ...light };

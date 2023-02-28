@@ -1,4 +1,6 @@
+import QUERY from '../../../../constants/query';
 import Axios from '../../../api/axios';
+import { getCookie } from '../../../cookie';
 
 const { createSlice, createAsyncThunk } = require('@reduxjs/toolkit');
 
@@ -10,12 +12,19 @@ const initialState = {
 };
 
 const axios = new Axios(process.env.REACT_APP_URL);
+const cookie = getCookie(QUERY.COOKIE.COOKIE_NAME);
+
+const option = {
+  headers: {
+    Authorization: `Bearer ${cookie ? cookie : ''}`,
+  },
+};
 
 export const __getDetail = createAsyncThunk(
   'GET_DETAIL',
   async (payload, thunkAPI) => {
     return await axios
-      .get(`/api/post/${payload}`)
+      .get(`/api/posts/${payload}`, option)
       .then(response => thunkAPI.fulfillWithValue(response.data.result))
       .catch(error => thunkAPI.rejectWithValue());
   },

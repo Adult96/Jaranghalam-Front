@@ -6,6 +6,7 @@ import postContentSlice from '../modules/board/postAdd';
 import getDetail from '../modules/home/getDetail';
 import getMy from '../modules/my/getMy';
 import getComment from '../modules/comment/getComment';
+import getMyComment from '../modules/my/getMyComment';
 
 const store = configureStore({
   reducer: {
@@ -16,6 +17,7 @@ const store = configureStore({
     getDetail,
     getMy,
     getComment,
+    getMyComment,
   },
 });
 

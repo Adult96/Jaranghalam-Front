@@ -11,9 +11,9 @@ export const postSignUp = async payload => {
 };
 
 export const getIdCheck = async payload => {
-  return await axios.get(`/user/idCheck/${payload}`);
+  return await axios.get(`/user/id/${payload}`);
 };
 
 export const getNickNameCheck = async payload => {
-  return await axios.get(`/user/nickNameCheck/${payload}`);
+  return await axios.get(`/user/nick-name/${payload}`);
 };

@@ -7,7 +7,7 @@ export const __postContent = createAsyncThunk(
     console.log(payload);
     try {
       const response = await axios.post(
-        'http://13.209.11.12/api/post',
+        'http://13.209.11.12/api/posts',
         payload.formData,
         payload.config,
       );

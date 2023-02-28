@@ -6,6 +6,10 @@ import ROUTER from '../../constants/router';
 import ContentAdd from '../../pages/ContentAdd';
 
 export default function TextBar({ showLoginIcon, showLogOut, onLogOut }) {
+  const [showModal, setShowModal] = useState(false);
+  const ModalHandler = () => {
+    setShowModal(prev => !prev);
+  };
   return (
     <>
       <TextContainer>

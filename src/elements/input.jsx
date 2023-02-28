@@ -9,9 +9,23 @@ export default function Input({
   placeholder,
   autoFocus,
   value,
+  mode,
   onChange,
   children,
 }) {
+  if (mode === 'comment')
+    return (
+      <CommentInput
+        width={width}
+        height={height}
+        fontSize={fontSize}
+        value={value}
+        placeholder={placeholder}
+        onChange={onChange}
+        autoFocus={autoFocus}
+      />
+    );
+
   return (
     <InputContainer>
       {children}
@@ -40,4 +54,12 @@ const InputElement = styled.input`
   border: none;
   outline: none;
   font-size: ${props => props.fontSize};
+`;
+
+const CommentInput = styled(InputElement)`
+  width: ${props => props.width};
+  height: ${props => props.height};
+  padding: 0.5rem;
+  background-color: transparent;
+  font-size: ${props => props.theme.fontSize.micro};
 `;

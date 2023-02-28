@@ -1,71 +1,100 @@
 import React from 'react';
 import { useState } from 'react';
 import styled from 'styled-components';
-import Button from '../elements/Button';
-import Input from '../elements/Input';
 import { useDispatch } from 'react-redux';
 import { __postContent } from '../utils/redux/modules/board/postAdd';
-import axios from 'axios';
 import { useRef } from 'react';
+import { __getHome } from '../utils/redux/modules/home/getHome';
 
-const StH3 = styled.h3`
+const StH6 = styled.h6`
   color: black;
+  text-align: center;
   border-bottom: 2px solid ${props => props.theme.borderRadius.text};
+`;
 
-  @media (max-width: 800px) {
-    overflow: hidden;
-    max-width: 100%;
-    max-height: 100%;
-  }
+//모달 css
+const StModalBackground = styled.div`
+  display: flex;
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  justify-content: center;
+  align-items: center;
+  background: #f0ededc5;
+  backdrop-filter: blur(3px);
+  z-index: 1;
+`;
+
+const StModalContainer = styled.div`
+  text-align: center;
+  max-width: 400px;
+  width: 90%;
+  max-height: 400px;
+  height: 90%;
+  border: 1px solid black;
+  border-radius: 10px;
+  background-color: white;
 `;
 
 const StInputForm = styled.form`
   display: flex;
-  /* flex-direction: row-reverse; */
-  width: 100px;
-  height: 100px;
-  justify-content: center;
+  flex: 1;
+  flex-direction: row-reverse;
   align-items: center;
-  margin-top: 50px;
-  gap: 110px;
+  max-width: 300px;
+  max-height: 300px;
+  margin-left: 100px;
+  width: 90%;
+  height: 90%;
+  gap: 20px;
+`;
 
-  @media (max-width: 800px) {
-    overflow: hidden;
-    max-width: 100%;
-    max-height: 100%;
-  }
+const StTextpush = styled.div`
+  flex: 1;
+  width: 90%;
+  height: 90%;
+  margin-right: 20px;
+`;
+
+const Sttitletext = styled.input`
+  width: 150px;
+  height: 35px;
+  outline: none;
+  border-radius: ${props => props.theme.borderRadius.small};
+  background-color: ${props => props.theme.bg};
+  color: ${props => props.theme.text}; ;
 `;
 
 const StTextArea = styled.textarea`
-  width: 150px;
-  height: 200px;
+  max-width: 150px;
+  max-height: 200px;
+  width: 100%;
+  height: 250px;
   margin-top: 10px;
   overflow: auto;
+  outline: none;
   border-radius: ${props => props.theme.borderRadius.small};
   color: ${props => props.theme.text};
   background-color: ${props => props.theme.bg};
-
-  @media (max-width: 800px) {
-    position: fixed;
-    overflow: auto;
-    max-width: 80vw;
-    max-height: 80vh;
-  }
-`;
-
-const StFile = styled.div`
-  margin-left: 40px;
-  margin-bottom: 220px;
-  border-radius: ${props => props.theme.borderRadius.small};
 `;
 
 const StButton = styled.div`
-  margin-bottom: 30px;
-  @media (max-width: 800px) {
-    position: fixed;
-    bottom: 1px;
-    font-size: 0.8rem;
-  }
+  display: flex;
+  margin-top: 300px;
+  margin-right: 130px;
+  position: fixed;
+  gap: 40px;
+`;
+
+const Stimgpush = styled.div`
+  flex: 1;
+  margin-left: 5px;
+  margin-bottom: 30x;
+`;
+
+const StCancelButton = styled.button`
+  border-radius: ${props => props.theme.borderRadius.small};
 `;
 
 const StsignupprofileImg = styled.label`
@@ -85,43 +114,6 @@ const StImg = styled.img`
   max-width: 200px;
   width: 200px;
   height: 200px;
-`;
-
-//모달 css
-const StModalBackground = styled.div`
-  display: flex;
-  position: fixed;
-  inset: 0;
-  width: 100vw;
-  height: 100vh;
-  justify-content: center;
-  align-items: center;
-  background: #f0ededc5;
-  backdrop-filter: blur(3px);
-  z-index: 1;
-
-  @media (max-width: 800px) {
-    background-color: #4e130873;
-  }
-`;
-
-const StModalContainer = styled.div`
-  display: flex !important;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  max-width: 90%;
-  width: 500px;
-  max-height: 90%;
-  height: 500px;
-  border: 1px solid black;
-  border-radius: 10px;
-  background-color: white;
-
-  @media (max-width: 800px) {
-    width: 500px;
-    height: 500px;
-  }
 `;
 
 function ContentAdd({ toggleModal }) {
@@ -155,14 +147,13 @@ function ContentAdd({ toggleModal }) {
     const config = {
       headers: {
         'Content-Type': 'multipart/form-data',
-        Authorization: `Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJoaTEyMzQiLCJleHAiOjE3MDg5NTIwMDksImlhdCI6MTY3NzQxNjAwOX0.BQ1kWVIs-x7nfTBJ6l8s360nppayIhxUDMIik5p29YY`,
+        Authorization: `Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiLsnKDsoIAwMSIsImV4cCI6MTcwOTEyNjgzNSwiaWF0IjoxNjc3NTkwODM1fQ.RPQh9r_NKQfSu4sZT0q8Q1qgObuAjqYAKW5v3flFO7A`,
       },
     };
-    dispatch(__postContent({ formData, config }));
-    dispatch(__getHome);
-    // dispatch(__postContent(post));
+    await dispatch(__postContent({ formData, config }));
     setTitle('');
     setContent('');
+    await dispatch(__getHome({ page: 1, query: '' }));
     alert('완료!!!!!!');
     toggleModal();
   };
@@ -180,15 +171,15 @@ function ContentAdd({ toggleModal }) {
   return (
     <StModalBackground>
       <StModalContainer>
-        <StH3>새 게시물 만들기</StH3>
+        <StH6>새 게시물 만들기</StH6>
         <StInputForm
           onSubmit={e => {
             e.preventDefault();
           }}
           encType="multipart/form-data"
         >
-          <div>
-            <Input
+          <StTextpush>
+            <Sttitletext
               type={'text'}
               value={title}
               onChange={e => {
@@ -205,28 +196,32 @@ function ContentAdd({ toggleModal }) {
               }}
               placeholder={'content'}
             />
-            <StButton>
-              <Button
-                click={onConfirmButtonHandler}
-                width={'100px'}
-                radius={'30px'}
-              >
-                꾺
-              </Button>
-            </StButton>
-          </div>
-          <StsignupprofileImg htmlFor="profileImg">
-            이미지 추가
-          </StsignupprofileImg>
-          <StInput
-            type="file"
-            accept="image/*"
-            id="profileImg"
-            onChange={Flieonload}
-            // onChange={saveImgFile}
-            ref={testRef}
-          />
-          <StImg src={imgUrl ? imgUrl : `/images/icon/user.png`} />
+          </StTextpush>
+          <StButton>
+            <StCancelButton onClick={() => toggleModal()}>
+              나가기
+            </StCancelButton>
+            <StCancelButton
+              onClick={onConfirmButtonHandler}
+              width={'100px'}
+              radius={'30px'}
+            >
+              추가
+            </StCancelButton>
+          </StButton>
+          <Stimgpush>
+            <StsignupprofileImg htmlFor="profileImg">
+              이미지 추가
+            </StsignupprofileImg>
+            <StInput
+              type="file"
+              accept="image/*"
+              id="profileImg"
+              onChange={Flieonload}
+              ref={testRef}
+            />
+            <StImg src={imgUrl ? imgUrl : `img/pngwing.com.png`} />
+          </Stimgpush>
         </StInputForm>
       </StModalContainer>
     </StModalBackground>

@@ -47,7 +47,7 @@ export default function IconBar({ showLoginIcon, showLogOut, onLogOut }) {
                 <MdContactPage />
               </Link>
             </My>
-            <Add id="추가">
+            <Add onClick={ModalHandler} id="추가">
               <AiOutlinePlusSquare />
             </Add>
           </>

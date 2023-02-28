@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import styled from 'styled-components';
@@ -6,30 +6,59 @@ import styled from 'styled-components';
 import BoardSort from '../components/BoardSort';
 import BoardList from '../components/BoardList';
 import { __getHome } from '../utils/redux/modules/home/getHome';
+import { useInView } from 'react-intersection-observer';
 
 export default function Home() {
+  const page = useRef(1);
+  const pageData = useRef({});
+  const [ref, inView] = useInView();
   const dispatch = useDispatch();
   const { getHome, isLoading, isError } = useSelector(state => state.getHome);
-
-  useEffect(() => {
-    dispatch(__getHome({ page: 1, query: '' }));
-  }, [dispatch]);
 
   const handleSortClick = e => {
     const innerText = e.target.innerText;
     if (innerText === 'Recent') {
-      dispatch(__getHome({ page: 1, query: '' }));
+      dispatch(__getHome({ page: page, query: '' }));
     } else if (innerText === 'Popular') {
-      dispatch(__getHome({ page: 1, query: '&sortBy=postLikeCount' }));
+      dispatch(__getHome({ page: page, query: '&sortBy=postLikeCount' }));
     }
   };
 
-  if (isLoading) return <p>로딩</p>;
-  if (isError) return <p>에러</p>;
+  useEffect(() => {
+    if (getHome.length === 0) {
+      console.log('첫 포스트 로딩');
+      dispatch(__getHome({ page: page.current, query: '' }));
+      return;
+    }
+  }, []);
+
+  useEffect(() => {
+    if (
+      getHome.length !== 0 &&
+      inView &&
+      !isLoading &&
+      !isError &&
+      getHome.length !== pageData.current.length
+    ) {
+      page.current += 1;
+      pageData.current = getHome;
+      console.log('첫 로딩 이후 무한 스크롤', getHome, page.current);
+      dispatch(__getHome({ page: page.current, query: '' }));
+    }
+  }, [inView]);
+
   return (
     <HomeWrapper>
-      <BoardSort click={handleSortClick} />
+      <BoardSort click={handleSortClick}>
+        {{ content: { first: 'Recent', second: 'Popular' } }}
+      </BoardSort>
       <BoardList boards={getHome} />
+      <InfiniteScroll ref={ref}>
+        {isLoading && <img src="/img/spinner.gif" alt="spinner" />}
+        {getHome.length === pageData.current.length && (
+          <p>마지막 페이지 입니다.</p>
+        )}
+      </InfiniteScroll>
     </HomeWrapper>
   );
 }
@@ -66,4 +95,11 @@ const HomeWrapper = styled.main`
   @media (min-width: ${props => props.theme.screen.tablet_v}) {
     border-left: 1px solid ${props => props.theme.bgBorderColor};
   }
+`;
+
+const InfiniteScroll = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 10rem;
 `;

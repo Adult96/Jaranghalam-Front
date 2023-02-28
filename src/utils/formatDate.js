@@ -1,6 +1,6 @@
-export default function formatAgo(data) {
+export default function formatAgo(createdDate, modifiedDate) {
   const nowDate = new Date();
-  const date = new Date(data);
+  const date = new Date(modifiedDate ? modifiedDate : createdDate);
   const year = nowDate.getFullYear() - date.getFullYear();
   const month = nowDate.getMonth() - date.getMonth();
   const day = nowDate.getDate() - date.getDate();

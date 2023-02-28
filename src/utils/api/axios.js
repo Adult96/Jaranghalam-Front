@@ -19,13 +19,18 @@ export default class Axios {
         return response;
       },
       error => {
-        alert(error.response.data.errorMessage);
+        const myPage = '/api/posts/my-post-list';
+        if (error.config.url !== myPage) {
+          alert(error.response.data.errorMessage);
+        }
+        console.log(error);
         return Promise.reject(error);
       },
     );
   }
 
   async get(path, option) {
+    console.log(path);
     return this.instance.get(path, option);
   }
 
