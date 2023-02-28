@@ -12,9 +12,9 @@ export const __getCheckId = createAsyncThunk(
   'GET_CHECK_ID',
   async (payload, thunkAPI) => {
     return await getIdCheck(payload)
-      .then(() => thunkAPI.fulfillWithValue())
-      .catch(() => thunkAPI.rejectWithValue());
-  }
+      .then(response => thunkAPI.fulfillWithValue())
+      .catch(error => thunkAPI.rejectWithValue());
+  },
 );
 
 const getCheckIdSlice = createSlice({

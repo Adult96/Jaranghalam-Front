@@ -8,7 +8,6 @@ export default function TextBar({ showLoginIcon, showLogOut, onLogOut }) {
   return (
     <TextContainer>
       <Title>Jaranghalam</Title>
-
       <TabText>
         {showLoginIcon && (
           <Home>

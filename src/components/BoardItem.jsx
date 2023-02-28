@@ -13,15 +13,16 @@ export default function BoardItem({
     content,
     imageUrl,
     createdAt,
-    like,
+    modifiedAt,
+    liked,
     postLikeCount,
   },
   path,
   handleEdit,
   handleDelete,
 }) {
-  const setDate = date => {
-    return formatAgo(date);
+  const setDate = (createDate, modifiedDate) => {
+    return formatAgo(createDate, modifiedDate);
   };
 
   const setformatLike = cnt => {
@@ -33,7 +34,7 @@ export default function BoardItem({
       <Header>
         <HeaderTitle>
           <h3>{userName}</h3>
-          <Date>{setDate(createdAt)}</Date>
+          <Date>{setDate(createdAt, modifiedAt)}</Date>
         </HeaderTitle>
         {path && (
           <ButtonContainer>
@@ -56,8 +57,10 @@ export default function BoardItem({
           </ButtonContainer>
         )}
       </Header>
+      {/* <ImageContainer> */}
       <Img src={imageUrl} alt="userimg" />
-      {like ? (
+      {/* </ImageContainer> */}
+      {liked ? (
         <HeartEmpty>
           <AiFillHeart />
         </HeartEmpty>
@@ -111,9 +114,26 @@ const ButtonContainer = styled.div`
   gap: 0.5rem;
 `;
 
+// const ImageContainer = styled.div`
+//   position: relative;
+//   width: 100%;
+//   height: 0;
+//   padding-bottom: calc(500 / 500 * 100%);
+// `;
+
+// const Img = styled.img`
+//   position: absolute;
+//   top: 0;
+//   left: 0;
+//   width: 100%;
+//   height: 100%;
+//   border-radius: 0.5rem;
+//   background-size: cover;
+// `;
+
 const Img = styled.img`
-  width: 100%;
-  height: 60%;
+  max-width: 100%;
+  height: auto;
   border-radius: 0.5rem;
   background-size: cover;
 `;

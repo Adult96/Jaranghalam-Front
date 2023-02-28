@@ -7,6 +7,9 @@ import Comment from './Comment';
 import formatLike from '../utils/formatLike';
 import { useDispatch, useSelector } from 'react-redux';
 import { __getComment } from '../utils/redux/modules/comment/getComment';
+import { postLike } from '../utils/api/like';
+import { __getMy } from '../utils/redux/modules/my/getMy';
+import { __getHome } from '../utils/redux/modules/home/getHome';
 
 export default function BoardDetail({
   board: {
@@ -16,25 +19,36 @@ export default function BoardDetail({
     content,
     imageUrl,
     createdAt,
+    modifiedAt,
     liked,
     postLikeCount,
     // commentList,
   },
+  path,
   onBackClick,
 }) {
   const [showComment, setShowComment] = useState(false);
   const { getComment, isLoading, isError } = useSelector(
     state => state.getComment,
   );
-
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(__getComment(id));
   }, [dispatch, id]);
 
-  const setDate = date => {
-    return formatAgo(date);
+  useEffect(() => {
+    return () => setShowComment(false);
+  }, [title, content, imageUrl, createdAt]);
+
+  useEffect(() => {
+    if (getComment.length === 0) {
+      setShowComment(false);
+    }
+  }, [getComment.length]);
+
+  const setDate = (createDate, modifiedDate) => {
+    return formatAgo(createDate, modifiedDate);
   };
 
   const setformatLike = cnt => {
@@ -45,29 +59,31 @@ export default function BoardDetail({
     setShowComment(state => !state);
   };
 
-  useEffect(() => {
-    return () => setShowComment(false);
-  }, [title, content, imageUrl, createdAt]);
-
+  const handleLike = async postId => {
+    await postLike(postId);
+    path ? dispatch(__getMy()) : dispatch(__getHome({ page: 1, query: '' }));
+  };
   return (
     <>
       <DetailContainer>
         <Header>
           <TitleText>
             <h3>{userName}</h3>
-            <Date>{setDate(createdAt)}</Date>
+            <Date>{setDate(createdAt, modifiedAt)}</Date>
           </TitleText>
           <Button width="4rem" height="1.5rem" type="sort" click={onBackClick}>
             Back
           </Button>
         </Header>
-        <Img src={imageUrl} alt="userimg" />
+        <ImageContainer>
+          <Img src={imageUrl} alt="userimg" />
+        </ImageContainer>
         {liked ? (
-          <HeartEmpty>
+          <HeartEmpty onClick={() => handleLike(id)}>
             <AiFillHeart />
           </HeartEmpty>
         ) : (
-          <Heart>
+          <Heart onClick={() => handleLike(id)}>
             <AiOutlineHeart />
           </Heart>
         )}
@@ -98,6 +114,7 @@ const DetailContainer = styled.div`
   width: 30vw;
   min-width: 25rem;
   height: 100vh;
+  padding: 1rem;
   overflow-y: scroll;
   &::-webkit-scrollbar {
     width: 8px;
@@ -136,9 +153,13 @@ const Date = styled.h4`
   color: ${props => props.theme.dateColor};
 `;
 
+const ImageContainer = styled.div`
+  max-width: 100%;
+`;
+
 const Img = styled.img`
   width: 100%;
-  height: 60%;
+  height: auto;
   border-radius: 0.5rem;
   background-size: cover;
 `;

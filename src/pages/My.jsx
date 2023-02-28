@@ -4,21 +4,50 @@ import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 
 import BoardList from '../components/BoardList';
+import BoardSort from '../components/BoardSort';
+import Error from '../components/Error';
+import MyCommentList from '../components/MyCommentList';
 import { __getMy } from '../utils/redux/modules/my/getMy';
+import {
+  initMyComnt,
+  __getMyComment,
+} from '../utils/redux/modules/my/getMyComment';
 
 export default function My() {
   const dispatch = useDispatch();
-  const { getMy, isLoading, isError } = useSelector(state => state.getMy);
+  const { getMy, isMyLoading, isMyError } = useSelector(state => state.getMy);
+  const { getMyComment, isMyComntLoading, isMyComntError } = useSelector(
+    state => state.getMyComment,
+  );
 
   useEffect(() => {
     dispatch(__getMy());
   }, [dispatch]);
 
-  if (isLoading) return <p>로딩</p>;
-  if (isError) return <p>에러</p>;
+  const handleSortClick = async e => {
+    const innerText = e.target.innerText;
+    if (innerText === 'My') {
+      await dispatch(__getMy());
+      dispatch(initMyComnt());
+    } else if (innerText === 'MyComment') {
+      console.log(1);
+      await dispatch(__getMyComment());
+    }
+  };
+
+  if (isMyLoading || isMyComntLoading) return <p>로딩</p>;
+  if (isMyError || isMyComntError)
+    return <Error>게시글이 존재하지 않습니다.</Error>;
   return (
     <HomeWrapper>
-      <BoardList boards={getMy} />
+      <BoardSort click={handleSortClick}>
+        {{ content: { first: 'My', second: 'MyComment' } }}
+      </BoardSort>
+      {getMyComment.length ? (
+        <MyCommentList myComment={getMyComment} />
+      ) : (
+        <BoardList boards={getMy} />
+      )}
     </HomeWrapper>
   );
 }
