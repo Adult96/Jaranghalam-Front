@@ -6,8 +6,11 @@ import styled from 'styled-components';
 import BoardList from '../components/BoardList';
 import BoardSort from '../components/BoardSort';
 import Error from '../components/Error';
-import { __getMy } from '../utils/redux/modules/my/getMy';
-import { __getMyComment } from '../utils/redux/modules/my/getMyComment';
+import { initMy, __getMy } from '../utils/redux/modules/my/getMy';
+import {
+  initMyComnt,
+  __getMyComment,
+} from '../utils/redux/modules/my/getMyComment';
 
 export default function My() {
   const dispatch = useDispatch();
@@ -20,12 +23,13 @@ export default function My() {
     dispatch(__getMy());
   }, [dispatch]);
 
-  const handleSortClick = e => {
+  const handleSortClick = async e => {
     const innerText = e.target.innerText;
     if (innerText === 'My') {
-      dispatch(__getMy());
+      await dispatch(__getMy());
+      dispatch(initMyComnt());
     } else if (innerText === 'MyComment') {
-      dispatch(__getMyComment());
+      await dispatch(__getMyComment());
     }
   };
 
