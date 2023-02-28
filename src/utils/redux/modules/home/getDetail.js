@@ -3,7 +3,7 @@ import Axios from '../../../api/axios';
 const { createSlice, createAsyncThunk } = require('@reduxjs/toolkit');
 
 const initialState = {
-  getHome: [],
+  getDetail: {},
   isLoading: false,
   isError: false,
   error: null,
@@ -11,31 +11,31 @@ const initialState = {
 
 const axios = new Axios(process.env.REACT_APP_URL);
 
-export const __getHome = createAsyncThunk(
-  'GET_HOME',
+export const __getDetail = createAsyncThunk(
+  'GET_DETAIL',
   async (payload, thunkAPI) => {
     return await axios
-      .get(`/api/post?page=${payload.page}&size=16${payload.query}`)
+      .get(`/api/post/${payload}`)
       .then(response => thunkAPI.fulfillWithValue(response.data.result))
       .catch(error => thunkAPI.rejectWithValue());
   },
 );
 
-const getHomeSlice = createSlice({
-  name: 'getHome',
+const getDetailSlice = createSlice({
+  name: 'getDetail',
   initialState,
   reducers: {},
   extraReducers: bulider => {
-    bulider.addCase(__getHome.pending, (state, _) => {
+    bulider.addCase(__getDetail.pending, (state, _) => {
       state.isLoading = true;
       state.isError = false;
     });
-    bulider.addCase(__getHome.fulfilled, (state, action) => {
+    bulider.addCase(__getDetail.fulfilled, (state, action) => {
       state.isLoading = false;
       state.isError = false;
-      state.getHome = action.payload;
+      state.getDetail = action.payload;
     });
-    bulider.addCase(__getHome.rejected, (state, action) => {
+    bulider.addCase(__getDetail.rejected, (state, action) => {
       state.isLoading = false;
       state.isError = true;
       state.error = action.payload;
@@ -43,4 +43,4 @@ const getHomeSlice = createSlice({
   },
 });
 
-export default getHomeSlice.reducer;
+export default getDetailSlice.reducer;

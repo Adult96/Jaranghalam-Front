@@ -9,6 +9,8 @@ import {
   AiOutlineUser,
 } from 'react-icons/ai';
 import { BiLogIn, BiArrowBack } from 'react-icons/bi';
+import { MdContactPage } from 'react-icons/md';
+
 import { Link } from 'react-router-dom';
 
 import ROUTER from '../../constants/router';
@@ -40,7 +42,12 @@ export default function IconBar({ showLoginIcon, showLogOut, onLogOut }) {
             <Like id="좋아요">
               <AiOutlineHeart />
             </Like>
-            <Add onClick={ModalHandler} id="추가">
+            <My>
+              <Link to="/my">
+                <MdContactPage />
+              </Link>
+            </My>
+            <Add id="추가">
               <AiOutlinePlusSquare />
             </Add>
           </>
@@ -110,6 +117,8 @@ const Home = styled.span`
 `;
 
 const Like = styled(Home)``;
+
+const My = styled(Home)``;
 
 const Add = styled(Home)``;
 

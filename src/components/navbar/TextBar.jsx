@@ -6,16 +6,10 @@ import ROUTER from '../../constants/router';
 import ContentAdd from '../../pages/ContentAdd';
 
 export default function TextBar({ showLoginIcon, showLogOut, onLogOut }) {
-  console.log(showLogOut);
-  const [showModal, setShowModal] = useState(false);
-  const ModalHandler = () => {
-    setShowModal(prev => !prev);
-  };
   return (
     <>
       <TextContainer>
         <Title>Jaranghalam</Title>
-
         <TabText>
           {showLoginIcon && (
             <Home>
@@ -25,11 +19,13 @@ export default function TextBar({ showLoginIcon, showLogOut, onLogOut }) {
           {showLogOut && (
             <>
               <Like>LIKE</Like>
+              <My>
+                <Link to="/my">MY</Link>
+              </My>
               <Add onClick={ModalHandler}>ADD</Add>
             </>
           )}
         </TabText>
-
         <Login>
           {showLogOut && <div onClick={onLogOut}>LogOut</div>}
           {showLoginIcon && !showLogOut && (
@@ -78,6 +74,8 @@ const Home = styled.span`
 `;
 
 const Like = styled(Home)``;
+
+const My = styled(Home)``;
 
 const Add = styled(Home)``;
 

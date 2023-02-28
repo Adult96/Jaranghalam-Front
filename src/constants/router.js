@@ -1,5 +1,6 @@
 const PATH = {
   LOGIN: '/login',
+  MY: '/my',
   ADD: '/add',
   HOME: '/',
   BACK: -1,
