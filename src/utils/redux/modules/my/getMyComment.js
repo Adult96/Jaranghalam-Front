@@ -6,8 +6,8 @@ const { createSlice, createAsyncThunk } = require('@reduxjs/toolkit');
 
 const initialState = {
   getMyComment: [],
-  isLoading: false,
-  isError: false,
+  isMyComntLoading: false,
+  isMyComntError: false,
   error: null,
 };
 
@@ -35,17 +35,17 @@ const getMyCommentSlice = createSlice({
   reducers: {},
   extraReducers: bulider => {
     bulider.addCase(__getMyComment.pending, (state, _) => {
-      state.isLoading = true;
-      state.isError = false;
+      state.isMyComntLoading = true;
+      state.isMyComntError = false;
     });
     bulider.addCase(__getMyComment.fulfilled, (state, action) => {
-      state.isLoading = false;
-      state.isError = false;
+      state.isMyComntLoading = false;
+      state.isMyComntError = false;
       state.getMyComment = action.payload;
     });
     bulider.addCase(__getMyComment.rejected, (state, action) => {
-      state.isLoading = false;
-      state.isError = true;
+      state.isMyComntLoading = false;
+      state.isMyComntError = true;
       state.error = action.payload;
     });
   },

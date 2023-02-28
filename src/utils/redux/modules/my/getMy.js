@@ -6,8 +6,8 @@ const { createSlice, createAsyncThunk } = require('@reduxjs/toolkit');
 
 const initialState = {
   getMy: [],
-  isLoading: false,
-  isError: false,
+  isMyLoading: false,
+  isMyError: false,
   error: null,
 };
 
@@ -32,17 +32,17 @@ const getMySlice = createSlice({
   reducers: {},
   extraReducers: bulider => {
     bulider.addCase(__getMy.pending, (state, _) => {
-      state.isLoading = true;
-      state.isError = false;
+      state.isMyLoading = true;
+      state.isMyError = false;
     });
     bulider.addCase(__getMy.fulfilled, (state, action) => {
-      state.isLoading = false;
-      state.isError = false;
+      state.isMyLoading = false;
+      state.isMyError = false;
       state.getMy = action.payload;
     });
     bulider.addCase(__getMy.rejected, (state, action) => {
-      state.isLoading = false;
-      state.isError = true;
+      state.isMyLoading = false;
+      state.isMyError = true;
       state.error = action.payload;
     });
   },

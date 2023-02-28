@@ -11,8 +11,8 @@ import { __getMyComment } from '../utils/redux/modules/my/getMyComment';
 
 export default function My() {
   const dispatch = useDispatch();
-  const { getMy, isLoading, isError } = useSelector(state => state.getMy);
-  const { getMyComment, isLoading, isError } = useSelector(
+  const { getMy, isMyLoading, isMyError } = useSelector(state => state.getMy);
+  const { getMyComment, isMyComntLoading, isMyComntError } = useSelector(
     state => state.getMyComment,
   );
 
@@ -29,8 +29,9 @@ export default function My() {
     }
   };
 
-  if (isLoading) return <p>로딩</p>;
-  if (isError) return <Error>게시글이 존재하지 않습니다.</Error>;
+  if (isMyLoading || isMyComntLoading) return <p>로딩</p>;
+  if (isMyError || isMyComntError)
+    return <Error>게시글이 존재하지 않습니다.</Error>;
   return (
     <HomeWrapper>
       <BoardSort click={handleSortClick}>
