@@ -37,6 +37,7 @@ const getMyCommentSlice = createSlice({
       state.isMyComntLoading = false;
       state.isMyComntError = false;
       state.isMyComntDone = false;
+      state.getMyComment = [];
     },
   },
   extraReducers: bulider => {
