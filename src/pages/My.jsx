@@ -6,7 +6,8 @@ import styled from 'styled-components';
 import BoardList from '../components/BoardList';
 import BoardSort from '../components/BoardSort';
 import Error from '../components/Error';
-import { initMy, __getMy } from '../utils/redux/modules/my/getMy';
+import MyCommentList from '../components/MyCommentList';
+import { __getMy } from '../utils/redux/modules/my/getMy';
 import {
   initMyComnt,
   __getMyComment,
@@ -41,7 +42,11 @@ export default function My() {
       <BoardSort click={handleSortClick}>
         {{ content: { first: 'My', second: 'MyComment' } }}
       </BoardSort>
-      <BoardList boards={getMy} />
+      {getMyComment.length ? (
+        <MyCommentList myComment={getMyComment} />
+      ) : (
+        <BoardList boards={getMy} />
+      )}
     </HomeWrapper>
   );
 }
