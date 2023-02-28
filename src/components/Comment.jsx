@@ -49,6 +49,10 @@ export default function Comment({ id, comment, loginName }) {
     showComment[0].style.display = 'flex';
   };
 
+  const handleEditClose = e => {
+    e.target.parentElement.style.display = 'none';
+  };
+
   return (
     <CommentContainer>
       {comment.map(v => (
@@ -73,7 +77,7 @@ export default function Comment({ id, comment, loginName }) {
           </Content>
           <Time>{'1시간전'}</Time>
           {v.userName === loginName && (
-            <Label id={v.id} ref={e => addToRefs(e)}>
+            <Label id={v.id} ref={addToRefs}>
               <Input
                 width="100%"
                 height="2rem"
@@ -84,7 +88,7 @@ export default function Comment({ id, comment, loginName }) {
               <Button width="3rem" type="update">
                 Edit
               </Button>
-              <Button width="2.5rem" type="update">
+              <Button width="2.5rem" type="update" click={handleEditClose}>
                 Close
               </Button>
             </Label>
