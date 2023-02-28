@@ -15,11 +15,17 @@ export default function Comment({ id, comment, loginName }) {
   const [commentText, setCommentText] = useState('');
   const textAreaRef = useRef();
   const labelRef = useRef([]);
+  const scrollRef = useRef();
 
   const dispatch = useDispatch();
 
   useEffect(() => {
     textAreaRef.current.focus();
+    scrollRef.current.scrollIntoView({
+      behavior: 'smooth',
+      block: 'end',
+      inline: 'nearest',
+    });
   }, []);
 
   const handleResizeText = () => {
@@ -62,7 +68,7 @@ export default function Comment({ id, comment, loginName }) {
   };
 
   return (
-    <CommentContainer>
+    <CommentContainer ref={scrollRef}>
       {comment.map(v => (
         <CommentText key={uuidv4()}>
           <Content>
