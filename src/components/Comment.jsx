@@ -9,10 +9,15 @@ import Button from '../elements/Button';
 import { deleteComment, postComment } from '../utils/api/comment';
 import { useDispatch } from 'react-redux';
 import { __getComment } from '../utils/redux/modules/comment/getComment';
+import Input from '../elements/Input';
 
 export default function Comment({ id, comment, loginName }) {
   const [commentText, setCommentText] = useState('');
   const textAreaRef = useRef();
+  const labelRef = useRef([]);
+  const addToRefs = el => {
+    labelRef.current.push(el);
+  };
 
   const dispatch = useDispatch();
 
@@ -38,6 +43,12 @@ export default function Comment({ id, comment, loginName }) {
     dispatch(__getComment(id));
   };
 
+  const handleShowComment = e => {
+    const commentId = e.target.parentElement.id;
+    const showComment = labelRef.current.filter(v => v.id === commentId);
+    showComment[0].style.display = 'flex';
+  };
+
   return (
     <CommentContainer>
       {comment.map(v => (
@@ -50,7 +61,7 @@ export default function Comment({ id, comment, loginName }) {
             <span>
               {v.userName === loginName && (
                 <User>
-                  <Edit onClick={handleDeleteComment}>
+                  <Edit id={v.id} onClick={handleShowComment}>
                     <AiOutlineEdit />
                   </Edit>
                   <Delete id={v.id} onClick={handleDeleteComment}>
@@ -61,6 +72,23 @@ export default function Comment({ id, comment, loginName }) {
             </span>
           </Content>
           <Time>{'1시간전'}</Time>
+          {v.userName === loginName && (
+            <Label id={v.id} ref={e => addToRefs(e)}>
+              <Input
+                width="100%"
+                height="2rem"
+                fontSize="4rem"
+                mode="comment"
+                placeholder="Edit Comment..."
+              />
+              <Button width="3rem" type="update">
+                Edit
+              </Button>
+              <Button width="2.5rem" type="update">
+                Close
+              </Button>
+            </Label>
+          )}
         </CommentText>
       ))}
       <InputContainer>
@@ -140,4 +168,12 @@ const Delete = styled.div`
     color: ${props => props.theme.color.red};
     transform: scale(1.2);
   }
+`;
+
+const Label = styled.label`
+  display: none;
+  justify-content: space-between;
+  width: 100%;
+  border: 1px solid ${props => props.theme.borderColor};
+  border-radius: 0.2rem;
 `;
