@@ -46,7 +46,11 @@ export default function Comment({ id, comment, loginName }) {
   const handleShowComment = e => {
     const commentId = e.target.parentElement.id;
     const showComment = labelRef.current.filter(v => v.id === commentId);
+    const commentValue = comment.filter(v => v.id === Number(commentId))[0]
+      .content;
+
     showComment[0].style.display = 'flex';
+    showComment[0].firstChild.value = commentValue;
   };
 
   const handleEditClose = e => {
