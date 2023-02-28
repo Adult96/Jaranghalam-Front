@@ -48,7 +48,6 @@ export default function BoardDetail({
   useEffect(() => {
     return () => setShowComment(false);
   }, [title, content, imageUrl, createdAt]);
-
   return (
     <>
       <DetailContainer>
