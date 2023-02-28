@@ -33,6 +33,16 @@ export default function BoardDetail({
     dispatch(__getComment(id));
   }, [dispatch, id]);
 
+  useEffect(() => {
+    return () => setShowComment(false);
+  }, [title, content, imageUrl, createdAt]);
+
+  useEffect(() => {
+    if (getComment.length === 0) {
+      setShowComment(false);
+    }
+  }, [getComment.length]);
+
   const setDate = date => {
     return formatAgo(date);
   };
@@ -45,9 +55,6 @@ export default function BoardDetail({
     setShowComment(state => !state);
   };
 
-  useEffect(() => {
-    return () => setShowComment(false);
-  }, [title, content, imageUrl, createdAt, getComment]);
   return (
     <>
       <DetailContainer>
