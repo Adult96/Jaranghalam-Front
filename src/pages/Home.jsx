@@ -28,7 +28,9 @@ export default function Home() {
   if (isError) return <p>에러</p>;
   return (
     <HomeWrapper>
-      <BoardSort click={handleSortClick} />
+      <BoardSort click={handleSortClick}>
+        {{ content: { first: 'Recent', second: 'Popular' } }}
+      </BoardSort>
       <BoardList boards={getHome} />
     </HomeWrapper>
   );
