@@ -78,11 +78,13 @@ export default function Login() {
 
   const handleIdCheck = async id => {
     if (!Valid.emptyDoneCheck(id)) return;
+    console.log(__getCheckId);
     dispatch(__getCheckId(id));
   };
 
   const handleNickNameCheck = nickName => {
     if (!Valid.emptyDoneCheck(nickName)) return;
+    dispatch(__getCheckNickName(id));
     dispatch(__getCheckNickName(nickName));
   };
 
