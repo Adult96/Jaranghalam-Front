@@ -75,7 +75,9 @@ export default function BoardDetail({
             Back
           </Button>
         </Header>
-        <Img src={imageUrl} alt="userimg" />
+        <ImageContainer>
+          <Img src={imageUrl} alt="userimg" />
+        </ImageContainer>
         {liked ? (
           <HeartEmpty onClick={() => handleLike(id)}>
             <AiFillHeart />
@@ -112,6 +114,7 @@ const DetailContainer = styled.div`
   width: 30vw;
   min-width: 25rem;
   height: 100vh;
+  padding: 1rem;
   overflow-y: scroll;
   &::-webkit-scrollbar {
     width: 8px;
@@ -150,9 +153,13 @@ const Date = styled.h4`
   color: ${props => props.theme.dateColor};
 `;
 
+const ImageContainer = styled.div`
+  max-width: 100%;
+`;
+
 const Img = styled.img`
   width: 100%;
-  height: 60%;
+  height: auto;
   border-radius: 0.5rem;
   background-size: cover;
 `;
