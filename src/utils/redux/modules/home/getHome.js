@@ -1,4 +1,6 @@
+import QUERY from '../../../../constants/query';
 import Axios from '../../../api/axios';
+import { getCookie } from '../../../cookie';
 
 const { createSlice, createAsyncThunk } = require('@reduxjs/toolkit');
 
@@ -11,9 +13,11 @@ const initialState = {
 
 const axios = new Axios(process.env.REACT_APP_URL);
 
+const cookie = getCookie(QUERY.COOKIE.COOKIE_NAME);
+
 const option = {
   headers: {
-    Authorization: `Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJoaTEyMzQiLCJleHAiOjE3MDg5NTIwMDksImlhdCI6MTY3NzQxNjAwOX0.BQ1kWVIs-x7nfTBJ6l8s360nppayIhxUDMIik5p29YY`,
+    Authorization: `Bearer ${cookie ? cookie : ''}`,
   },
 };
 

@@ -1,42 +1,80 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import formatAgo from '../utils/formatDate';
 
 import { v4 as uuidv4 } from 'uuid';
+import BoardDetail from './BoardDetail';
+import { useDispatch, useSelector } from 'react-redux';
+import { __getDetail } from '../utils/redux/modules/home/getDetail';
 
 export default function MyCommentList({ myComment }) {
-  console.log(myComment);
+  const [showDetail, setShowDetail] = useState(false);
+  const dispatch = useDispatch();
+
+  const { getDetail, isLoading, isError } = useSelector(
+    state => state.getDetail,
+  );
+
+  const handleBackClick = () => {
+    setShowDetail(false);
+  };
+
+  const handleCommentClick = async postId => {
+    await setShowDetail(true);
+    await dispatch(__getDetail(postId));
+  };
 
   const setDate = (createDate, modifiedDate) => {
     return formatAgo(createDate, modifiedDate);
   };
-
+  console.log(myComment);
   return (
     <MyCommentWrapper>
-      {myComment.map(v => (
-        <Comment key={uuidv4()}>
-          <Title>
-            <span>{v.userName}</span>{' '}
-            <span>{setDate(v.createdAt, v.modifiedAt)}</span>
-          </Title>
-          <Content>{v.content}</Content>
-        </Comment>
-      ))}
+      <CommentContainer>
+        {myComment.map(v => (
+          <Comment
+            key={uuidv4()}
+            onClick={e => {
+              handleCommentClick(v.postId);
+            }}
+          >
+            <Title>
+              <span>{v.userName}</span>{' '}
+              <span>{setDate(v.createdAt, v.modifiedAt)}</span>
+            </Title>
+            <Content>{v.content}</Content>
+          </Comment>
+        ))}
+      </CommentContainer>
+      {showDetail && (
+        <BoardDetail
+          board={getDetail}
+          path={true}
+          onBackClick={handleBackClick}
+        />
+      )}
     </MyCommentWrapper>
   );
 }
 
 const MyCommentWrapper = styled.main`
+  position: relative;
   display: flex;
-  flex-direction: column;
+  justify-content: center;
   align-items: center;
-  width: 100%;
-  height: 100%;
+  height: auto;
+`;
+
+const CommentContainer = styled.div`
+  width: 60%;
+
+  @media (min-width: ${props => props.theme.screen.mobile_h}) {
+    width: 100%;
+  }
 `;
 
 const Comment = styled.li`
   display: flex;
-  width: 60%;
   margin: 1rem;
   padding: 1rem;
   border-radius: 0.5rem;

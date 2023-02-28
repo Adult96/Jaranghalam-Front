@@ -30,6 +30,7 @@ export default function My() {
       await dispatch(__getMy());
       dispatch(initMyComnt());
     } else if (innerText === 'MyComment') {
+      console.log(1);
       await dispatch(__getMyComment());
     }
   };

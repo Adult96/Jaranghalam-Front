@@ -64,7 +64,6 @@ export default function BoardDetail({
     await postLike(postId);
     path ? dispatch(__getMy()) : dispatch(__getHome({ page: 1, query: '' }));
   };
-  console.log(liked);
   return (
     <>
       <DetailContainer>
