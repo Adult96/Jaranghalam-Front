@@ -74,6 +74,8 @@ const Valid = {
       alert('공백은 검사할수 없습니다.');
       return false;
     }
+
+    return true;
   },
 };
 

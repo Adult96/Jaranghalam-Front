@@ -21,7 +21,7 @@ export const __getMy = createAsyncThunk('GET_MY', async (payload, thunkAPI) => {
     },
   };
   return await axios
-    .get(`/api/post/myPostList`, option)
+    .get(`/api/posts/my-Post-List`, option)
     .then(response => thunkAPI.fulfillWithValue(response.data.result))
     .catch(error => thunkAPI.rejectWithValue());
 });

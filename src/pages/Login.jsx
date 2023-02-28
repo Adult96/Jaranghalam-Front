@@ -28,10 +28,10 @@ export default function Login() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { isIdDone, isIdLoading, isIdError } = useSelector(
-    state => state.getCheckId
+    state => state.getCheckId,
   );
   const { isNickNameDone, isNickNameLoading, isNickNameError } = useSelector(
-    state => state.getCheckNickName
+    state => state.getCheckNickName,
   );
 
   const handleSubmit = e => {
@@ -78,11 +78,13 @@ export default function Login() {
 
   const handleIdCheck = id => {
     if (!Valid.emptyDoneCheck(id)) return;
+    console.log(__getCheckId);
     dispatch(__getCheckId(id));
   };
 
   const handleNickNameCheck = nickName => {
     if (!Valid.emptyDoneCheck(nickName)) return;
+    dispatch(__getCheckNickName(id));
     dispatch(__getCheckNickName(nickName));
   };
 
@@ -101,20 +103,20 @@ export default function Login() {
         <h1>{signUp ? <HiOutlineUserAdd /> : <AiFillLock />}</h1>
         <Label>
           <Input
-            name='id'
+            name="id"
             width={signUp ? '16rem' : '20rem'}
-            height='2.5rem'
-            fontSize='1.3rem'
-            placeholder='ID'
+            height="2.5rem"
+            fontSize="1.3rem"
+            placeholder="ID"
             value={id}
             onChange={e => setId(e.target.value)}
             autoFocus={true}
           />
           {signUp && (
             <Button
-              type='button'
-              width='4rem'
-              height='100%'
+              type="button"
+              width="4rem"
+              height="100%"
               click={() => handleIdCheck(id)}
             >
               중복 검사
@@ -122,7 +124,7 @@ export default function Login() {
           )}
           {isIdLoading && signUp && (
             <Loding>
-              <img src='/img/spinner.gif' alt='spinner' />
+              <img src="/img/spinner.gif" alt="spinner" />
             </Loding>
           )}
           {isIdDone && signUp && (
@@ -139,19 +141,19 @@ export default function Login() {
         {signUp && (
           <Label>
             <Input
-              type='text'
+              type="text"
               width={signUp ? '16rem' : '20rem'}
-              height='2.5rem'
-              fontSize='1.3rem'
+              height="2.5rem"
+              fontSize="1.3rem"
               value={nickName}
               onChange={e => setNickName(e.target.value)}
-              placeholder='NiCK NAME'
+              placeholder="NiCK NAME"
             />
             {signUp && (
               <Button
-                type='button'
-                width='4rem'
-                height='100%'
+                type="button"
+                width="4rem"
+                height="100%"
                 click={() => handleNickNameCheck(nickName)}
               >
                 중복 검사
@@ -159,7 +161,7 @@ export default function Login() {
             )}
             {isNickNameLoading && (
               <Loding>
-                <img src='/img/spinner.gif' alt='spinner' />
+                <img src="/img/spinner.gif" alt="spinner" />
               </Loding>
             )}
             {isNickNameDone && (
@@ -176,28 +178,28 @@ export default function Login() {
         )}
         <Input
           type={showPw ? 'text' : 'password'}
-          width='20rem'
-          height='2.5rem'
-          fontSize='1.3rem'
+          width="20rem"
+          height="2.5rem"
+          fontSize="1.3rem"
           value={pw}
           onChange={e => setPw(e.target.value)}
-          placeholder='PW'
+          placeholder="PW"
         />
         {signUp && (
           <Input
             type={showPw ? 'text' : 'password'}
-            width='20rem'
-            height='2.5rem'
-            fontSize='1.3rem'
+            width="20rem"
+            height="2.5rem"
+            fontSize="1.3rem"
             value={pwCheck}
             onChange={e => setPwCheck(e.target.value)}
-            placeholder='PW CHECK'
+            placeholder="PW CHECK"
           />
         )}
 
         <ShowPasswordContainer>
           <Input
-            type='checkbox'
+            type="checkbox"
             onChange={e => {
               setShowPw(e.target.checked);
             }}
@@ -205,13 +207,13 @@ export default function Login() {
           <span>Show Password</span>
         </ShowPasswordContainer>
         <ButtonContainer>
-          <Button width='10rem' height='3rem'>
+          <Button width="10rem" height="3rem">
             {signUp ? 'Enter' : 'Login'}
           </Button>
           <Button
-            width='10rem'
-            height='3rem'
-            type='button'
+            width="10rem"
+            height="3rem"
+            type="button"
             click={handleSignUp}
           >
             {signUp ? 'back' : 'SignUp'}

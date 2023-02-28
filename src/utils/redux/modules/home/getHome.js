@@ -15,7 +15,7 @@ export const __getHome = createAsyncThunk(
   'GET_HOME',
   async (payload, thunkAPI) => {
     return await axios
-      .get(`/api/post?page=${payload.page}&size=16${payload.query}`)
+      .get(`/api/posts?page=${payload.page}&size=16${payload.query}`)
       .then(response => thunkAPI.fulfillWithValue(response.data.result))
       .catch(error => thunkAPI.rejectWithValue());
   },
