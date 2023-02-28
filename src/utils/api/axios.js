@@ -19,7 +19,10 @@ export default class Axios {
         return response;
       },
       error => {
-        alert(error.response.data.errorMessage);
+        const myPage = '/api/posts/my-post-list';
+        if (error.config.url !== myPage) {
+          alert(error.response.data.errorMessage);
+        }
         return Promise.reject(error);
       },
     );
