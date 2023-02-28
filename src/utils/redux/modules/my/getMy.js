@@ -29,7 +29,13 @@ export const __getMy = createAsyncThunk('GET_MY', async (payload, thunkAPI) => {
 const getMySlice = createSlice({
   name: 'getMy',
   initialState,
-  reducers: {},
+  reducers: {
+    initMy: (state, action) => {
+      state.isMyLoading = false;
+      state.isMyError = false;
+      state.isMyDone = false;
+    },
+  },
   extraReducers: bulider => {
     bulider.addCase(__getMy.pending, (state, _) => {
       state.isMyLoading = true;

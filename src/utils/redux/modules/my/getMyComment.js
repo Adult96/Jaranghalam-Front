@@ -32,7 +32,13 @@ export const __getMyComment = createAsyncThunk(
 const getMyCommentSlice = createSlice({
   name: 'getMyComment',
   initialState,
-  reducers: {},
+  reducers: {
+    initMyComnt: (state, action) => {
+      state.isMyComntLoading = false;
+      state.isMyComntError = false;
+      state.isMyComntDone = false;
+    },
+  },
   extraReducers: bulider => {
     bulider.addCase(__getMyComment.pending, (state, _) => {
       state.isMyComntLoading = true;
