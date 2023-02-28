@@ -74,6 +74,8 @@ const Valid = {
       alert('공백은 검사할수 없습니다.');
       return false;
     }
+
+    return true;
   },
 };
 
@@ -104,7 +106,6 @@ function idType(id) {
 }
 
 function nickNameLength(nickName) {
-  console.log(nickName.length, nickName.length < 2, nickName.length > 10);
   if (nickName.length < 2 || nickName.length > 10) return false;
   return true;
 }

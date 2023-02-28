@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 
 import BoardList from '../components/BoardList';
+import Error from '../components/Error';
 import { __getMy } from '../utils/redux/modules/my/getMy';
 
 export default function My() {
@@ -15,7 +16,7 @@ export default function My() {
   }, [dispatch]);
 
   if (isLoading) return <p>로딩</p>;
-  if (isError) return <p>에러</p>;
+  if (isError) return <Error>게시글이 존재하지 않습니다.</Error>;
   return (
     <HomeWrapper>
       <BoardList boards={getMy} />

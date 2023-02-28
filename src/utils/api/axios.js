@@ -23,12 +23,14 @@ export default class Axios {
         if (error.config.url !== myPage) {
           alert(error.response.data.errorMessage);
         }
+        console.log(error);
         return Promise.reject(error);
       },
     );
   }
 
   async get(path, option) {
+    console.log(path);
     return this.instance.get(path, option);
   }
 
