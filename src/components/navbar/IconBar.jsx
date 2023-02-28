@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 
 import {
@@ -14,8 +14,13 @@ import { MdContactPage } from 'react-icons/md';
 import { Link } from 'react-router-dom';
 
 import ROUTER from '../../constants/router';
+import ContentAdd from '../../pages/ContentAdd';
 
 export default function IconBar({ showLoginIcon, showLogOut, onLogOut }) {
+  const [showModal, setShowModal] = useState(false);
+  const ModalHandler = () => {
+    setShowModal(prev => !prev);
+  };
   return (
     <IconContainer>
       <Title>
@@ -42,11 +47,12 @@ export default function IconBar({ showLoginIcon, showLogOut, onLogOut }) {
                 <MdContactPage />
               </Link>
             </My>
-            <Add id="추가">
+            <Add onClick={ModalHandler} id="추가">
               <AiOutlinePlusSquare />
             </Add>
           </>
         )}
+        {showModal ? <ContentAdd toggleModal={ModalHandler} /> : null}
       </TabIcon>
       <Login>
         {showLogOut && <BiLogIn onClick={onLogOut} />}
