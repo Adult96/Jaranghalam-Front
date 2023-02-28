@@ -57,7 +57,9 @@ export default function BoardItem({
           </ButtonContainer>
         )}
       </Header>
+      {/* <ImageContainer> */}
       <Img src={imageUrl} alt="userimg" />
+      {/* </ImageContainer> */}
       {liked ? (
         <HeartEmpty>
           <AiFillHeart />
@@ -112,9 +114,26 @@ const ButtonContainer = styled.div`
   gap: 0.5rem;
 `;
 
+// const ImageContainer = styled.div`
+//   position: relative;
+//   width: 100%;
+//   height: 0;
+//   padding-bottom: calc(500 / 500 * 100%);
+// `;
+
+// const Img = styled.img`
+//   position: absolute;
+//   top: 0;
+//   left: 0;
+//   width: 100%;
+//   height: 100%;
+//   border-radius: 0.5rem;
+//   background-size: cover;
+// `;
+
 const Img = styled.img`
-  width: 100%;
-  height: 60%;
+  max-width: 100%;
+  height: auto;
   border-radius: 0.5rem;
   background-size: cover;
 `;
