@@ -15,8 +15,11 @@ export default function MyCommentList({ myComment }) {
     <MyCommentWrapper>
       {myComment.map(v => (
         <Comment key={uuidv4()}>
-          <span>{setDate(v.createdAt, v.modifiedAt)}</span>
-          <span>{v.content}</span>
+          <Title>
+            <span>{v.userName}</span>{' '}
+            <span>{setDate(v.createdAt, v.modifiedAt)}</span>
+          </Title>
+          <Content>{v.content}</Content>
         </Comment>
       ))}
     </MyCommentWrapper>
@@ -33,4 +36,23 @@ const MyCommentWrapper = styled.main`
 
 const Comment = styled.li`
   display: flex;
+  width: 60%;
+  margin: 1rem;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  background: ${props => props.theme.bg};
+  box-shadow: 15px 15px 30px ${props => props.theme.shadowColorTop},
+    -15px -15px 30px ${props => props.theme.shadowColorBottom};
+
+  :hover {
+    background: ${props => props.theme.commentHoverColor};
+  }
+`;
+
+const Title = styled.div`
+  width: 10rem;
+`;
+
+const Content = styled.span`
+  margin: 0 1rem;
 `;

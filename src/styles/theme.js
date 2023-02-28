@@ -2,6 +2,7 @@ const color = {
   white: '#ffffff',
   light_white: '#eeeeee',
   dark_white: '#bdbdbd',
+  apple_white: '#e8e8e8',
   red: '#dc1a13',
   pink: '#fe918d',
   dark_pink: '#ff6863',
@@ -77,6 +78,9 @@ const light = {
   bgBtnColor: color.light_white,
   bgInputColor: color.light_white,
   dateColor: color.dark_white,
+  commentHoverColor: color.apple_white,
+  shadowColorTop: '#bebebe',
+  shadowColorBottom: '#ffffff',
 };
 
 const dark = {
@@ -93,6 +97,9 @@ const dark = {
   bgBtnColor: color.shark_blue,
   bgInputColor: color.shark_blue,
   dateColor: color.light_grey,
+  commentHoverColor: color.shark_light_blue,
+  shadowColorTop: '#363346',
+  shadowColorBottom: '#282634',
 };
 
 export const lightTheme = { ...light };
