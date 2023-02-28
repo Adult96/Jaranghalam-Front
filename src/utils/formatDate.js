@@ -1,11 +1,12 @@
-export default function formatAgo(data) {
+export default function formatAgo(createdDate, modifiedDate) {
   const nowDate = new Date();
-  const date = new Date(data);
+  const date = new Date(modifiedDate ? modifiedDate : createdDate);
   const year = nowDate.getFullYear() - date.getFullYear();
   const month = nowDate.getMonth() - date.getMonth();
   const day = nowDate.getDate() - date.getDate();
   const h = nowDate.getHours() - date.getHours();
   const m = nowDate.getMinutes() - date.getMinutes();
+  console.log(date, year, month, day, h, m, createdDate, modifiedDate);
   if (year) {
     return ` · ${year}년 전`;
   }

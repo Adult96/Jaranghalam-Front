@@ -7,8 +7,8 @@ import { v4 as uuidv4 } from 'uuid';
 export default function MyCommentList({ myComment }) {
   console.log(myComment);
 
-  const setDate = date => {
-    return formatAgo(date);
+  const setDate = (createDate, modifiedDate) => {
+    return formatAgo(createDate, modifiedDate);
   };
 
   return (
