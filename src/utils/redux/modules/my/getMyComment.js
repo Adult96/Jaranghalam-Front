@@ -57,4 +57,5 @@ const getMyCommentSlice = createSlice({
   },
 });
 
+export const { initMyComnt } = getMyCommentSlice.actions;
 export default getMyCommentSlice.reducer;

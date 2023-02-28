@@ -54,4 +54,5 @@ const getMySlice = createSlice({
   },
 });
 
+export const { initMy } = getMySlice.actions;
 export default getMySlice.reducer;
