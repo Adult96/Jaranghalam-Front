@@ -19,6 +19,7 @@ export default function BoardDetail({
     content,
     imageUrl,
     createdAt,
+    modifiedAt,
     liked,
     postLikeCount,
     // commentList,
@@ -47,8 +48,8 @@ export default function BoardDetail({
     }
   }, [getComment.length]);
 
-  const setDate = date => {
-    return formatAgo(date);
+  const setDate = (createDate, modifiedDate) => {
+    return formatAgo(createDate, modifiedDate);
   };
 
   const setformatLike = cnt => {
@@ -70,7 +71,7 @@ export default function BoardDetail({
         <Header>
           <TitleText>
             <h3>{userName}</h3>
-            <Date>{setDate(createdAt)}</Date>
+            <Date>{setDate(createdAt, modifiedAt)}</Date>
           </TitleText>
           <Button width="4rem" height="1.5rem" type="sort" click={onBackClick}>
             Back

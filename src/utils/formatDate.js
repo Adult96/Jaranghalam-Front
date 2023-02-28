@@ -6,7 +6,6 @@ export default function formatAgo(createdDate, modifiedDate) {
   const day = nowDate.getDate() - date.getDate();
   const h = nowDate.getHours() - date.getHours();
   const m = nowDate.getMinutes() - date.getMinutes();
-  console.log(date, year, month, day, h, m, createdDate, modifiedDate);
   if (year) {
     return ` · ${year}년 전`;
   }

@@ -13,6 +13,7 @@ export default function BoardItem({
     content,
     imageUrl,
     createdAt,
+    modifiedAt,
     liked,
     postLikeCount,
   },
@@ -20,8 +21,8 @@ export default function BoardItem({
   handleEdit,
   handleDelete,
 }) {
-  const setDate = date => {
-    return formatAgo(date);
+  const setDate = (createDate, modifiedDate) => {
+    return formatAgo(createDate, modifiedDate);
   };
 
   const setformatLike = cnt => {
@@ -33,7 +34,7 @@ export default function BoardItem({
       <Header>
         <HeaderTitle>
           <h3>{userName}</h3>
-          <Date>{setDate(createdAt)}</Date>
+          <Date>{setDate(createdAt, modifiedAt)}</Date>
         </HeaderTitle>
         {path && (
           <ButtonContainer>

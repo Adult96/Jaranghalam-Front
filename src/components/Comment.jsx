@@ -10,6 +10,7 @@ import { deleteComment, postComment, putComment } from '../utils/api/comment';
 import { useDispatch } from 'react-redux';
 import { __getComment } from '../utils/redux/modules/comment/getComment';
 import Input from '../elements/Input';
+import formatAgo from '../utils/formatDate';
 
 export default function Comment({ id, comment, loginName }) {
   const [commentText, setCommentText] = useState('');
@@ -67,6 +68,10 @@ export default function Comment({ id, comment, loginName }) {
     dispatch(__getComment(id));
   };
 
+  const setDate = (createDate, modifiedDate) => {
+    return formatAgo(createDate, modifiedDate);
+  };
+
   return (
     <CommentContainer ref={scrollRef}>
       {comment.map(v => (
@@ -89,7 +94,7 @@ export default function Comment({ id, comment, loginName }) {
               )}
             </span>
           </Content>
-          <Time>{'1시간전'}</Time>
+          <Time>{setDate(v.createdAt, v.modifiedAt)}</Time>
           {v.userName === loginName && (
             <Label id={v.id} ref={e => (labelRef.current[v.id] = e)}>
               <Input
