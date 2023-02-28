@@ -4,17 +4,20 @@ import axios from 'axios';
 export const __postContent = createAsyncThunk(
   'postContent/postContent',
   async (payload, thunkAPI) => {
+    console.log(payload);
     try {
-      const response = await axios.post('http://localhost:4001/board', {
-        title: payload.title,
-        content: payload.content,
-      });
+      const response = await axios.post(
+        'http://13.209.11.12/api/post',
+        payload.formData,
+        payload.config,
+      );
       console.log(response.data);
       return thunkAPI.fulfillWithValue(response.data);
     } catch (error) {
+      console.log('에러입니다', error);
       thunkAPI.rejectWithValue();
     }
-  }
+  },
 );
 
 const initialState = {
@@ -28,7 +31,7 @@ const postContentSlice = createSlice({
   name: 'postContent',
   initialState,
   reducers: {},
-  extraReducers: (builder) => {
+  extraReducers: builder => {
     builder
       .addCase(__postContent.fulfilled, (state, action) => {
         console.log(action.payload);

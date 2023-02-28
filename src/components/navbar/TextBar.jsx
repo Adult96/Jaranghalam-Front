@@ -1,38 +1,47 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-
+import { useState } from 'react';
 import ROUTER from '../../constants/router';
+import ContentAdd from '../../pages/ContentAdd';
 
 export default function TextBar({ showLoginIcon, showLogOut, onLogOut }) {
   console.log(showLogOut);
+  const [showModal, setShowModal] = useState(false);
+  const ModalHandler = () => {
+    setShowModal(prev => !prev);
+  };
   return (
-    <TextContainer>
-      <Title>Jaranghalam</Title>
+    <>
+      <TextContainer>
+        <Title>Jaranghalam</Title>
 
-      <TabText>
-        {showLoginIcon && (
-          <Home>
-            <Link to='/'>HOME</Link>
-          </Home>
-        )}
-        {showLogOut && (
-          <>
-            <Like>LIKE</Like>
-            <Add>ADD</Add>
-          </>
-        )}
-      </TabText>
-      <Login>
-        {showLogOut && <div onClick={onLogOut}>LogOut</div>}
-        {showLoginIcon && !showLogOut && (
-          <Link to={ROUTER.PATH.LOGIN}>Login</Link>
-        )}
-        {!showLoginIcon && !showLogOut && (
-          <Link to={ROUTER.PATH.BACK}>Back</Link>
-        )}
-      </Login>
-    </TextContainer>
+        <TabText>
+          {showLoginIcon && (
+            <Home>
+              <Link to="/">HOME</Link>
+            </Home>
+          )}
+          {showLogOut && (
+            <>
+              <Like>LIKE</Like>
+              <Add onClick={ModalHandler}>ADD</Add>
+            </>
+          )}
+        </TabText>
+
+        <Login>
+          {showLogOut && <div onClick={onLogOut}>LogOut</div>}
+          {showLoginIcon && !showLogOut && (
+            <Link to={ROUTER.PATH.LOGIN}>Login</Link>
+          )}
+          {!showLoginIcon && !showLogOut && (
+            <Link to={ROUTER.PATH.BACK}>Back</Link>
+          )}
+        </Login>
+      </TextContainer>
+      {showModal ? <ContentAdd toggleModal={ModalHandler} /> : null}
+    </>
   );
 }
 

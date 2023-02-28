@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { v4 as uuidv4 } from 'uuid';
 import BoardDetail from './BoardDetail';
-
 import BoardItem from './BoardItem';
 import BoardSort from './BoardSort';
 

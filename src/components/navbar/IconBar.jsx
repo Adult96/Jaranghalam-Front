@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 
 import {
@@ -12,34 +12,40 @@ import { BiLogIn, BiArrowBack } from 'react-icons/bi';
 import { Link } from 'react-router-dom';
 
 import ROUTER from '../../constants/router';
+import ContentAdd from '../../pages/ContentAdd';
 
 export default function IconBar({ showLoginIcon, showLogOut, onLogOut }) {
+  const [showModal, setShowModal] = useState(false);
+  const ModalHandler = () => {
+    setShowModal(prev => !prev);
+  };
   return (
     <IconContainer>
       <Title>
-        <AiFillInstagram id='Jaranghalem' />
+        <AiFillInstagram id="Jaranghalem" />
         <TitleText>
           <span>Jaranghalam</span>
         </TitleText>
       </Title>
       <TabIcon>
         {showLoginIcon && (
-          <Home id='홈'>
-            <Link to='/'>
+          <Home id="홈">
+            <Link to="/">
               <AiFillHome />
             </Link>
           </Home>
         )}
         {showLogOut && (
           <>
-            <Like id='좋아요'>
+            <Like id="좋아요">
               <AiOutlineHeart />
             </Like>
-            <Add id='추가'>
+            <Add onClick={ModalHandler} id="추가">
               <AiOutlinePlusSquare />
             </Add>
           </>
         )}
+        {showModal ? <ContentAdd toggleModal={ModalHandler} /> : null}
       </TabIcon>
       <Login>
         {showLogOut && <BiLogIn onClick={onLogOut} />}
