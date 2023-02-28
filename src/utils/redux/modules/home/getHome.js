@@ -43,7 +43,7 @@ const getHomeSlice = createSlice({
     bulider.addCase(__getHome.fulfilled, (state, action) => {
       state.isLoading = false;
       state.isError = false;
-      state.getHome = action.payload;
+      state.getHome = [...state.getHome].concat(action.payload);
     });
     bulider.addCase(__getHome.rejected, (state, action) => {
       state.isLoading = false;

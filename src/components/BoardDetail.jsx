@@ -31,7 +31,6 @@ export default function BoardDetail({
   const { getComment, isLoading, isError } = useSelector(
     state => state.getComment,
   );
-
   const dispatch = useDispatch();
 
   useEffect(() => {
