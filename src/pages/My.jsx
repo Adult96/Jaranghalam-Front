@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 
 import BoardList from '../components/BoardList';
+import BoardSort from '../components/BoardSort';
 import Error from '../components/Error';
 import { __getMy } from '../utils/redux/modules/my/getMy';
 
@@ -15,10 +16,22 @@ export default function My() {
     dispatch(__getMy());
   }, [dispatch]);
 
+  const handleSortClick = e => {
+    const innerText = e.target.innerText;
+    if (innerText === 'My') {
+      // dispatch(__getMy({ page: 1, query: '' }));
+    } else if (innerText === 'MyComment') {
+      // dispatch(__getMyComment({ page: 1, query: '&sortBy=postLikeCount' }));
+    }
+  };
+
   if (isLoading) return <p>로딩</p>;
   if (isError) return <Error>게시글이 존재하지 않습니다.</Error>;
   return (
     <HomeWrapper>
+      <BoardSort click={handleSortClick}>
+        {{ content: { first: 'My', second: 'MyComment' } }}
+      </BoardSort>
       <BoardList boards={getMy} />
     </HomeWrapper>
   );
