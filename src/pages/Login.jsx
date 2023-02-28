@@ -76,7 +76,7 @@ export default function Login() {
     }
   };
 
-  const handleIdCheck = id => {
+  const handleIdCheck = async id => {
     if (!Valid.emptyDoneCheck(id)) return;
     console.log(__getCheckId);
     dispatch(__getCheckId(id));

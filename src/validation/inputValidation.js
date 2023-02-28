@@ -106,7 +106,6 @@ function idType(id) {
 }
 
 function nickNameLength(nickName) {
-  console.log(nickName.length, nickName.length < 2, nickName.length > 10);
   if (nickName.length < 2 || nickName.length > 10) return false;
   return true;
 }

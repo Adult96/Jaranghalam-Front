@@ -6,18 +6,27 @@ import { AiOutlineEdit } from 'react-icons/ai';
 import { RxCross1 } from 'react-icons/rx';
 
 import Button from '../elements/Button';
-import { deleteComment, postComment } from '../utils/api/comment';
+import { deleteComment, postComment, putComment } from '../utils/api/comment';
 import { useDispatch } from 'react-redux';
 import { __getComment } from '../utils/redux/modules/comment/getComment';
+import Input from '../elements/Input';
+import formatAgo from '../utils/formatDate';
 
 export default function Comment({ id, comment, loginName }) {
   const [commentText, setCommentText] = useState('');
   const textAreaRef = useRef();
+  const labelRef = useRef([]);
+  const scrollRef = useRef();
 
   const dispatch = useDispatch();
 
   useEffect(() => {
     textAreaRef.current.focus();
+    scrollRef.current.scrollIntoView({
+      behavior: 'smooth',
+      block: 'end',
+      inline: 'nearest',
+    });
   }, []);
 
   const handleResizeText = () => {
@@ -38,8 +47,33 @@ export default function Comment({ id, comment, loginName }) {
     dispatch(__getComment(id));
   };
 
+  const handleShowComment = e => {
+    const commentId = e.target.parentElement.id;
+    const showComment = labelRef.current.filter(v => v.id === commentId);
+    const commentValue = comment.filter(v => v.id === Number(commentId))[0]
+      .content;
+
+    showComment[0].style.display = 'flex';
+    showComment[0].firstChild.value = commentValue;
+  };
+
+  const handleEditClose = e => {
+    e.target.parentElement.style.display = 'none';
+  };
+
+  const handleEdit = async (e, id) => {
+    const commentId = e.target.parentElement.id;
+    const editValue = e.target.parentElement.firstChild.value;
+    await putComment(commentId, { content: editValue });
+    dispatch(__getComment(id));
+  };
+
+  const setDate = (createDate, modifiedDate) => {
+    return formatAgo(createDate, modifiedDate);
+  };
+
   return (
-    <CommentContainer>
+    <CommentContainer ref={scrollRef}>
       {comment.map(v => (
         <CommentText key={uuidv4()}>
           <Content>
@@ -50,7 +84,7 @@ export default function Comment({ id, comment, loginName }) {
             <span>
               {v.userName === loginName && (
                 <User>
-                  <Edit onClick={handleDeleteComment}>
+                  <Edit id={v.id} onClick={handleShowComment}>
                     <AiOutlineEdit />
                   </Edit>
                   <Delete id={v.id} onClick={handleDeleteComment}>
@@ -60,7 +94,24 @@ export default function Comment({ id, comment, loginName }) {
               )}
             </span>
           </Content>
-          <Time>{'1시간전'}</Time>
+          <Time>{setDate(v.createdAt, v.modifiedAt)}</Time>
+          {v.userName === loginName && (
+            <Label id={v.id} ref={e => (labelRef.current[v.id] = e)}>
+              <Input
+                width="100%"
+                height="2rem"
+                fontSize="4rem"
+                mode="comment"
+                placeholder="Edit Comment..."
+              />
+              <Button width="3rem" type="update" click={e => handleEdit(e, id)}>
+                Edit
+              </Button>
+              <Button width="2.5rem" type="update" click={handleEditClose}>
+                Close
+              </Button>
+            </Label>
+          )}
         </CommentText>
       ))}
       <InputContainer>
@@ -140,4 +191,12 @@ const Delete = styled.div`
     color: ${props => props.theme.color.red};
     transform: scale(1.2);
   }
+`;
+
+const Label = styled.label`
+  display: none;
+  justify-content: space-between;
+  width: 100%;
+  border: 1px solid ${props => props.theme.borderColor};
+  border-radius: 0.2rem;
 `;

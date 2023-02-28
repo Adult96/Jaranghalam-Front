@@ -6,8 +6,8 @@ const { createSlice, createAsyncThunk } = require('@reduxjs/toolkit');
 
 const initialState = {
   getMy: [],
-  isLoading: false,
-  isError: false,
+  isMyLoading: false,
+  isMyError: false,
   error: null,
 };
 
@@ -17,11 +17,11 @@ export const __getMy = createAsyncThunk('GET_MY', async (payload, thunkAPI) => {
   const cookie = getCookie(QUERY.COOKIE.COOKIE_NAME);
   const option = {
     headers: {
-      Authorization: `Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJoaTEyMzQiLCJleHAiOjE3MDg5NTIwMDksImlhdCI6MTY3NzQxNjAwOX0.BQ1kWVIs-x7nfTBJ6l8s360nppayIhxUDMIik5p29YY`,
+      Authorization: `Bearer ${cookie}`,
     },
   };
   return await axios
-    .get(`/api/posts/my-Post-List`, option)
+    .get(`/api/posts/my-post-list`, option)
     .then(response => thunkAPI.fulfillWithValue(response.data.result))
     .catch(error => thunkAPI.rejectWithValue());
 });
@@ -29,23 +29,30 @@ export const __getMy = createAsyncThunk('GET_MY', async (payload, thunkAPI) => {
 const getMySlice = createSlice({
   name: 'getMy',
   initialState,
-  reducers: {},
+  reducers: {
+    initMy: (state, action) => {
+      state.isMyLoading = false;
+      state.isMyError = false;
+      state.isMyDone = false;
+    },
+  },
   extraReducers: bulider => {
     bulider.addCase(__getMy.pending, (state, _) => {
-      state.isLoading = true;
-      state.isError = false;
+      state.isMyLoading = true;
+      state.isMyError = false;
     });
     bulider.addCase(__getMy.fulfilled, (state, action) => {
-      state.isLoading = false;
-      state.isError = false;
+      state.isMyLoading = false;
+      state.isMyError = false;
       state.getMy = action.payload;
     });
     bulider.addCase(__getMy.rejected, (state, action) => {
-      state.isLoading = false;
-      state.isError = true;
+      state.isMyLoading = false;
+      state.isMyError = true;
       state.error = action.payload;
     });
   },
 });
 
+export const { initMy } = getMySlice.actions;
 export default getMySlice.reducer;
