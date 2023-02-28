@@ -13,7 +13,7 @@ export default function BoardItem({
     content,
     imageUrl,
     createdAt,
-    like,
+    liked,
     postLikeCount,
   },
   path,
@@ -57,7 +57,7 @@ export default function BoardItem({
         )}
       </Header>
       <Img src={imageUrl} alt="userimg" />
-      {like ? (
+      {liked ? (
         <HeartEmpty>
           <AiFillHeart />
         </HeartEmpty>

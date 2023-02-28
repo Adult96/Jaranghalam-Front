@@ -66,7 +66,11 @@ export default function BoardList({ boards }) {
           ))}
         </BoardContainer>
         {showDetail && (
-          <BoardDetail board={getDetail} onBackClick={handleBackClick} />
+          <BoardDetail
+            board={getDetail}
+            path={path}
+            onBackClick={handleBackClick}
+          />
         )}
       </BoardWrapper>
     </>

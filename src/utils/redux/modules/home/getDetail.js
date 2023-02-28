@@ -11,11 +11,17 @@ const initialState = {
 
 const axios = new Axios(process.env.REACT_APP_URL);
 
+const option = {
+  headers: {
+    Authorization: `Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJoaTEyMzQiLCJleHAiOjE3MDg5NTIwMDksImlhdCI6MTY3NzQxNjAwOX0.BQ1kWVIs-x7nfTBJ6l8s360nppayIhxUDMIik5p29YY`,
+  },
+};
+
 export const __getDetail = createAsyncThunk(
   'GET_DETAIL',
   async (payload, thunkAPI) => {
     return await axios
-      .get(`/api/posts/${payload}`)
+      .get(`/api/posts/${payload}`, option)
       .then(response => thunkAPI.fulfillWithValue(response.data.result))
       .catch(error => thunkAPI.rejectWithValue());
   },

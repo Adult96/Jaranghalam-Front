@@ -7,6 +7,9 @@ import Comment from './Comment';
 import formatLike from '../utils/formatLike';
 import { useDispatch, useSelector } from 'react-redux';
 import { __getComment } from '../utils/redux/modules/comment/getComment';
+import { postLike } from '../utils/api/like';
+import { __getMy } from '../utils/redux/modules/my/getMy';
+import { __getHome } from '../utils/redux/modules/home/getHome';
 
 export default function BoardDetail({
   board: {
@@ -20,6 +23,7 @@ export default function BoardDetail({
     postLikeCount,
     // commentList,
   },
+  path,
   onBackClick,
 }) {
   const [showComment, setShowComment] = useState(false);
@@ -55,6 +59,11 @@ export default function BoardDetail({
     setShowComment(state => !state);
   };
 
+  const handleLike = async postId => {
+    await postLike(postId);
+    path ? dispatch(__getMy()) : dispatch(__getHome({ page: 1, query: '' }));
+  };
+  console.log(liked);
   return (
     <>
       <DetailContainer>
@@ -69,11 +78,11 @@ export default function BoardDetail({
         </Header>
         <Img src={imageUrl} alt="userimg" />
         {liked ? (
-          <HeartEmpty>
+          <HeartEmpty onClick={() => handleLike(id)}>
             <AiFillHeart />
           </HeartEmpty>
         ) : (
-          <Heart>
+          <Heart onClick={() => handleLike(id)}>
             <AiOutlineHeart />
           </Heart>
         )}
