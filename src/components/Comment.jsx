@@ -2,7 +2,9 @@ import React, { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import { v4 as uuidv4 } from 'uuid';
 
+import { AiOutlineEdit } from 'react-icons/ai';
 import { RxCross1 } from 'react-icons/rx';
+
 import Button from '../elements/Button';
 import { deleteComment, postComment } from '../utils/api/comment';
 import { useDispatch } from 'react-redux';
@@ -47,9 +49,14 @@ export default function Comment({ id, comment, loginName }) {
             </span>
             <span>
               {v.userName === loginName && (
-                <Delete id={v.id} onClick={handleDeleteComment}>
-                  <RxCross1 />
-                </Delete>
+                <User>
+                  <Edit onClick={handleDeleteComment}>
+                    <AiOutlineEdit />
+                  </Edit>
+                  <Delete id={v.id} onClick={handleDeleteComment}>
+                    <RxCross1 />
+                  </Delete>
+                </User>
               )}
             </span>
           </Content>
@@ -114,6 +121,18 @@ const TextArea = styled.textarea`
   font-size: ${props => props.theme.fontSize.small};
   resize: none;
   overflow: hidden;
+`;
+
+const User = styled.div`
+  display: flex;
+  gap: 0.5rem;
+`;
+
+const Edit = styled.div`
+  :hover {
+    color: ${props => props.theme.color.dark_mint};
+    transform: scale(1.2);
+  }
 `;
 
 const Delete = styled.div`
