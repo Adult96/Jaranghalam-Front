@@ -22,6 +22,8 @@ export default class Axios {
 
           const userName = jwt_decode(parseToken);
           Storage.setUserName(userName.sub);
+        } else {
+          Storage.removeUserName();
         }
 
         if (refreshToken) {
@@ -33,10 +35,18 @@ export default class Axios {
       },
       error => {
         console.log(error);
-        const myPage = '/api/posts/my-post-list';
-        if (error.config.url !== myPage) {
-          alert(error.response.data.errorMessage);
+        // const myPage = '/api/posts/my-post-list';
+        const errorMessage = error.response.data.errorMessage;
+        if (errorMessage === 'Token Error') {
+          Storage.removeUserName();
+          window.location.reload();
+        } else {
+          alert(errorMessage);
         }
+
+        // if (error.config.url !== myPage) {
+        //   alert(errorMessage);
+        // }
         console.log(error);
         return Promise.reject(error);
       },

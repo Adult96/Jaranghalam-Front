@@ -27,12 +27,9 @@ export default function Home() {
   };
 
   useEffect(() => {
-    // if (getHome.length === 0) {
     console.log('첫 포스트 로딩');
     dispatch(initGetHome());
     dispatch(__getHome({ page: page.current, query: '' }));
-    // return;
-    // }
   }, []);
 
   useEffect(() => {

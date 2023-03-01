@@ -10,6 +10,7 @@ import ROUTER from './constants/router';
 import { getCookie, removeCookie } from './utils/cookie';
 import Storage from './utils/localStorage';
 import ContentAdd from './components/ContentAdd';
+import QUERY from './constants/query';
 
 function App() {
   const { pathname } = useLocation();
@@ -20,7 +21,7 @@ function App() {
   const navigate = useNavigate();
 
   const theme = darkMode ? darkTheme : lightTheme;
-  console.log(1);
+
   useEffect(() => {
     pathname === ROUTER.PATH.LOGIN
       ? setShowLoginIcon(false)
@@ -28,17 +29,30 @@ function App() {
   }, [pathname]);
 
   useEffect(() => {
+    const cookie = getCookie(QUERY.COOKIE.COOKIE_NAME);
     const userName = Storage.getUserName();
-    if (userName && pathname === ROUTER.PATH.LOGIN) {
+    if (cookie && pathname === ROUTER.PATH.LOGIN) {
       navigate(ROUTER.PATH.HOME);
-    } else if (userName && pathname === ROUTER.PATH.HOME) {
+    } else if (cookie && pathname === ROUTER.PATH.HOME) {
       setShowLogOut(true);
-    } else if (userName && pathname === ROUTER.PATH.MY) {
+    } else if (cookie && pathname === ROUTER.PATH.MY) {
       setShowLogOut(true);
-    } else if (userName && pathname === ROUTER.PATH.LIKE) {
+    } else if (cookie && pathname === ROUTER.PATH.LIKE) {
       setShowLogOut(true);
+    } else if (
+      (!cookie || !userName) ===
+      (pathname === ROUTER.PATH.MY ||
+        pathname === ROUTER.PATH.LIKE ||
+        showModal === true)
+    ) {
+      Storage.removeUserName();
+      setShowModal(false);
+      setShowLogOut(false);
+      navigate(ROUTER.PATH.HOME);
+    } else {
+      Storage.removeUserName();
     }
-  }, [navigate, pathname]);
+  }, [navigate, pathname, showModal]);
 
   const handleLogOut = () => {
     removeCookie('myToken');
