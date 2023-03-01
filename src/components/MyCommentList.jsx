@@ -20,8 +20,8 @@ export default function MyCommentList({ myComment }) {
   };
 
   const handleCommentClick = async postId => {
-    await setShowDetail(true);
     await dispatch(__getDetail(postId));
+    await setShowDetail(true);
   };
 
   const setDate = (createDate, modifiedDate) => {
@@ -61,7 +61,7 @@ const MyCommentWrapper = styled.main`
   position: relative;
   display: flex;
   justify-content: center;
-  align-items: center;
+  /* align-items: center; */
   height: auto;
 `;
 
