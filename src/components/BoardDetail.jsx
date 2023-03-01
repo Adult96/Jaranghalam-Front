@@ -29,6 +29,7 @@ export default function BoardDetail({
   onBackClick,
 }) {
   const [likeClick, setLikeClick] = useState(false);
+  const [likeCnt, setLikeCnt] = useState(false);
   const [showComment, setShowComment] = useState(false);
   const { getComment, isLoading, isError } = useSelector(
     state => state.getComment,
@@ -57,6 +58,10 @@ export default function BoardDetail({
   };
 
   const setformatLike = cnt => {
+    if (likeCnt) {
+      cnt = likeClick ? cnt + 1 : cnt - 1;
+    }
+
     return formatLike(cnt);
   };
 
@@ -66,11 +71,12 @@ export default function BoardDetail({
 
   const handleLike = async postId => {
     setLikeClick(state => !state);
+    setLikeCnt(state => !state);
     await postLike(postId);
     if (path) {
       dispatch(editMy(postId));
     } else {
-      dispatch(editHomeLike(postId));
+      dispatch(editHomeLike({ postId, likeClick: !likeClick }));
     }
   };
 

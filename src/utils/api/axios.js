@@ -12,7 +12,10 @@ export default class Axios {
 
     this.instance.interceptors.response.use(
       response => {
+        console.log(response);
         const token = response.headers.authorization;
+        const refreshToken = response.headers.refreshtoken;
+
         if (token) {
           const [, parseToken] = token.split(' ');
           setCookie(QUERY.COOKIE.COOKIE_NAME, parseToken);
@@ -21,9 +24,15 @@ export default class Axios {
           Storage.setUserName(userName.sub);
         }
 
+        if (refreshToken) {
+          const [, parseToken] = token.split(' ');
+          setCookie(QUERY.COOKIE.REFRESH_NAME, parseToken);
+        }
+
         return response;
       },
       error => {
+        console.log(error);
         const myPage = '/api/posts/my-post-list';
         if (error.config.url !== myPage) {
           alert(error.response.data.errorMessage);
