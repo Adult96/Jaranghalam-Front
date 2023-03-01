@@ -1,5 +1,6 @@
 const COOKIE = {
   COOKIE_NAME: 'myToken',
+  REFRESH_NAME: 'myRefreshToken',
 };
 
 const AXIOS_PATH = {

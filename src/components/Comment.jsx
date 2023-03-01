@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { v4 as uuidv4 } from 'uuid';
 
 import { AiOutlineEdit } from 'react-icons/ai';
@@ -11,8 +11,9 @@ import { useDispatch } from 'react-redux';
 import { __getComment } from '../utils/redux/modules/comment/getComment';
 import Input from '../elements/Input';
 import formatAgo from '../utils/formatDate';
+import { __getMyComment } from '../utils/redux/modules/my/getMyComment';
 
-export default function Comment({ id, comment, loginName }) {
+export default function Comment({ id, comment, loginName, path }) {
   const [commentText, setCommentText] = useState('');
   const textAreaRef = useRef();
   const labelRef = useRef([]);
@@ -37,14 +38,22 @@ export default function Comment({ id, comment, loginName }) {
 
   const handleAddComment = async () => {
     await postComment(id, { content: commentText });
-    dispatch(__getComment(id));
+    if (path) {
+      await dispatch(__getMyComment());
+    } else {
+      await dispatch(__getComment(id));
+    }
     setCommentText('');
   };
 
   const handleDeleteComment = async e => {
     const commentId = e.target.parentElement.id;
     await deleteComment(commentId);
-    dispatch(__getComment(id));
+    if (path) {
+      dispatch(__getMyComment());
+    } else {
+      dispatch(__getComment(id));
+    }
   };
 
   const handleShowComment = e => {
@@ -114,7 +123,7 @@ export default function Comment({ id, comment, loginName }) {
           )}
         </CommentText>
       ))}
-      <InputContainer>
+      <InputContainer loginName={loginName ? true : false}>
         <TextArea
           ref={textAreaRef}
           value={commentText}
@@ -156,7 +165,15 @@ const Time = styled.p`
 `;
 
 const InputContainer = styled.div`
-  display: flex;
+  ${props =>
+    props.loginName
+      ? css`
+          display: flex;
+        `
+      : css`
+          display: none;
+        `}
+
   align-items: center;
   justify-content: space-between;
   color: ${props => props.theme.text};

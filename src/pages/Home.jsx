@@ -1,11 +1,11 @@
 import React, { useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 import BoardSort from '../components/BoardSort';
 import BoardList from '../components/BoardList';
-import { __getHome } from '../utils/redux/modules/home/getHome';
+import { initGetHome, __getHome } from '../utils/redux/modules/home/getHome';
 import { useInView } from 'react-intersection-observer';
 
 export default function Home() {
@@ -15,21 +15,21 @@ export default function Home() {
   const dispatch = useDispatch();
   const { getHome, isLoading, isError } = useSelector(state => state.getHome);
 
-  const handleSortClick = e => {
+  const handleSortClick = async e => {
     const innerText = e.target.innerText;
     if (innerText === 'Recent') {
-      dispatch(__getHome({ page: page, query: '' }));
+      await dispatch(initGetHome());
+      dispatch(__getHome({ page: 1, query: '' }));
     } else if (innerText === 'Popular') {
-      dispatch(__getHome({ page: page, query: '&sortBy=postLikeCount' }));
+      await dispatch(initGetHome());
+      dispatch(__getHome({ page: 1, query: '&sortBy=postLikeCount' }));
     }
   };
 
   useEffect(() => {
-    if (getHome.length === 0) {
-      console.log('첫 포스트 로딩');
-      dispatch(__getHome({ page: page.current, query: '' }));
-      return;
-    }
+    console.log('첫 포스트 로딩');
+    dispatch(initGetHome());
+    dispatch(__getHome({ page: page.current, query: '' }));
   }, []);
 
   useEffect(() => {
@@ -53,7 +53,10 @@ export default function Home() {
         {{ content: { first: 'Recent', second: 'Popular' } }}
       </BoardSort>
       <BoardList boards={getHome} />
-      <InfiniteScroll ref={ref}>
+      <InfiniteScroll
+        ref={ref}
+        setHeight={getHome.length === pageData.current.length ? true : false}
+      >
         {isLoading && <img src="/img/spinner.gif" alt="spinner" />}
         {getHome.length === pageData.current.length && (
           <p>마지막 페이지 입니다.</p>
@@ -101,5 +104,13 @@ const InfiniteScroll = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 10rem;
+  height: 100%;
+  ${props =>
+    props.setHeight
+      ? css`
+          height: 10rem;
+        `
+      : css`
+          height: 100%;
+        `}
 `;

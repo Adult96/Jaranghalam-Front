@@ -8,12 +8,17 @@ import ThemeMode from './components/ThemeMode';
 import Navbar from './components/navbar/Navbar';
 import ROUTER from './constants/router';
 import { getCookie, removeCookie } from './utils/cookie';
+import Storage from './utils/localStorage';
+import ContentAdd from './components/ContentAdd';
+import QUERY from './constants/query';
+import { postRefresh } from './utils/api/reFresh';
 
 function App() {
   const { pathname } = useLocation();
   const [darkMode, setDarkMode] = useState(false);
   const [showLoginIcon, setShowLoginIcon] = useState(false);
   const [showLogOut, setShowLogOut] = useState(false);
+  const [showModal, setShowModal] = useState(false);
   const navigate = useNavigate();
 
   const theme = darkMode ? darkTheme : lightTheme;
@@ -25,28 +30,55 @@ function App() {
   }, [pathname]);
 
   useEffect(() => {
-    const cookie = getCookie('myToken');
+    const cookie = getCookie(QUERY.COOKIE.COOKIE_NAME);
+    const refresh = getCookie(QUERY.COOKIE.REFRESH_NAME);
+
+    const userName = Storage.getUserName();
+    // if (!cookie && refresh) {
+    //   postRefresh(refresh);
+    // } else
+
     if (cookie && pathname === ROUTER.PATH.LOGIN) {
       navigate(ROUTER.PATH.HOME);
     } else if (cookie && pathname === ROUTER.PATH.HOME) {
       setShowLogOut(true);
     } else if (cookie && pathname === ROUTER.PATH.MY) {
       setShowLogOut(true);
+    } else if (cookie && pathname === ROUTER.PATH.LIKE) {
+      setShowLogOut(true);
+    } else if (
+      (!cookie || !userName) ===
+      (pathname === ROUTER.PATH.MY ||
+        pathname === ROUTER.PATH.LIKE ||
+        showModal === true)
+    ) {
+      Storage.removeUserName();
+      setShowModal(false);
+      setShowLogOut(false);
+      navigate(ROUTER.PATH.HOME);
     }
-  }, [navigate, pathname]);
+  }, [navigate, pathname, showModal]);
 
   const handleLogOut = () => {
-    removeCookie('myToken');
+    removeCookie(QUERY.COOKIE.COOKIE_NAME);
+    Storage.removeUserName();
     setShowLogOut(false);
     navigate(ROUTER.PATH.HOME);
+  };
+
+  const handleShowModal = () => {
+    setShowModal(prev => !prev);
   };
 
   return (
     <ThemeProvider theme={theme}>
       <GlobalStyle />
       <ThemeMode darkMode={darkMode} onDarkMode={setDarkMode} />
+      {showModal ? <ContentAdd toggleModal={handleShowModal} /> : null}
       <Wrapper>
         <Navbar
+          modal={showModal}
+          onShowModal={handleShowModal}
           showLoginIcon={showLoginIcon}
           showLogOut={showLogOut}
           onLogOut={handleLogOut}

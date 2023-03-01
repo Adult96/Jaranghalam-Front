@@ -7,6 +7,7 @@ import getDetail from '../modules/home/getDetail';
 import getMy from '../modules/my/getMy';
 import getComment from '../modules/comment/getComment';
 import getMyComment from '../modules/my/getMyComment';
+import getLike from '../modules/like/getLike';
 
 const store = configureStore({
   reducer: {
@@ -18,6 +19,7 @@ const store = configureStore({
     getMy,
     getComment,
     getMyComment,
+    getLike,
   },
 });
 

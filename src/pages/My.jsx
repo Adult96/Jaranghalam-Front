@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import styled from 'styled-components';
@@ -15,6 +15,7 @@ import {
 
 export default function My() {
   const dispatch = useDispatch();
+  const [myTapClick, setMyTapClick] = useState(true);
   const { getMy, isMyLoading, isMyError } = useSelector(state => state.getMy);
   const { getMyComment, isMyComntLoading, isMyComntError } = useSelector(
     state => state.getMyComment,
@@ -29,24 +30,29 @@ export default function My() {
     if (innerText === 'My') {
       await dispatch(__getMy());
       dispatch(initMyComnt());
+      setMyTapClick(true);
     } else if (innerText === 'MyComment') {
-      console.log(1);
       await dispatch(__getMyComment());
+      setMyTapClick(false);
     }
   };
 
   if (isMyLoading || isMyComntLoading) return <p>로딩</p>;
-  if (isMyError || isMyComntError)
-    return <Error>게시글이 존재하지 않습니다.</Error>;
+  if (isMyError || isMyComntError) return <Error>에러가 발생 했습니다.</Error>;
   return (
     <HomeWrapper>
       <BoardSort click={handleSortClick}>
         {{ content: { first: 'My', second: 'MyComment' } }}
       </BoardSort>
-      {getMyComment.length ? (
+      {myTapClick && !!Number(getMy.length) && <BoardList boards={getMy} />}
+      {myTapClick && !!!Number(getMy.length) && (
+        <Comment>등록된 개인 게시글이 없습니다.</Comment>
+      )}
+      {!myTapClick && !!Number(getMyComment.length) && (
         <MyCommentList myComment={getMyComment} />
-      ) : (
-        <BoardList boards={getMy} />
+      )}
+      {!myTapClick && !!!Number(getMyComment.length) && (
+        <Comment>등록된 개인 댓글이 없습니다.</Comment>
       )}
     </HomeWrapper>
   );
@@ -84,4 +90,13 @@ const HomeWrapper = styled.main`
   @media (min-width: ${props => props.theme.screen.tablet_v}) {
     border-left: 1px solid ${props => props.theme.bgBorderColor};
   }
+`;
+
+const Comment = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  font-size: ${props => props.theme.fontSize.small};
 `;

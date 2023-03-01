@@ -1,4 +1,4 @@
-import React, { useCallback, useRef, useState } from 'react';
+import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 
@@ -11,9 +11,13 @@ import BoardItem from './BoardItem';
 import ROUTER from '../constants/router';
 import { deleteBoard } from '../utils/api/myBoard';
 import { __getMy } from '../utils/redux/modules/my/getMy';
+import ContentAdd from './ContentAdd';
 
 export default React.memo(function BoardList({ boards }) {
   const [showDetail, setShowDetail] = useState(false);
+  const [showModal, setShowModal] = useState(false);
+  const [modalPostId, setModalPostId] = useState(null);
+
   const { pathname } = useLocation();
   const dispatch = useDispatch();
   const { getDetail, isLoading, isError } = useSelector(
@@ -36,20 +40,28 @@ export default React.memo(function BoardList({ boards }) {
     await dispatch(__getDetail(boardId));
   };
 
-  const handleEdit = postid => {};
+  const handleEdit = postid => {
+    setModalPostId(postid);
+    handleShowModal();
+  };
 
   const handleDelete = async postid => {
     await deleteBoard(postid);
     dispatch(__getMy());
   };
 
+  const handleShowModal = () => {
+    setShowModal(state => !state);
+  };
+
   return (
     <>
       <BoardWrapper>
-        <BoardContainer media={`${showDetail}`}>
-          {boards.map(board => (
-            <li
+        <BoardContainer>
+          {boards.map((board, index) => (
+            <Li
               key={uuidv4()}
+              media={`${showDetail}`}
               onClick={e => {
                 handleBoardClick(e, board.id);
               }}
@@ -60,7 +72,7 @@ export default React.memo(function BoardList({ boards }) {
                 handleEdit={handleEdit}
                 handleDelete={handleDelete}
               />
-            </li>
+            </Li>
           ))}
         </BoardContainer>
         {showDetail && (
@@ -71,6 +83,13 @@ export default React.memo(function BoardList({ boards }) {
           />
         )}
       </BoardWrapper>
+      {showModal && (
+        <ContentAdd
+          toggleModal={handleShowModal}
+          edit={true}
+          postId={modalPostId}
+        />
+      )}
     </>
   );
 });
@@ -83,28 +102,38 @@ const BoardWrapper = styled.ul`
 `;
 
 const BoardContainer = styled.div`
-  display: grid;
+  display: flex;
+  flex-wrap: wrap;
   gap: 1rem;
   padding: 1rem;
+  width: 100%;
+  /* grid-template-columns: repeat(auto-fit, minmax(40%, auto)); */
+`;
 
-  @media (min-width: ${props => props.theme.screen.tablet_v}) {
-    ${props =>
-      props.media === 'true'
-        ? 'grid-template-columns: 1fr;'
-        : 'grid-template-columns: 1fr 1fr;'}
+const Li = styled.li`
+  width: 100%;
+
+  @media (min-width: 600px) {
+    ${props => (props.media === 'true' ? ' width: 100%;' : ' width: 48%;')}
+  }
+
+  @media (min-width: 800px) {
+    ${props => (props.media === 'true' ? ' width: 100%;' : ' width: 48%;')}
   }
 
   @media (min-width: 1024px) {
-    ${props =>
-      props.media === 'true'
-        ? 'grid-template-columns: 1fr 1fr '
-        : 'grid-template-columns: 1fr 1fr 1fr '}
+    ${props => (props.media === 'true' ? ' width: 100%; ' : ' width: 32%;')}
+  }
+
+  @media (min-width: 1200px) {
+    ${props => (props.media === 'true' ? ' width: 48%; ' : ' width: 32%;')}
   }
 
   @media (min-width: 1400px) {
-    ${props =>
-      props.media === 'true'
-        ? 'grid-template-columns: 1fr 1fr 1fr;'
-        : 'grid-template-columns: 1fr 1fr 1fr 1fr;'}
+    ${props => (props.media === 'true' ? ' width: 48%;' : ' width: 32.4%;')}
+  }
+
+  @media (min-width: 1600px) {
+    ${props => (props.media === 'true' ? ' width: 31%;' : ' width: 24%;')}
   }
 `;

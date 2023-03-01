@@ -3,12 +3,17 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { useState } from 'react';
 import ROUTER from '../../constants/router';
-import ContentAdd from '../../pages/ContentAdd';
+import ContentAdd from '../../components/ContentAdd';
 
-export default function TextBar({ showLoginIcon, showLogOut, onLogOut }) {
-  const [showModal, setShowModal] = useState(false);
+export default function TextBar({
+  modal,
+  onShowModal,
+  showLoginIcon,
+  showLogOut,
+  onLogOut,
+}) {
   const ModalHandler = () => {
-    setShowModal(prev => !prev);
+    onShowModal();
   };
   return (
     <>
@@ -22,7 +27,9 @@ export default function TextBar({ showLoginIcon, showLogOut, onLogOut }) {
           )}
           {showLogOut && (
             <>
-              <Like>LIKE</Like>
+              <Like>
+                <Link to="/like">LIKE</Link>
+              </Like>
               <My>
                 <Link to="/my">MY</Link>
               </My>
@@ -40,7 +47,6 @@ export default function TextBar({ showLoginIcon, showLogOut, onLogOut }) {
           )}
         </Login>
       </TextContainer>
-      {showModal ? <ContentAdd toggleModal={ModalHandler} /> : null}
     </>
   );
 }

@@ -5,7 +5,7 @@ import { getCookie } from '../../../cookie';
 const { createSlice, createAsyncThunk, current } = require('@reduxjs/toolkit');
 
 const initialState = {
-  getHome: [],
+  getLike: [],
   isLoading: false,
   isError: false,
   error: null,
@@ -17,34 +17,34 @@ const cookie = getCookie(QUERY.COOKIE.COOKIE_NAME);
 
 const option = {
   headers: {
-    Authorization: `Bearer ${cookie ? cookie : ''}`,
+    Authorization: `Bearer ${cookie}`,
   },
 };
 
-export const __getHome = createAsyncThunk(
+export const __getLike = createAsyncThunk(
   'GET_HOME',
   async (payload, thunkAPI) => {
     return await axios
-      .get(`/api/posts?page=${payload.page}&size=16${payload.query}`, option)
+      .get(`/api/liked-posts`, option)
       .then(response => thunkAPI.fulfillWithValue(response.data.result))
       .catch(error => thunkAPI.rejectWithValue());
   },
 );
 
-const getHomeSlice = createSlice({
-  name: 'getHome',
+const getLikeSlice = createSlice({
+  name: 'getLike',
   initialState,
   reducers: {
-    initGetHome: (state, action) => {
+    initGetLike: (state, action) => {
       state.isLoading = false;
       state.isError = false;
-      state.getHome = [];
+      state.getLike = [];
     },
-    editHomeLike: (state, action) => {
+    editLiked: (state, action) => {
       const { postId, likeClick } = action.payload;
       state.isLoading = false;
       state.isError = false;
-      state.getHome = [...current(state.getHome)].map(v =>
+      state.getLike = [...current(state.getLike)].map(v =>
         v.id === postId
           ? {
               ...v,
@@ -56,21 +56,21 @@ const getHomeSlice = createSlice({
     },
   },
   extraReducers: bulider => {
-    bulider.addCase(__getHome.pending, (state, _) => {
+    bulider.addCase(__getLike.pending, (state, _) => {
       state.isLoading = true;
       state.isError = false;
     });
-    bulider.addCase(__getHome.fulfilled, (state, action) => {
+    bulider.addCase(__getLike.fulfilled, (state, action) => {
       state.isLoading = false;
       state.isError = false;
-      state.getHome = [...state.getHome].concat(action.payload);
+      state.getLike = action.payload;
     });
-    bulider.addCase(__getHome.rejected, (state, action) => {
+    bulider.addCase(__getLike.rejected, (state, action) => {
       state.isLoading = false;
       state.isError = true;
       state.error = action.payload;
     });
   },
 });
-export const { initGetHome, editHomeLike } = getHomeSlice.actions;
-export default getHomeSlice.reducer;
+export const { initGetLike, editLiked } = getLikeSlice.actions;
+export default getLikeSlice.reducer;

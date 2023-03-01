@@ -1,6 +1,8 @@
 import axios from 'axios';
 import QUERY from '../../constants/query';
-import { setCookie } from '../cookie';
+import { getCookie, setCookie } from '../cookie';
+import jwt_decode from 'jwt-decode';
+import Storage from '../localStorage';
 
 export default class Axios {
   constructor(url) {
@@ -10,19 +12,40 @@ export default class Axios {
 
     this.instance.interceptors.response.use(
       response => {
+        console.log(response);
         const token = response.headers.authorization;
+        const refreshToken = response.headers.refreshtoken;
+
         if (token) {
           const [, parseToken] = token.split(' ');
           setCookie(QUERY.COOKIE.COOKIE_NAME, parseToken);
+
+          const userName = jwt_decode(parseToken);
+          Storage.setUserName(userName.sub);
+        }
+
+        if (refreshToken) {
+          const [, parseToken] = token.split(' ');
+          setCookie(QUERY.COOKIE.REFRESH_NAME, parseToken);
         }
 
         return response;
       },
       error => {
-        const myPage = '/api/posts/my-post-list';
-        if (error.config.url !== myPage) {
-          alert(error.response.data.errorMessage);
+        const errorMessage = error.response.data.errorMessage;
+        if (errorMessage === 'Token Error') {
+          // const refresh = getCookie(QUERY.COOKIE.REFRESH_NAME);
+          // if (refresh) {
+          //   postRefresh(refresh);
+          //   return;
+          // } else {
+          Storage.removeUserName();
+          window.location.reload();
+          // }
+        } else {
+          alert(errorMessage);
         }
+
         console.log(error);
         return Promise.reject(error);
       },

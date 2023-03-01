@@ -3,15 +3,25 @@ import styled from 'styled-components';
 import IconBar from './IconBar';
 import TextBar from './TextBar';
 
-export default function Navbar({ showLoginIcon, showLogOut, onLogOut }) {
+export default function Navbar({
+  modal,
+  onShowModal,
+  showLoginIcon,
+  showLogOut,
+  onLogOut,
+}) {
   return (
     <NavbarContainer>
       <IconBar
+        modal={modal}
+        onShowModal={onShowModal}
         showLoginIcon={showLoginIcon}
         showLogOut={showLogOut}
         onLogOut={onLogOut}
       />
       <TextBar
+        modal={modal}
+        onShowModal={onShowModal}
         showLoginIcon={showLoginIcon}
         showLogOut={showLogOut}
         onLogOut={onLogOut}

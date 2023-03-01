@@ -6,6 +6,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
 import App from './App';
 import Home from './pages/Home';
+import Like from './pages/Like';
 import Login from './pages/Login';
 import My from './pages/My';
 import store from './utils/redux/config/configStore';
@@ -24,6 +25,10 @@ const router = createBrowserRouter([
         element: <Login />,
       },
       {
+        path: '/like',
+        element: <Like />,
+      },
+      {
         path: '/my',
         element: <My />,
       },
@@ -33,9 +38,9 @@ const router = createBrowserRouter([
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <React.StrictMode>
-    <Provider store={store}>
-      <RouterProvider router={router} />
-    </Provider>
-  </React.StrictMode>,
+  // <React.StrictMode>
+  <Provider store={store}>
+    <RouterProvider router={router} />
+  </Provider>,
+  // </React.StrictMode>,
 );

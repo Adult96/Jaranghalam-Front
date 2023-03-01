@@ -2,7 +2,7 @@ import QUERY from '../../../../constants/query';
 import Axios from '../../../api/axios';
 import { getCookie } from '../../../cookie';
 
-const { createSlice, createAsyncThunk } = require('@reduxjs/toolkit');
+const { createSlice, createAsyncThunk, current } = require('@reduxjs/toolkit');
 
 const initialState = {
   getMyComment: [],

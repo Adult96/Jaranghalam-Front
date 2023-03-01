@@ -2,7 +2,7 @@ import QUERY from '../../../../constants/query';
 import Axios from '../../../api/axios';
 import { getCookie } from '../../../cookie';
 
-const { createSlice, createAsyncThunk } = require('@reduxjs/toolkit');
+const { createSlice, createAsyncThunk, current } = require('@reduxjs/toolkit');
 
 const initialState = {
   getMy: [],
@@ -33,7 +33,20 @@ const getMySlice = createSlice({
     initMy: (state, action) => {
       state.isMyLoading = false;
       state.isMyError = false;
-      state.isMyDone = false;
+    },
+    editMy: (state, action) => {
+      const { postId, likeClick } = action.payload;
+      state.isMyLoading = false;
+      state.isMyError = false;
+      state.getMy = [...current(state.getMy)].map(v =>
+        v.id === postId
+          ? {
+              ...v,
+              isLiked: !v.isLiked,
+              postLikeCount: v.postLikeCount + (likeClick ? 1 : -1),
+            }
+          : v,
+      );
     },
   },
   extraReducers: bulider => {
@@ -54,5 +67,5 @@ const getMySlice = createSlice({
   },
 });
 
-export const { initMy } = getMySlice.actions;
+export const { initMy, editMy } = getMySlice.actions;
 export default getMySlice.reducer;

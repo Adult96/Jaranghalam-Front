@@ -20,14 +20,14 @@ export default function MyCommentList({ myComment }) {
   };
 
   const handleCommentClick = async postId => {
-    await setShowDetail(true);
     await dispatch(__getDetail(postId));
+    await setShowDetail(true);
   };
 
   const setDate = (createDate, modifiedDate) => {
     return formatAgo(createDate, modifiedDate);
   };
-  console.log(myComment);
+
   return (
     <MyCommentWrapper>
       <CommentContainer>
@@ -61,7 +61,7 @@ const MyCommentWrapper = styled.main`
   position: relative;
   display: flex;
   justify-content: center;
-  align-items: center;
+  /* align-items: center; */
   height: auto;
 `;
 
