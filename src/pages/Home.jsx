@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 import BoardSort from '../components/BoardSort';
 import BoardList from '../components/BoardList';
@@ -53,7 +53,10 @@ export default function Home() {
         {{ content: { first: 'Recent', second: 'Popular' } }}
       </BoardSort>
       <BoardList boards={getHome} />
-      <InfiniteScroll ref={ref}>
+      <InfiniteScroll
+        ref={ref}
+        setHeight={getHome.length === pageData.current.length ? true : false}
+      >
         {isLoading && <img src="/img/spinner.gif" alt="spinner" />}
         {getHome.length === pageData.current.length && (
           <p>마지막 페이지 입니다.</p>
@@ -101,5 +104,13 @@ const InfiniteScroll = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 10rem;
+  height: 100%;
+  ${props =>
+    props.setHeight
+      ? css`
+          height: 10rem;
+        `
+      : css`
+          height: 100%;
+        `}
 `;
