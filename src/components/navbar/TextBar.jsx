@@ -5,10 +5,15 @@ import { useState } from 'react';
 import ROUTER from '../../constants/router';
 import ContentAdd from '../../components/ContentAdd';
 
-export default function TextBar({ showLoginIcon, showLogOut, onLogOut }) {
-  const [showModal, setShowModal] = useState(false);
+export default function TextBar({
+  modal,
+  onShowModal,
+  showLoginIcon,
+  showLogOut,
+  onLogOut,
+}) {
   const ModalHandler = () => {
-    setShowModal(prev => !prev);
+    onShowModal();
   };
   return (
     <>
@@ -40,7 +45,6 @@ export default function TextBar({ showLoginIcon, showLogOut, onLogOut }) {
           )}
         </Login>
       </TextContainer>
-      {showModal ? <ContentAdd toggleModal={ModalHandler} /> : null}
     </>
   );
 }

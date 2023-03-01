@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import formatAgo from '../utils/formatDate';
 import { AiOutlineHeart, AiFillHeart } from 'react-icons/ai';
 import Button from '../elements/Button';
@@ -9,7 +9,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { __getComment } from '../utils/redux/modules/comment/getComment';
 import { postLike } from '../utils/api/like';
 import { __getMy } from '../utils/redux/modules/my/getMy';
-import { __getHome } from '../utils/redux/modules/home/getHome';
+import { initGetHome, __getHome } from '../utils/redux/modules/home/getHome';
 import Storage from '../utils/localStorage';
 
 export default function BoardDetail({
@@ -33,7 +33,6 @@ export default function BoardDetail({
     state => state.getComment,
   );
   const dispatch = useDispatch();
-
   const loginName = Storage.getUserName();
 
   useEffect(() => {
@@ -64,8 +63,14 @@ export default function BoardDetail({
 
   const handleLike = async postId => {
     await postLike(postId);
-    path ? dispatch(__getMy()) : dispatch(__getHome({ page: 1, query: '' }));
+    // if (path) {
+    //   dispatch(__getMy());
+    // } else {
+    //   await dispatch(initGetHome());
+    //   dispatch(__getHome({ page: 1, query: '' }));
+    // }
   };
+
   return (
     <>
       <DetailContainer>
@@ -82,11 +87,11 @@ export default function BoardDetail({
           <Img src={imageUrl} alt="userimg" />
         </ImageContainer>
         {liked ? (
-          <HeartEmpty onClick={() => handleLike(id)}>
+          <HeartEmpty onClick={() => handleLike(id)} loginName={loginName}>
             <AiFillHeart />
           </HeartEmpty>
         ) : (
-          <Heart onClick={() => handleLike(id)}>
+          <Heart onClick={() => handleLike(id)} loginName={loginName}>
             <AiOutlineHeart />
           </Heart>
         )}
@@ -193,8 +198,24 @@ const Content = styled.p`
 const Heart = styled.div`
   margin-top: 1rem;
   font-size: ${props => props.theme.fontSize.medium};
+  ${props =>
+    props.loginName
+      ? css`
+          display: block;
+        `
+      : css`
+          display: none;
+        `}
 `;
 
 const HeartEmpty = styled(Heart)`
   color: ${props => props.theme.color.red};
+  ${props =>
+    props.loginName
+      ? css`
+          display: block;
+        `
+      : css`
+          display: none;
+        `}
 `;

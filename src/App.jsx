@@ -9,12 +9,14 @@ import Navbar from './components/navbar/Navbar';
 import ROUTER from './constants/router';
 import { getCookie, removeCookie } from './utils/cookie';
 import Storage from './utils/localStorage';
+import ContentAdd from './components/ContentAdd';
 
 function App() {
   const { pathname } = useLocation();
   const [darkMode, setDarkMode] = useState(false);
   const [showLoginIcon, setShowLoginIcon] = useState(false);
   const [showLogOut, setShowLogOut] = useState(false);
+  const [showModal, setShowModal] = useState(false);
   const navigate = useNavigate();
 
   const theme = darkMode ? darkTheme : lightTheme;
@@ -43,12 +45,19 @@ function App() {
     navigate(ROUTER.PATH.HOME);
   };
 
+  const handleShowModal = () => {
+    setShowModal(prev => !prev);
+  };
+
   return (
     <ThemeProvider theme={theme}>
       <GlobalStyle />
       <ThemeMode darkMode={darkMode} onDarkMode={setDarkMode} />
+      {showModal ? <ContentAdd toggleModal={handleShowModal} /> : null}
       <Wrapper>
         <Navbar
+          modal={showModal}
+          onShowModal={handleShowModal}
           showLoginIcon={showLoginIcon}
           showLogOut={showLogOut}
           onLogOut={handleLogOut}

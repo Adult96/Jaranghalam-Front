@@ -47,7 +47,7 @@ export default React.memo(function BoardList({ boards }) {
     <>
       <BoardWrapper>
         <BoardContainer media={`${showDetail}`}>
-          {boards.map(board => (
+          {boards.map((board, index) => (
             <li
               key={uuidv4()}
               onClick={e => {

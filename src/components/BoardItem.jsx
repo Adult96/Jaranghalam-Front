@@ -21,6 +21,7 @@ export default function BoardItem({
   handleEdit,
   handleDelete,
 }) {
+  console.log(liked);
   const setDate = (createDate, modifiedDate) => {
     return formatAgo(createDate, modifiedDate);
   };
