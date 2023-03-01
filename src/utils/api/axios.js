@@ -1,6 +1,8 @@
 import axios from 'axios';
 import QUERY from '../../constants/query';
 import { setCookie } from '../cookie';
+import jwt_decode from 'jwt-decode';
+import Storage from '../localStorage';
 
 export default class Axios {
   constructor(url) {
@@ -14,6 +16,9 @@ export default class Axios {
         if (token) {
           const [, parseToken] = token.split(' ');
           setCookie(QUERY.COOKIE.COOKIE_NAME, parseToken);
+
+          const userName = jwt_decode(parseToken);
+          Storage.setUserName(userName.sub);
         }
 
         return response;
