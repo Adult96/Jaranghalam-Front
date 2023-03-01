@@ -74,7 +74,7 @@ export default function BoardDetail({
     setLikeCnt(state => !state);
     await postLike(postId);
     if (path) {
-      dispatch(editMy(postId));
+      dispatch(editMy({ postId, likeClick: !likeClick }));
     } else {
       dispatch(editHomeLike({ postId, likeClick: !likeClick }));
     }

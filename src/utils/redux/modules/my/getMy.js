@@ -35,10 +35,17 @@ const getMySlice = createSlice({
       state.isMyError = false;
     },
     editMy: (state, action) => {
+      const { postId, likeClick } = action.payload;
       state.isMyLoading = false;
       state.isMyError = false;
       state.getMy = [...current(state.getMy)].map(v =>
-        v.id === action.payload ? { ...v, isLiked: !v.isLiked } : v,
+        v.id === postId
+          ? {
+              ...v,
+              isLiked: !v.isLiked,
+              postLikeCount: v.postLikeCount + (likeClick ? 1 : -1),
+            }
+          : v,
       );
     },
   },
