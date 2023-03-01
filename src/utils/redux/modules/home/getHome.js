@@ -2,7 +2,7 @@ import QUERY from '../../../../constants/query';
 import Axios from '../../../api/axios';
 import { getCookie } from '../../../cookie';
 
-const { createSlice, createAsyncThunk } = require('@reduxjs/toolkit');
+const { createSlice, createAsyncThunk, current } = require('@reduxjs/toolkit');
 
 const initialState = {
   getHome: [],
@@ -34,7 +34,14 @@ export const __getHome = createAsyncThunk(
 const getHomeSlice = createSlice({
   name: 'getHome',
   initialState,
-  reducers: {},
+  reducers: {
+    initGetHome: (state, action) => {
+      state.isLoading = false;
+      state.isError = false;
+      state.getHome = [];
+      console.log(1);
+    },
+  },
   extraReducers: bulider => {
     bulider.addCase(__getHome.pending, (state, _) => {
       state.isLoading = true;
@@ -44,6 +51,7 @@ const getHomeSlice = createSlice({
       state.isLoading = false;
       state.isError = false;
       state.getHome = [...state.getHome].concat(action.payload);
+      console.log(2);
     });
     bulider.addCase(__getHome.rejected, (state, action) => {
       state.isLoading = false;
@@ -52,5 +60,5 @@ const getHomeSlice = createSlice({
     });
   },
 });
-
+export const { initGetHome } = getHomeSlice.actions;
 export default getHomeSlice.reducer;

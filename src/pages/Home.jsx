@@ -46,7 +46,7 @@ export default function Home() {
       dispatch(__getHome({ page: page.current, query: '' }));
     }
   }, [inView]);
-
+  console.log(getHome);
   return (
     <HomeWrapper>
       <BoardSort click={handleSortClick}>

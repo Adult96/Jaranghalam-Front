@@ -2,9 +2,12 @@ import React from 'react';
 import { useState } from 'react';
 import styled from 'styled-components';
 import { useDispatch } from 'react-redux';
-import { __postContent } from '../utils/redux/modules/board/postAdd';
 import { useRef } from 'react';
-import { __getHome } from '../utils/redux/modules/home/getHome';
+import { initGetHome, __getHome } from '../utils/redux/modules/home/getHome';
+import { postBoard } from '../utils/api/myBoard';
+import ROUTER from '../constants/router';
+import { __getMy } from '../utils/redux/modules/my/getMy';
+import { useLocation } from 'react-router-dom';
 
 function ContentAdd({ toggleModal }) {
   const [title, setTitle] = useState('');
@@ -12,6 +15,7 @@ function ContentAdd({ toggleModal }) {
   const [selectedFile, setSelectedFile] = useState(new FormData());
   const [imgUrl, setImgUrl] = useState('');
   const testRef = useRef();
+  const { pathname } = useLocation();
 
   const dispatch = useDispatch();
 
@@ -34,17 +38,17 @@ function ContentAdd({ toggleModal }) {
       new Blob([JSON.stringify(post)], { type: 'application/json' }),
     );
     formData.append('image', selectedFile);
-    const config = {
-      headers: {
-        'Content-Type': 'multipart/form-data',
-        Authorization: `Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiLsnKDsoIAwMSIsImV4cCI6MTcwOTEyNjgzNSwiaWF0IjoxNjc3NTkwODM1fQ.RPQh9r_NKQfSu4sZT0q8Q1qgObuAjqYAKW5v3flFO7A`,
-      },
-    };
-    await dispatch(__postContent({ formData, config }));
+
+    await postBoard(formData);
+    if (pathname === ROUTER.PATH.HOME) {
+      await dispatch(initGetHome());
+      await dispatch(__getHome({ page: 1, query: '' }));
+    } else if (pathname === ROUTER.PATH.MY) {
+      await dispatch(__getMy());
+    }
+
     setTitle('');
     setContent('');
-    await dispatch(__getHome({ page: 1, query: '' }));
-    alert('완료!!!!!!');
     toggleModal();
   };
 
