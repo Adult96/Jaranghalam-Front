@@ -108,10 +108,20 @@ export default function BoardDetail({
               : `댓글 ${getComment.length}개 모두보기`}
           </Button>
         ) : (
-          <Comment id={id} comment={getComment} loginName={loginName} />
+          <Comment
+            id={id}
+            comment={getComment}
+            loginName={loginName}
+            path={path}
+          />
         )}
         {showComment && (
-          <Comment id={id} comment={getComment} loginName={loginName} />
+          <Comment
+            id={id}
+            comment={getComment}
+            loginName={loginName}
+            path={path}
+          />
         )}
       </DetailContainer>
     </>

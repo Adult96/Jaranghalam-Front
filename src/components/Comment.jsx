@@ -11,8 +11,9 @@ import { useDispatch } from 'react-redux';
 import { __getComment } from '../utils/redux/modules/comment/getComment';
 import Input from '../elements/Input';
 import formatAgo from '../utils/formatDate';
+import { __getMyComment } from '../utils/redux/modules/my/getMyComment';
 
-export default function Comment({ id, comment, loginName }) {
+export default function Comment({ id, comment, loginName, path }) {
   const [commentText, setCommentText] = useState('');
   const textAreaRef = useRef();
   const labelRef = useRef([]);
@@ -37,14 +38,22 @@ export default function Comment({ id, comment, loginName }) {
 
   const handleAddComment = async () => {
     await postComment(id, { content: commentText });
-    dispatch(__getComment(id));
+    if (path) {
+      await dispatch(__getMyComment());
+    } else {
+      await dispatch(__getComment(id));
+    }
     setCommentText('');
   };
 
   const handleDeleteComment = async e => {
     const commentId = e.target.parentElement.id;
     await deleteComment(commentId);
-    dispatch(__getComment(id));
+    if (path) {
+      dispatch(__getMyComment());
+    } else {
+      dispatch(__getComment(id));
+    }
   };
 
   const handleShowComment = e => {
