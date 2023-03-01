@@ -44,7 +44,9 @@ export default function IconBar({
         {showLogOut && (
           <>
             <Like id="좋아요">
-              <AiOutlineHeart />
+              <Link to="/like">
+                <AiOutlineHeart />
+              </Link>
             </Like>
             <My>
               <Link to="/my">

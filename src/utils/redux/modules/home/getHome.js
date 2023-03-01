@@ -40,6 +40,13 @@ const getHomeSlice = createSlice({
       state.isError = false;
       state.getHome = [];
     },
+    editHomeLike: (state, action) => {
+      state.isLoading = false;
+      state.isError = false;
+      state.getHome = [...current(state.getHome)].map(v =>
+        v.id === action.payload ? { ...v, isLiked: !v.isLiked } : v,
+      );
+    },
   },
   extraReducers: bulider => {
     bulider.addCase(__getHome.pending, (state, _) => {
@@ -58,5 +65,5 @@ const getHomeSlice = createSlice({
     });
   },
 });
-export const { initGetHome } = getHomeSlice.actions;
+export const { initGetHome, editHomeLike } = getHomeSlice.actions;
 export default getHomeSlice.reducer;

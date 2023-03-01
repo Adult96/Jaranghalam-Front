@@ -35,6 +35,8 @@ function App() {
       setShowLogOut(true);
     } else if (userName && pathname === ROUTER.PATH.MY) {
       setShowLogOut(true);
+    } else if (userName && pathname === ROUTER.PATH.LIKE) {
+      setShowLogOut(true);
     }
   }, [navigate, pathname]);
 

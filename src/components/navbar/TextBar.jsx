@@ -27,7 +27,9 @@ export default function TextBar({
           )}
           {showLogOut && (
             <>
-              <Like>LIKE</Like>
+              <Like>
+                <Link to="/like">LIKE</Link>
+              </Like>
               <My>
                 <Link to="/my">MY</Link>
               </My>

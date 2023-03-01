@@ -9,7 +9,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { __getComment } from '../utils/redux/modules/comment/getComment';
 import { postLike } from '../utils/api/like';
 import { __getMy } from '../utils/redux/modules/my/getMy';
-import { initGetHome, __getHome } from '../utils/redux/modules/home/getHome';
+import { editHomeLike } from '../utils/redux/modules/home/getHome';
 import Storage from '../utils/localStorage';
 
 export default function BoardDetail({
@@ -28,15 +28,18 @@ export default function BoardDetail({
   path,
   onBackClick,
 }) {
+  const [likeClick, setLikeClick] = useState(false);
   const [showComment, setShowComment] = useState(false);
   const { getComment, isLoading, isError } = useSelector(
     state => state.getComment,
   );
+
   const dispatch = useDispatch();
   const loginName = Storage.getUserName();
 
   useEffect(() => {
     dispatch(__getComment(id));
+    setLikeClick(isLiked ? true : false);
   }, [dispatch, id]);
 
   useEffect(() => {
@@ -62,13 +65,14 @@ export default function BoardDetail({
   };
 
   const handleLike = async postId => {
+    setLikeClick(state => !state);
     await postLike(postId);
-    // if (path) {
-    //   dispatch(__getMy());
-    // } else {
-    //   await dispatch(initGetHome());
-    //   dispatch(__getHome({ page: 1, query: '' }));
-    // }
+    if (path) {
+      dispatch(__getMy());
+    } else {
+      await dispatch(editHomeLike(postId));
+      // dispatch(__getHome({ page: 1, query: '' }));
+    }
   };
 
   return (
@@ -86,7 +90,7 @@ export default function BoardDetail({
         <ImageContainer>
           <Img src={imageUrl} alt="userimg" />
         </ImageContainer>
-        {isLiked ? (
+        {likeClick ? (
           <HeartEmpty onClick={() => handleLike(id)} loginName={loginName}>
             <AiFillHeart />
           </HeartEmpty>

@@ -1,29 +1,53 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import styled from 'styled-components';
 
-import BoardList from '../components/BoardList';
 import BoardSort from '../components/BoardSort';
-import Error from '../components/Error';
-import MyCommentList from '../components/MyCommentList';
-import { __getMy } from '../utils/redux/modules/my/getMy';
-import {
-  initMyComnt,
-  __getMyComment,
-} from '../utils/redux/modules/my/getMyComment';
+import BoardList from '../components/BoardList';
+import { initGetHome, __getHome } from '../utils/redux/modules/home/getHome';
+import { useInView } from 'react-intersection-observer';
 
-export default function My() {
+export default function Like() {
+  const page = useRef(1);
+  const pageData = useRef({});
+  const [ref, inView] = useInView();
   const dispatch = useDispatch();
-  const { getLike, isLike, isLike } = useSelector(state => state.getLike);
+  const { getHome, isLoading, isError } = useSelector(state => state.getHome);
 
   useEffect(() => {
-    dispatch(__getMy());
-  }, [dispatch]);
+    if (getHome.length === 0) {
+      dispatch(initGetHome());
+      dispatch(__getHome({ page: page.current, query: '' }));
+      return;
+    }
+  }, []);
 
-  if (isLikeLoading) return <p>로딩</p>;
-  if (isLikeError) return <Error>에러가 발생 했습니다.</Error>;
-  return <HomeWrapper></HomeWrapper>;
+  useEffect(() => {
+    if (
+      getHome.length !== 0 &&
+      inView &&
+      !isLoading &&
+      !isError &&
+      getHome.length !== pageData.current.length
+    ) {
+      page.current += 1;
+      pageData.current = getHome;
+      dispatch(__getHome({ page: page.current, query: '' }));
+    }
+  }, [inView]);
+  console.log(getHome.filter(v => v.isLiked));
+  return (
+    <HomeWrapper>
+      <BoardList boards={getHome} />
+      <InfiniteScroll ref={ref}>
+        {isLoading && <img src="/img/spinner.gif" alt="spinner" />}
+        {getHome.length === pageData.current.length && (
+          <p>마지막 페이지 입니다.</p>
+        )}
+      </InfiniteScroll>
+    </HomeWrapper>
+  );
 }
 
 const HomeWrapper = styled.main`
@@ -58,4 +82,11 @@ const HomeWrapper = styled.main`
   @media (min-width: ${props => props.theme.screen.tablet_v}) {
     border-left: 1px solid ${props => props.theme.bgBorderColor};
   }
+`;
+
+const InfiniteScroll = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 10rem;
 `;
