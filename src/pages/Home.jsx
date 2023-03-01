@@ -5,7 +5,7 @@ import styled from 'styled-components';
 
 import BoardSort from '../components/BoardSort';
 import BoardList from '../components/BoardList';
-import { __getHome } from '../utils/redux/modules/home/getHome';
+import { initGetHome, __getHome } from '../utils/redux/modules/home/getHome';
 import { useInView } from 'react-intersection-observer';
 
 export default function Home() {
@@ -25,11 +25,12 @@ export default function Home() {
   };
 
   useEffect(() => {
-    if (getHome.length === 0) {
-      console.log('첫 포스트 로딩');
-      dispatch(__getHome({ page: page.current, query: '' }));
-      return;
-    }
+    // if (getHome.length === 0) {
+    console.log('첫 포스트 로딩');
+    dispatch(initGetHome());
+    dispatch(__getHome({ page: page.current, query: '' }));
+    // return;
+    // }
   }, []);
 
   useEffect(() => {
@@ -46,7 +47,7 @@ export default function Home() {
       dispatch(__getHome({ page: page.current, query: '' }));
     }
   }, [inView]);
-  console.log(getHome);
+
   return (
     <HomeWrapper>
       <BoardSort click={handleSortClick}>
