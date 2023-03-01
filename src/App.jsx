@@ -28,12 +28,12 @@ function App() {
   }, [pathname]);
 
   useEffect(() => {
-    const cookie = getCookie('myToken');
-    if (cookie && pathname === ROUTER.PATH.LOGIN) {
+    const userName = Storage.getUserName();
+    if (userName && pathname === ROUTER.PATH.LOGIN) {
       navigate(ROUTER.PATH.HOME);
-    } else if (cookie && pathname === ROUTER.PATH.HOME) {
+    } else if (userName && pathname === ROUTER.PATH.HOME) {
       setShowLogOut(true);
-    } else if (cookie && pathname === ROUTER.PATH.MY) {
+    } else if (userName && pathname === ROUTER.PATH.MY) {
       setShowLogOut(true);
     }
   }, [navigate, pathname]);

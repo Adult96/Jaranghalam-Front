@@ -14,14 +14,13 @@ export default function BoardItem({
     imageUrl,
     createdAt,
     modifiedAt,
-    liked,
+    isLiked,
     postLikeCount,
   },
   path,
   handleEdit,
   handleDelete,
 }) {
-  console.log(liked);
   const setDate = (createDate, modifiedDate) => {
     return formatAgo(createDate, modifiedDate);
   };
@@ -61,7 +60,7 @@ export default function BoardItem({
       {/* <ImageContainer> */}
       <Img src={imageUrl} alt="userimg" />
       {/* </ImageContainer> */}
-      {liked ? (
+      {isLiked ? (
         <HeartEmpty>
           <AiFillHeart />
         </HeartEmpty>

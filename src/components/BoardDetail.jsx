@@ -21,7 +21,7 @@ export default function BoardDetail({
     imageUrl,
     createdAt,
     modifiedAt,
-    liked,
+    isLiked,
     postLikeCount,
     // commentList,
   },
@@ -86,7 +86,7 @@ export default function BoardDetail({
         <ImageContainer>
           <Img src={imageUrl} alt="userimg" />
         </ImageContainer>
-        {liked ? (
+        {isLiked ? (
           <HeartEmpty onClick={() => handleLike(id)} loginName={loginName}>
             <AiFillHeart />
           </HeartEmpty>

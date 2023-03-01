@@ -4,12 +4,12 @@ import styled from 'styled-components';
 import { useDispatch } from 'react-redux';
 import { useRef } from 'react';
 import { initGetHome, __getHome } from '../utils/redux/modules/home/getHome';
-import { postBoard } from '../utils/api/myBoard';
+import { postBoard, putBoard } from '../utils/api/myBoard';
 import ROUTER from '../constants/router';
 import { __getMy } from '../utils/redux/modules/my/getMy';
 import { useLocation } from 'react-router-dom';
 
-function ContentAdd({ toggleModal }) {
+function ContentAdd({ toggleModal, edit, postId }) {
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
   const [selectedFile, setSelectedFile] = useState(new FormData());
@@ -27,7 +27,6 @@ function ContentAdd({ toggleModal }) {
   //모달 속 추가 핸들러 (이미지 업로드, 데이터 업로드)
   const onConfirmButtonHandler = async () => {
     const formData = new FormData();
-    console.log(selectedFile);
 
     const post = {
       title,
@@ -39,7 +38,12 @@ function ContentAdd({ toggleModal }) {
     );
     formData.append('image', selectedFile);
 
-    await postBoard(formData);
+    if (edit) {
+      await putBoard(postId, formData);
+    } else {
+      await postBoard(formData);
+    }
+
     if (pathname === ROUTER.PATH.HOME) {
       await dispatch(initGetHome());
       await dispatch(__getHome({ page: 1, query: '' }));
@@ -110,12 +114,13 @@ function ContentAdd({ toggleModal }) {
             <StCancelButton onClick={() => toggleModal()} type="button">
               나가기
             </StCancelButton>
+
             <StCancelButton
               onClick={onConfirmButtonHandler}
               width={'100px'}
               radius={'30px'}
             >
-              추가
+              {edit ? '수정' : '추가'}
             </StCancelButton>
           </StButton>
         </StInputForm>

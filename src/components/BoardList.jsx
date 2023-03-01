@@ -11,9 +11,13 @@ import BoardItem from './BoardItem';
 import ROUTER from '../constants/router';
 import { deleteBoard } from '../utils/api/myBoard';
 import { __getMy } from '../utils/redux/modules/my/getMy';
+import ContentAdd from './ContentAdd';
 
 export default React.memo(function BoardList({ boards }) {
   const [showDetail, setShowDetail] = useState(false);
+  const [showModal, setShowModal] = useState(false);
+  const [modalPostId, setModalPostId] = useState(null);
+
   const { pathname } = useLocation();
   const dispatch = useDispatch();
   const { getDetail, isLoading, isError } = useSelector(
@@ -36,11 +40,18 @@ export default React.memo(function BoardList({ boards }) {
     await dispatch(__getDetail(boardId));
   };
 
-  const handleEdit = postid => {};
+  const handleEdit = postid => {
+    setModalPostId(postid);
+    handleShowModal();
+  };
 
   const handleDelete = async postid => {
     await deleteBoard(postid);
     dispatch(__getMy());
+  };
+
+  const handleShowModal = () => {
+    setShowModal(state => !state);
   };
 
   return (
@@ -71,6 +82,13 @@ export default React.memo(function BoardList({ boards }) {
           />
         )}
       </BoardWrapper>
+      {showModal && (
+        <ContentAdd
+          toggleModal={handleShowModal}
+          edit={true}
+          postId={modalPostId}
+        />
+      )}
     </>
   );
 });

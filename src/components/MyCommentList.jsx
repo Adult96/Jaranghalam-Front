@@ -27,7 +27,7 @@ export default function MyCommentList({ myComment }) {
   const setDate = (createDate, modifiedDate) => {
     return formatAgo(createDate, modifiedDate);
   };
-  console.log(myComment);
+
   return (
     <MyCommentWrapper>
       <CommentContainer>
