@@ -20,7 +20,7 @@ function App() {
   const navigate = useNavigate();
 
   const theme = darkMode ? darkTheme : lightTheme;
-
+  console.log(1);
   useEffect(() => {
     pathname === ROUTER.PATH.LOGIN
       ? setShowLoginIcon(false)

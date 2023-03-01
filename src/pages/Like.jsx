@@ -7,45 +7,23 @@ import BoardSort from '../components/BoardSort';
 import BoardList from '../components/BoardList';
 import { initGetHome, __getHome } from '../utils/redux/modules/home/getHome';
 import { useInView } from 'react-intersection-observer';
+import { initGetLike, __getLike } from '../utils/redux/modules/like/getLike';
 
 export default function Like() {
   const page = useRef(1);
   const pageData = useRef({});
   const [ref, inView] = useInView();
   const dispatch = useDispatch();
-  const { getHome, isLoading, isError } = useSelector(state => state.getHome);
+  const { getLike } = useSelector(state => state.getLike);
 
   useEffect(() => {
-    if (getHome.length === 0) {
-      dispatch(initGetHome());
-      dispatch(__getHome({ page: page.current, query: '' }));
-      return;
-    }
-  }, []);
-
-  useEffect(() => {
-    if (
-      getHome.length !== 0 &&
-      inView &&
-      !isLoading &&
-      !isError &&
-      getHome.length !== pageData.current.length
-    ) {
-      page.current += 1;
-      pageData.current = getHome;
-      dispatch(__getHome({ page: page.current, query: '' }));
-    }
-  }, [inView]);
-  console.log(getHome.filter(v => v.isLiked));
+    dispatch(initGetLike());
+    dispatch(__getLike());
+  }, [dispatch]);
+  console.log(getLike.filter(v => v.isLiked));
   return (
     <HomeWrapper>
-      <BoardList boards={getHome} />
-      <InfiniteScroll ref={ref}>
-        {isLoading && <img src="/img/spinner.gif" alt="spinner" />}
-        {getHome.length === pageData.current.length && (
-          <p>마지막 페이지 입니다.</p>
-        )}
-      </InfiniteScroll>
+      <BoardList boards={getLike.filter(v => v.isLiked)} />
     </HomeWrapper>
   );
 }
