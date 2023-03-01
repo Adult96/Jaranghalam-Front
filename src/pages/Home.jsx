@@ -15,12 +15,14 @@ export default function Home() {
   const dispatch = useDispatch();
   const { getHome, isLoading, isError } = useSelector(state => state.getHome);
 
-  const handleSortClick = e => {
+  const handleSortClick = async e => {
     const innerText = e.target.innerText;
     if (innerText === 'Recent') {
-      dispatch(__getHome({ page: page, query: '' }));
+      await dispatch(initGetHome());
+      dispatch(__getHome({ page: 1, query: '' }));
     } else if (innerText === 'Popular') {
-      dispatch(__getHome({ page: page, query: '&sortBy=postLikeCount' }));
+      await dispatch(initGetHome());
+      dispatch(__getHome({ page: 1, query: '&sortBy=postLikeCount' }));
     }
   };
 
