@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { useState } from 'react';
 import ROUTER from '../../constants/router';
-import ContentAdd from '../../pages/ContentAdd';
+import ContentAdd from '../../components/ContentAdd';
 
 export default function TextBar({ showLoginIcon, showLogOut, onLogOut }) {
   const [showModal, setShowModal] = useState(false);

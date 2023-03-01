@@ -14,7 +14,7 @@ import { MdContactPage } from 'react-icons/md';
 import { Link } from 'react-router-dom';
 
 import ROUTER from '../../constants/router';
-import ContentAdd from '../../pages/ContentAdd';
+import ContentAdd from '../../components/ContentAdd';
 
 export default function IconBar({ showLoginIcon, showLogOut, onLogOut }) {
   const [showModal, setShowModal] = useState(false);
