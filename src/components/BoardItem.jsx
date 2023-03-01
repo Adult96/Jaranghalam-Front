@@ -58,7 +58,7 @@ export default function BoardItem({
         )}
       </Header>
       {/* <ImageContainer> */}
-      <Img src={imageUrl} alt="userimg" />
+      <Img srcImg={imageUrl} alt="userimg" />
       {/* </ImageContainer> */}
       {isLiked ? (
         <HeartEmpty>
@@ -69,9 +69,11 @@ export default function BoardItem({
           <AiOutlineHeart />
         </Heart>
       )}
-      <Like>{setformatLike(postLikeCount)}</Like>
-      <Title>{`${userName} ${title}`}</Title>
-      <Content>{content}</Content>
+      <ContentContainer>
+        <Like>{setformatLike(postLikeCount)}</Like>
+        <Title>{`${userName} ${title}`}</Title>
+        <Content>{content}</Content>
+      </ContentContainer>
     </BoardContainer>
   );
 }
@@ -80,9 +82,8 @@ const BoardContainer = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
-  height: 37rem;
-  min-height: 25rem;
-  border-bottom: 1px solid ${props => props.theme.borderColor};
+  height: 100%;
+  max-height: 50rem;
 
   ${props =>
     props.path &&
@@ -131,11 +132,14 @@ const ButtonContainer = styled.div`
 //   background-size: cover;
 // `;
 
-const Img = styled.img`
-  max-width: 100%;
-  height: auto;
+const Img = styled.div`
+  height: 0;
+  width: 100%;
+  padding-bottom: 100%;
   border-radius: 0.5rem;
-  background-size: cover;
+  object-fit: cover;
+  background-image: url(${props => props.srcImg});
+  background-size: 100% 100%;
 `;
 
 const Like = styled.h4`
@@ -168,4 +172,8 @@ const Heart = styled.div`
 
 const HeartEmpty = styled(Heart)`
   color: ${props => props.theme.color.red};
+`;
+
+const ContentContainer = styled.div`
+  border-bottom: 1px solid ${props => props.theme.borderColor};
 `;

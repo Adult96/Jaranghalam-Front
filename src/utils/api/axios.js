@@ -1,6 +1,6 @@
 import axios from 'axios';
 import QUERY from '../../constants/query';
-import { setCookie } from '../cookie';
+import { getCookie, setCookie } from '../cookie';
 import jwt_decode from 'jwt-decode';
 import Storage from '../localStorage';
 
@@ -22,8 +22,6 @@ export default class Axios {
 
           const userName = jwt_decode(parseToken);
           Storage.setUserName(userName.sub);
-        } else {
-          Storage.removeUserName();
         }
 
         if (refreshToken) {
@@ -34,19 +32,20 @@ export default class Axios {
         return response;
       },
       error => {
-        console.log(error);
-        // const myPage = '/api/posts/my-post-list';
         const errorMessage = error.response.data.errorMessage;
         if (errorMessage === 'Token Error') {
+          // const refresh = getCookie(QUERY.COOKIE.REFRESH_NAME);
+          // if (refresh) {
+          //   postRefresh(refresh);
+          //   return;
+          // } else {
           Storage.removeUserName();
           window.location.reload();
+          // }
         } else {
           alert(errorMessage);
         }
 
-        // if (error.config.url !== myPage) {
-        //   alert(errorMessage);
-        // }
         console.log(error);
         return Promise.reject(error);
       },

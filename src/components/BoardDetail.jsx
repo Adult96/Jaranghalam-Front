@@ -92,9 +92,7 @@ export default function BoardDetail({
             Back
           </Button>
         </Header>
-        <ImageContainer>
-          <Img src={imageUrl} alt="userimg" />
-        </ImageContainer>
+        <Img srcImg={imageUrl} />
         {likeClick ? (
           <HeartEmpty onClick={() => handleLike(id)} loginName={loginName}>
             <AiFillHeart />
@@ -138,9 +136,9 @@ const DetailContainer = styled.div`
   position: sticky;
   top: 0;
   right: 0;
-  width: 30vw;
-  min-width: 25rem;
-  height: 100vh;
+  width: 70rem;
+  height: 100%;
+  max-height: 50rem;
   padding: 1rem;
   overflow-y: scroll;
   &::-webkit-scrollbar {
@@ -153,13 +151,23 @@ const DetailContainer = styled.div`
     background: transparent;
   }
 
-  @media (max-width: ${props => props.theme.screen.mobile_h}) {
+  @media (max-width: 600px) {
     position: fixed;
     top: 0;
     left: 0;
-    width: 100%;
+    width: 100vw;
+    height: 100vh;
+    max-height: 100%;
     padding: 1rem;
     background-color: ${props => props.theme.bg};
+  }
+
+  @media (min-width: 1024px) {
+    width: 60rem;
+  }
+
+  @media (min-width: 1200px) {
+    width: 50rem;
   }
 `;
 
@@ -180,15 +188,14 @@ const Date = styled.h4`
   color: ${props => props.theme.dateColor};
 `;
 
-const ImageContainer = styled.div`
-  max-width: 100%;
-`;
-
 const Img = styled.img`
+  height: 0;
   width: 100%;
-  height: auto;
+  padding-bottom: 100%;
   border-radius: 0.5rem;
-  background-size: cover;
+  object-fit: cover;
+  background-image: url(${props => props.srcImg});
+  background-size: 100% 100%;
 `;
 
 const Like = styled.h4`

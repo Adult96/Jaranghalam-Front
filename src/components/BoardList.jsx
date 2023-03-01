@@ -57,10 +57,11 @@ export default React.memo(function BoardList({ boards }) {
   return (
     <>
       <BoardWrapper>
-        <BoardContainer media={`${showDetail}`}>
+        <BoardContainer>
           {boards.map((board, index) => (
-            <li
+            <Li
               key={uuidv4()}
+              media={`${showDetail}`}
               onClick={e => {
                 handleBoardClick(e, board.id);
               }}
@@ -71,7 +72,7 @@ export default React.memo(function BoardList({ boards }) {
                 handleEdit={handleEdit}
                 handleDelete={handleDelete}
               />
-            </li>
+            </Li>
           ))}
         </BoardContainer>
         {showDetail && (
@@ -101,28 +102,38 @@ const BoardWrapper = styled.ul`
 `;
 
 const BoardContainer = styled.div`
-  display: grid;
+  display: flex;
+  flex-wrap: wrap;
   gap: 1rem;
   padding: 1rem;
+  width: 100%;
+  /* grid-template-columns: repeat(auto-fit, minmax(40%, auto)); */
+`;
 
-  @media (min-width: ${props => props.theme.screen.tablet_v}) {
-    ${props =>
-      props.media === 'true'
-        ? 'grid-template-columns: 1fr;'
-        : 'grid-template-columns: 1fr 1fr;'}
+const Li = styled.li`
+  width: 100%;
+
+  @media (min-width: 600px) {
+    ${props => (props.media === 'true' ? ' width: 100%;' : ' width: 48%;')}
+  }
+
+  @media (min-width: 800px) {
+    ${props => (props.media === 'true' ? ' width: 100%;' : ' width: 48%;')}
   }
 
   @media (min-width: 1024px) {
-    ${props =>
-      props.media === 'true'
-        ? 'grid-template-columns: 1fr 1fr '
-        : 'grid-template-columns: 1fr 1fr 1fr '}
+    ${props => (props.media === 'true' ? ' width: 100%; ' : ' width: 32%;')}
+  }
+
+  @media (min-width: 1200px) {
+    ${props => (props.media === 'true' ? ' width: 48%; ' : ' width: 32%;')}
   }
 
   @media (min-width: 1400px) {
-    ${props =>
-      props.media === 'true'
-        ? 'grid-template-columns: 1fr 1fr 1fr;'
-        : 'grid-template-columns: 1fr 1fr 1fr 1fr;'}
+    ${props => (props.media === 'true' ? ' width: 48%;' : ' width: 32.4%;')}
+  }
+
+  @media (min-width: 1600px) {
+    ${props => (props.media === 'true' ? ' width: 31%;' : ' width: 24%;')}
   }
 `;

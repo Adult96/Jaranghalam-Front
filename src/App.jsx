@@ -11,6 +11,7 @@ import { getCookie, removeCookie } from './utils/cookie';
 import Storage from './utils/localStorage';
 import ContentAdd from './components/ContentAdd';
 import QUERY from './constants/query';
+import { postRefresh } from './utils/api/reFresh';
 
 function App() {
   const { pathname } = useLocation();
@@ -30,7 +31,13 @@ function App() {
 
   useEffect(() => {
     const cookie = getCookie(QUERY.COOKIE.COOKIE_NAME);
+    const refresh = getCookie(QUERY.COOKIE.REFRESH_NAME);
+
     const userName = Storage.getUserName();
+    // if (!cookie && refresh) {
+    //   postRefresh(refresh);
+    // } else
+
     if (cookie && pathname === ROUTER.PATH.LOGIN) {
       navigate(ROUTER.PATH.HOME);
     } else if (cookie && pathname === ROUTER.PATH.HOME) {
@@ -49,13 +56,11 @@ function App() {
       setShowModal(false);
       setShowLogOut(false);
       navigate(ROUTER.PATH.HOME);
-    } else {
-      Storage.removeUserName();
     }
   }, [navigate, pathname, showModal]);
 
   const handleLogOut = () => {
-    removeCookie('myToken');
+    removeCookie(QUERY.COOKIE.COOKIE_NAME);
     Storage.removeUserName();
     setShowLogOut(false);
     navigate(ROUTER.PATH.HOME);
