@@ -8,7 +8,7 @@ import formatLike from '../utils/formatLike';
 import { useDispatch, useSelector } from 'react-redux';
 import { __getComment } from '../utils/redux/modules/comment/getComment';
 import { postLike } from '../utils/api/like';
-import { __getMy } from '../utils/redux/modules/my/getMy';
+import { editMy, __getMy } from '../utils/redux/modules/my/getMy';
 import { editHomeLike } from '../utils/redux/modules/home/getHome';
 import Storage from '../utils/localStorage';
 
@@ -68,10 +68,9 @@ export default function BoardDetail({
     setLikeClick(state => !state);
     await postLike(postId);
     if (path) {
-      dispatch(__getMy());
+      dispatch(editMy(postId));
     } else {
-      await dispatch(editHomeLike(postId));
-      // dispatch(__getHome({ page: 1, query: '' }));
+      dispatch(editHomeLike(postId));
     }
   };
 
