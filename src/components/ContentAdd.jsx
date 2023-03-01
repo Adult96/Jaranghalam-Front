@@ -107,7 +107,7 @@ function ContentAdd({ toggleModal }) {
             </StTextpush>
           </FormContainer>
           <StButton>
-            <StCancelButton onClick={() => toggleModal()}>
+            <StCancelButton onClick={() => toggleModal()} type="button">
               나가기
             </StCancelButton>
             <StCancelButton
