@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { v4 as uuidv4 } from 'uuid';
 
 import { AiOutlineEdit } from 'react-icons/ai';
@@ -114,7 +114,7 @@ export default function Comment({ id, comment, loginName }) {
           )}
         </CommentText>
       ))}
-      <InputContainer>
+      <InputContainer loginName={loginName ? true : false}>
         <TextArea
           ref={textAreaRef}
           value={commentText}
@@ -156,7 +156,15 @@ const Time = styled.p`
 `;
 
 const InputContainer = styled.div`
-  display: flex;
+  ${props =>
+    props.loginName
+      ? css`
+          display: flex;
+        `
+      : css`
+          display: none;
+        `}
+
   align-items: center;
   justify-content: space-between;
   color: ${props => props.theme.text};

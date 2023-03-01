@@ -10,6 +10,7 @@ import { __getComment } from '../utils/redux/modules/comment/getComment';
 import { postLike } from '../utils/api/like';
 import { __getMy } from '../utils/redux/modules/my/getMy';
 import { __getHome } from '../utils/redux/modules/home/getHome';
+import Storage from '../utils/localStorage';
 
 export default function BoardDetail({
   board: {
@@ -32,6 +33,8 @@ export default function BoardDetail({
     state => state.getComment,
   );
   const dispatch = useDispatch();
+
+  const loginName = Storage.getUserName();
 
   useEffect(() => {
     dispatch(__getComment(id));
@@ -97,10 +100,10 @@ export default function BoardDetail({
               : `댓글 ${getComment.length}개 모두보기`}
           </Button>
         ) : (
-          <Comment id={id} comment={getComment} loginName="hi1234" />
+          <Comment id={id} comment={getComment} loginName={loginName} />
         )}
         {showComment && (
-          <Comment id={id} comment={getComment} loginName="hi1234" />
+          <Comment id={id} comment={getComment} loginName={loginName} />
         )}
       </DetailContainer>
     </>

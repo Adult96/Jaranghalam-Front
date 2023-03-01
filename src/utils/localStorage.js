@@ -1,9 +1,11 @@
-'use strict';
-
 const Storage = {
   setUserName(name) {
     removeLocalStorage('userName');
     setlocalStorage('userName', name);
+  },
+
+  removeUserName() {
+    removeLocalStorage('userName');
   },
 
   getUserName() {

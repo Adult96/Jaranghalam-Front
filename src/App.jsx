@@ -8,6 +8,7 @@ import ThemeMode from './components/ThemeMode';
 import Navbar from './components/navbar/Navbar';
 import ROUTER from './constants/router';
 import { getCookie, removeCookie } from './utils/cookie';
+import Storage from './utils/localStorage';
 
 function App() {
   const { pathname } = useLocation();
@@ -37,6 +38,7 @@ function App() {
 
   const handleLogOut = () => {
     removeCookie('myToken');
+    Storage.removeUserName();
     setShowLogOut(false);
     navigate(ROUTER.PATH.HOME);
   };
