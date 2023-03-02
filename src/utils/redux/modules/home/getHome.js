@@ -13,17 +13,16 @@ const initialState = {
 
 const axios = new Axios(process.env.REACT_APP_URL);
 
-const cookie = getCookie(QUERY.COOKIE.COOKIE_NAME);
-
-const option = {
-  headers: {
-    Authorization: `Bearer ${cookie ? cookie : ''}`,
-  },
-};
-
 export const __getHome = createAsyncThunk(
   'GET_HOME',
   async (payload, thunkAPI) => {
+    const cookie = getCookie(QUERY.COOKIE.COOKIE_NAME);
+
+    const option = {
+      headers: {
+        Authorization: `Bearer ${cookie ? cookie : ''}`,
+      },
+    };
     return await axios
       .get(`/api/posts?page=${payload.page}&size=16${payload.query}`, option)
       .then(response => thunkAPI.fulfillWithValue(response.data.result))
@@ -41,7 +40,7 @@ const getHomeSlice = createSlice({
       state.getHome = [];
     },
     editHomeLike: (state, action) => {
-      const { postId, likeClick } = action.payload;
+      const { postId, likeCnt } = action.payload;
       state.isLoading = false;
       state.isError = false;
       state.getHome = [...current(state.getHome)].map(v =>
@@ -49,7 +48,7 @@ const getHomeSlice = createSlice({
           ? {
               ...v,
               isLiked: !v.isLiked,
-              postLikeCount: v.postLikeCount + (likeClick ? 1 : -1),
+              postLikeCount: likeCnt,
             }
           : v,
       );

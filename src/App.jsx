@@ -31,13 +31,6 @@ function App() {
 
   useEffect(() => {
     const cookie = getCookie(QUERY.COOKIE.COOKIE_NAME);
-    const refresh = getCookie(QUERY.COOKIE.REFRESH_NAME);
-
-    const userName = Storage.getUserName();
-    // if (!cookie && refresh) {
-    //   postRefresh(refresh);
-    // } else
-
     if (cookie && pathname === ROUTER.PATH.LOGIN) {
       navigate(ROUTER.PATH.HOME);
     } else if (cookie && pathname === ROUTER.PATH.HOME) {
@@ -46,21 +39,23 @@ function App() {
       setShowLogOut(true);
     } else if (cookie && pathname === ROUTER.PATH.LIKE) {
       setShowLogOut(true);
-    } else if (
-      (!cookie || !userName) ===
-      (pathname === ROUTER.PATH.MY ||
-        pathname === ROUTER.PATH.LIKE ||
-        showModal === true)
-    ) {
-      Storage.removeUserName();
-      setShowModal(false);
-      setShowLogOut(false);
-      navigate(ROUTER.PATH.HOME);
     }
+    // else if (
+    //   !cookie ===
+    //   (pathname === ROUTER.PATH.MY ||
+    //     pathname === ROUTER.PATH.LIKE ||
+    //     showModal === true)
+    // ) {
+    //   Storage.removeUserName();
+    //   setShowModal(false);
+    //   setShowLogOut(false);
+    //   navigate(ROUTER.PATH.HOME);
+    // }
   }, [navigate, pathname, showModal]);
 
   const handleLogOut = () => {
     removeCookie(QUERY.COOKIE.COOKIE_NAME);
+    removeCookie(QUERY.COOKIE.REFRESH_NAME);
     Storage.removeUserName();
     setShowLogOut(false);
     navigate(ROUTER.PATH.HOME);
@@ -70,12 +65,33 @@ function App() {
     setShowModal(prev => !prev);
   };
 
+  const handleTokenCheck = () => {
+    const cookie = getCookie(QUERY.COOKIE.COOKIE_NAME);
+    const refresh = getCookie(QUERY.COOKIE.REFRESH_NAME);
+    if (!cookie && refresh && showLogOut) {
+      return accessTokenReRoad(refresh);
+    }
+
+    if (!cookie && !refresh && showLogOut) {
+      removeCookie(QUERY.COOKIE.COOKIE_NAME);
+      removeCookie(QUERY.COOKIE.REFRESH_NAME);
+      Storage.removeUserName();
+      setShowLogOut(false);
+      navigate(ROUTER.PATH.HOME);
+      return;
+    }
+  };
+
+  const accessTokenReRoad = async refresh => {
+    postRefresh(refresh);
+  };
+
   return (
     <ThemeProvider theme={theme}>
       <GlobalStyle />
       <ThemeMode darkMode={darkMode} onDarkMode={setDarkMode} />
       {showModal ? <ContentAdd toggleModal={handleShowModal} /> : null}
-      <Wrapper>
+      <Wrapper onClick={handleTokenCheck}>
         <Navbar
           modal={showModal}
           onShowModal={handleShowModal}

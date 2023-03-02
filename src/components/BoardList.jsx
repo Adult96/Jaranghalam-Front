@@ -12,6 +12,7 @@ import ROUTER from '../constants/router';
 import { deleteBoard } from '../utils/api/myBoard';
 import { __getMy } from '../utils/redux/modules/my/getMy';
 import ContentAdd from './ContentAdd';
+import Storage from '../utils/localStorage';
 
 export default React.memo(function BoardList({ boards }) {
   const [showDetail, setShowDetail] = useState(false);
@@ -20,6 +21,9 @@ export default React.memo(function BoardList({ boards }) {
 
   const { pathname } = useLocation();
   const dispatch = useDispatch();
+
+  const userName = Storage.getUserName();
+
   const { getDetail, isLoading, isError } = useSelector(
     state => state.getDetail,
   );
@@ -68,9 +72,9 @@ export default React.memo(function BoardList({ boards }) {
             >
               <BoardItem
                 board={board}
-                path={path}
                 handleEdit={handleEdit}
                 handleDelete={handleDelete}
+                userName={userName}
               />
             </Li>
           ))}

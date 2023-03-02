@@ -13,17 +13,16 @@ const initialState = {
 
 const axios = new Axios(process.env.REACT_APP_URL);
 
-const cookie = getCookie(QUERY.COOKIE.COOKIE_NAME);
-
-const option = {
-  headers: {
-    Authorization: `Bearer ${cookie}`,
-  },
-};
-
 export const __getLike = createAsyncThunk(
   'GET_HOME',
   async (payload, thunkAPI) => {
+    const cookie = getCookie(QUERY.COOKIE.COOKIE_NAME);
+
+    const option = {
+      headers: {
+        Authorization: `Bearer ${cookie}`,
+      },
+    };
     return await axios
       .get(`/api/liked-posts`, option)
       .then(response => thunkAPI.fulfillWithValue(response.data.result))

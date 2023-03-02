@@ -77,15 +77,46 @@ const Valid = {
 
     return true;
   },
+
+  emptyAddCheck(img, ...input) {
+    if (!formEmpty(...input)) {
+      alert('공백은 추가할수 없습니다.');
+      return false;
+    }
+    if (!imgEmpty(img)) {
+      alert('이미지를 추가해 주세요.');
+      return false;
+    }
+
+    return true;
+  },
+
+  addLenghCheck(title, content) {
+    if (!titleLength(title)) {
+      alert('제목은 20자 이상 입력할 수 없습니다.');
+      return false;
+    }
+    if (!contentLength(content)) {
+      alert('내용은 200자 이상 입력할 수 없습니다.');
+      return false;
+    }
+
+    return true;
+  },
 };
 
-function title(text) {
-  if (text.length <= 0) return false;
+function imgEmpty(img) {
+  if (img.length <= 0) return false;
   return true;
 }
 
-function content(text) {
-  if (text.length <= 0) return false;
+function titleLength(text) {
+  if (text.length > 20) return false;
+  return true;
+}
+
+function contentLength(text) {
+  if (text.length > 200) return false;
   return true;
 }
 

@@ -12,17 +12,17 @@ const initialState = {
 };
 
 const axios = new Axios(process.env.REACT_APP_URL);
-const cookie = getCookie(QUERY.COOKIE.COOKIE_NAME);
-
-const option = {
-  headers: {
-    Authorization: `Bearer ${cookie ? cookie : ''}`,
-  },
-};
 
 export const __getDetail = createAsyncThunk(
   'GET_DETAIL',
   async (payload, thunkAPI) => {
+    const cookie = getCookie(QUERY.COOKIE.COOKIE_NAME);
+
+    const option = {
+      headers: {
+        Authorization: `Bearer ${cookie ? cookie : ''}`,
+      },
+    };
     return await axios
       .get(`/api/posts/${payload}`, option)
       .then(response => thunkAPI.fulfillWithValue(response.data.result))

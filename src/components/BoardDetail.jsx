@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import styled, { css } from 'styled-components';
 import formatAgo from '../utils/formatDate';
 import { AiOutlineHeart, AiFillHeart } from 'react-icons/ai';
@@ -11,11 +11,15 @@ import { postLike } from '../utils/api/like';
 import { editMy, __getMy } from '../utils/redux/modules/my/getMy';
 import { editHomeLike } from '../utils/redux/modules/home/getHome';
 import Storage from '../utils/localStorage';
+import { __getDetail } from '../utils/redux/modules/home/getDetail';
+import { __getLike } from '../utils/redux/modules/like/getLike';
+import { useLocation } from 'react-router-dom';
+import ROUTER from '../constants/router';
 
-export default function BoardDetail({
+export default React.memo(function BoardDetail({
   board: {
     id,
-    userName,
+    userNickName,
     title,
     content,
     imageUrl,
@@ -25,22 +29,29 @@ export default function BoardDetail({
     postLikeCount,
     // commentList,
   },
-  path,
   onBackClick,
 }) {
+  const { pathname } = useLocation();
+  const cntRef = useRef(postLikeCount);
   const [likeClick, setLikeClick] = useState(false);
-  const [likeCnt, setLikeCnt] = useState(false);
+  const [likeClickHeart, setLikeClickHeart] = useState(false);
+  const [likeDetailClick, setLikeDetailClick] = useState(false);
   const [showComment, setShowComment] = useState(false);
+
+  const dispatch = useDispatch();
+  const loginName = Storage.getUserName();
+  const path = pathname === ROUTER.PATH.MY ? true : false;
+
   const { getComment, isLoading, isError } = useSelector(
     state => state.getComment,
   );
 
-  const dispatch = useDispatch();
-  const loginName = Storage.getUserName();
-
   useEffect(() => {
     dispatch(__getComment(id));
     setLikeClick(isLiked ? true : false);
+    setLikeClickHeart(isLiked ? true : false);
+    setLikeDetailClick(false);
+    cntRef.current = postLikeCount;
   }, [dispatch, id]);
 
   useEffect(() => {
@@ -58,10 +69,6 @@ export default function BoardDetail({
   };
 
   const setformatLike = cnt => {
-    if (likeCnt) {
-      cnt = likeClick ? cnt + 1 : cnt - 1;
-    }
-
     return formatLike(cnt);
   };
 
@@ -70,14 +77,32 @@ export default function BoardDetail({
   };
 
   const handleLike = async postId => {
-    setLikeClick(state => !state);
-    setLikeCnt(state => !state);
-    await postLike(postId);
-    if (path) {
-      dispatch(editMy({ postId, likeClick: !likeClick }));
-    } else {
-      dispatch(editHomeLike({ postId, likeClick: !likeClick }));
+    if (likeClick) {
+      cntRef.current = likeDetailClick
+        ? cntRef.current + 1
+        : cntRef.current - 1;
+    } else if (!likeClick) {
+      cntRef.current = likeDetailClick
+        ? cntRef.current - 1
+        : cntRef.current + 1;
     }
+
+    await postLike(postId);
+    if (pathname === ROUTER.PATH.MY) {
+      await dispatch(editMy({ postId, likeCnt: cntRef.current }));
+    } else if (pathname === ROUTER.PATH.HOME) {
+      await dispatch(
+        editHomeLike({
+          postId,
+          likeCnt: cntRef.current,
+        }),
+      );
+    } else {
+      await dispatch(__getLike());
+    }
+    dispatch(__getDetail(postId));
+    setLikeClickHeart(state => !state);
+    setLikeDetailClick(state => !state);
   };
 
   return (
@@ -85,7 +110,7 @@ export default function BoardDetail({
       <DetailContainer>
         <Header>
           <TitleText>
-            <h3>{userName}</h3>
+            <h3>{userNickName}</h3>
             <Date>{setDate(createdAt, modifiedAt)}</Date>
           </TitleText>
           <Button width="4rem" height="1.5rem" type="sort" click={onBackClick}>
@@ -93,17 +118,17 @@ export default function BoardDetail({
           </Button>
         </Header>
         <Img srcImg={imageUrl} />
-        {likeClick ? (
-          <HeartEmpty onClick={() => handleLike(id)} loginName={loginName}>
-            <AiFillHeart />
-          </HeartEmpty>
-        ) : (
+        {likeClickHeart ? (
           <Heart onClick={() => handleLike(id)} loginName={loginName}>
-            <AiOutlineHeart />
+            <AiFillHeart />
           </Heart>
+        ) : (
+          <HeartEmpty onClick={() => handleLike(id)} loginName={loginName}>
+            <AiOutlineHeart />
+          </HeartEmpty>
         )}
-        <Like>{setformatLike(postLikeCount)}</Like>
-        <Title>{`${userName} ${title}`}</Title>
+        <Like>{setformatLike(cntRef.current)}</Like>
+        <Title>{title}</Title>
         <Content>{content}</Content>
         {getComment.length ? (
           <Button click={handleShowComment} height="1.5rem" type="sort">
@@ -130,7 +155,7 @@ export default function BoardDetail({
       </DetailContainer>
     </>
   );
-}
+});
 
 const DetailContainer = styled.div`
   position: sticky;
@@ -139,7 +164,7 @@ const DetailContainer = styled.div`
   width: 70rem;
   height: 100%;
   max-height: 50rem;
-  padding: 1rem;
+  padding: 3rem 1rem 1rem 1rem;
   overflow-y: scroll;
   &::-webkit-scrollbar {
     width: 8px;
@@ -160,6 +185,7 @@ const DetailContainer = styled.div`
     max-height: 100%;
     padding: 1rem;
     background-color: ${props => props.theme.bg};
+    z-index: 10000;
   }
 
   @media (min-width: 1024px) {
@@ -213,33 +239,39 @@ const Title = styled.h4`
 `;
 
 const Content = styled.p`
-  display: -webkit-box;
-
-  white-space: normal;
-  -webkit-line-clamp: 8;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
+  word-spacing: 1px;
+  line-height: 1.35rem;
 `;
 
 const Heart = styled.div`
   margin-top: 1rem;
   font-size: ${props => props.theme.fontSize.medium};
+  color: ${props => props.theme.color.red};
+  :hover {
+    transform: scale(1.2);
+  }
+
   ${props =>
     props.loginName
       ? css`
-          display: block;
+          display: inline-block;
         `
       : css`
           display: none;
         `}
 `;
 
-const HeartEmpty = styled(Heart)`
-  color: ${props => props.theme.color.red};
+const HeartEmpty = styled.div`
+  margin-top: 1rem;
+  font-size: ${props => props.theme.fontSize.medium};
+  :hover {
+    color: ${props => props.theme.color.ligth_pink};
+    transform: scale(1.2);
+  }
   ${props =>
     props.loginName
       ? css`
-          display: block;
+          display: inline-block;
         `
       : css`
           display: none;

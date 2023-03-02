@@ -16,7 +16,13 @@ export default function BoardSort({ click, children: { content } }) {
 }
 
 const BoardListSort = styled.div`
+  position: sticky;
+  top: 0;
   display: flex;
+  align-items: center;
+  height: 4rem;
+  background-color: ${props => props.theme.navbarBg};
   gap: 1rem;
   margin: 1rem 0rem 0rem 1rem;
+  z-index: 100;
 `;

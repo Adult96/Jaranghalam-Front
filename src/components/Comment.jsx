@@ -22,12 +22,13 @@ export default function Comment({ id, comment, loginName, path }) {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    textAreaRef.current.focus();
-    scrollRef.current.scrollIntoView({
-      behavior: 'smooth',
-      block: 'end',
-      inline: 'nearest',
-    });
+    if (comment.length) {
+      textAreaRef.current.focus();
+      scrollRef.current.scrollIntoView({
+        behavior: 'smooth',
+        block: 'end',
+      });
+    }
   }, []);
 
   const handleResizeText = () => {
@@ -87,11 +88,11 @@ export default function Comment({ id, comment, loginName, path }) {
         <CommentText key={uuidv4()}>
           <Content>
             <span>
-              <NickName>{v.userName}</NickName>
+              <NickName>{v.userNickName}</NickName>
               {v.content}
             </span>
             <span>
-              {v.userName === loginName && (
+              {v.userNickName === loginName && (
                 <User>
                   <Edit id={v.id} onClick={handleShowComment}>
                     <AiOutlineEdit />
@@ -104,7 +105,7 @@ export default function Comment({ id, comment, loginName, path }) {
             </span>
           </Content>
           <Time>{setDate(v.createdAt, v.modifiedAt)}</Time>
-          {v.userName === loginName && (
+          {v.userNickName === loginName && (
             <Label id={v.id} ref={e => (labelRef.current[v.id] = e)}>
               <Input
                 width="100%"

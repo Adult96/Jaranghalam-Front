@@ -34,26 +34,17 @@ export default class Axios {
       error => {
         const errorMessage = error.response.data.errorMessage;
         if (errorMessage === 'Token Error') {
-          // const refresh = getCookie(QUERY.COOKIE.REFRESH_NAME);
-          // if (refresh) {
-          //   postRefresh(refresh);
-          //   return;
-          // } else {
-          Storage.removeUserName();
-          window.location.reload();
-          // }
+          console.log(error);
         } else {
           alert(errorMessage);
         }
 
-        console.log(error);
         return Promise.reject(error);
       },
     );
   }
 
   async get(path, option) {
-    console.log(path);
     return this.instance.get(path, option);
   }
 

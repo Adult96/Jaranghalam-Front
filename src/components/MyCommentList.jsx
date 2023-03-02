@@ -39,7 +39,7 @@ export default function MyCommentList({ myComment }) {
             }}
           >
             <Title>
-              <span>{v.userName}</span>{' '}
+              <span>{v.userNickName}</span>{' '}
               <span>{setDate(v.createdAt, v.modifiedAt)}</span>
             </Title>
             <Content>{v.content}</Content>

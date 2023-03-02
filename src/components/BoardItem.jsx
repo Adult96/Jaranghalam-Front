@@ -4,11 +4,13 @@ import { AiOutlineHeart, AiFillHeart } from 'react-icons/ai';
 import formatAgo from '../utils/formatDate';
 import formatLike from '../utils/formatLike';
 import Button from '../elements/Button';
+import { useLocation } from 'react-router-dom';
+import ROUTER from '../constants/router';
 
 export default function BoardItem({
   board: {
     id,
-    userName,
+    userNickName,
     title,
     content,
     imageUrl,
@@ -17,10 +19,13 @@ export default function BoardItem({
     isLiked,
     postLikeCount,
   },
-  path,
+  userName,
   handleEdit,
   handleDelete,
 }) {
+  const { pathname } = useLocation();
+  const path = pathname === ROUTER.PATH.MY ? true : false;
+
   const setDate = (createDate, modifiedDate) => {
     return formatAgo(createDate, modifiedDate);
   };
@@ -33,7 +38,7 @@ export default function BoardItem({
     <BoardContainer path={!path}>
       <Header>
         <HeaderTitle>
-          <h3>{userName}</h3>
+          <h3>{userNickName}</h3>
           <Date>{setDate(createdAt, modifiedAt)}</Date>
         </HeaderTitle>
         {path && (
@@ -57,21 +62,20 @@ export default function BoardItem({
           </ButtonContainer>
         )}
       </Header>
-      {/* <ImageContainer> */}
       <Img srcImg={imageUrl} alt="userimg" />
-      {/* </ImageContainer> */}
-      {isLiked ? (
+      {isLiked && userName && (
         <HeartEmpty>
           <AiFillHeart />
         </HeartEmpty>
-      ) : (
+      )}
+      {!isLiked && userName && (
         <Heart>
           <AiOutlineHeart />
         </Heart>
       )}
       <ContentContainer>
         <Like>{setformatLike(postLikeCount)}</Like>
-        <Title>{`${userName} ${title}`}</Title>
+        <Title>{title}</Title>
         <Content>{content}</Content>
       </ContentContainer>
     </BoardContainer>
@@ -108,6 +112,7 @@ const Date = styled.h4`
 
 const HeaderTitle = styled.div`
   display: flex;
+  gap: 0.5rem;
 `;
 
 const ButtonContainer = styled.div`
@@ -160,7 +165,7 @@ const Content = styled.p`
   display: -webkit-box;
 
   white-space: normal;
-  -webkit-line-clamp: 2; /* 텍스트를 자를 때 원하는 단위 ex) 3줄 */
+  -webkit-line-clamp: 1; /* 텍스트를 자를 때 원하는 단위 ex) 3줄 */
   -webkit-box-orient: vertical;
   overflow: hidden;
 `;
