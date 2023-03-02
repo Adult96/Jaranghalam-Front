@@ -33,5 +33,3 @@ export const putBoard = async (postId, payload) => {
   };
   return await axios.put(`/api/posts/${postId}`, payload, option);
 };
-
-//eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJoaTEyMzQiLCJleHAiOjE3MDg5NTIwMDksImlhdCI6MTY3NzQxNjAwOX0.BQ1kWVIs-x7nfTBJ6l8s360nppayIhxUDMIik5p29YY
