@@ -41,7 +41,7 @@ const getHomeSlice = createSlice({
       state.getHome = [];
     },
     editHomeLike: (state, action) => {
-      const { postId, likeClick } = action.payload;
+      const { postId, likeClick, likeCnt } = action.payload;
       state.isLoading = false;
       state.isError = false;
       state.getHome = [...current(state.getHome)].map(v =>
@@ -49,7 +49,7 @@ const getHomeSlice = createSlice({
           ? {
               ...v,
               isLiked: !v.isLiked,
-              postLikeCount: v.postLikeCount + (likeClick ? 1 : -1),
+              postLikeCount: likeCnt,
             }
           : v,
       );

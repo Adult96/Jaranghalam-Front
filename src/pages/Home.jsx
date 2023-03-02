@@ -27,7 +27,6 @@ export default function Home() {
   };
 
   useEffect(() => {
-    console.log('첫 포스트 로딩');
     dispatch(initGetHome());
     dispatch(__getHome({ page: page.current, query: '' }));
   }, []);
@@ -42,11 +41,10 @@ export default function Home() {
     ) {
       page.current += 1;
       pageData.current = getHome;
-      console.log('첫 로딩 이후 무한 스크롤', getHome, page.current);
       dispatch(__getHome({ page: page.current, query: '' }));
     }
   }, [inView]);
-
+  console.log(getHome);
   return (
     <HomeWrapper>
       <BoardSort click={handleSortClick}>

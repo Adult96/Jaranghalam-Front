@@ -12,7 +12,7 @@ export default class Axios {
 
     this.instance.interceptors.response.use(
       response => {
-        console.log(response);
+        // console.log(response);
         const token = response.headers.authorization;
         const refreshToken = response.headers.refreshtoken;
 
@@ -53,7 +53,6 @@ export default class Axios {
   }
 
   async get(path, option) {
-    console.log(path);
     return this.instance.get(path, option);
   }
 

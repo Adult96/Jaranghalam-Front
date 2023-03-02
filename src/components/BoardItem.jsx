@@ -8,7 +8,7 @@ import Button from '../elements/Button';
 export default function BoardItem({
   board: {
     id,
-    userName,
+    userNickName,
     title,
     content,
     imageUrl,
@@ -33,7 +33,7 @@ export default function BoardItem({
     <BoardContainer path={!path}>
       <Header>
         <HeaderTitle>
-          <h3>{userName}</h3>
+          <h3>{userNickName}</h3>
           <Date>{setDate(createdAt, modifiedAt)}</Date>
         </HeaderTitle>
         {path && (
@@ -71,7 +71,7 @@ export default function BoardItem({
       )}
       <ContentContainer>
         <Like>{setformatLike(postLikeCount)}</Like>
-        <Title>{`${userName} ${title}`}</Title>
+        <Title>{`${userNickName} ${title}`}</Title>
         <Content>{content}</Content>
       </ContentContainer>
     </BoardContainer>

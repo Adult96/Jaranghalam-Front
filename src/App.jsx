@@ -34,10 +34,6 @@ function App() {
     const refresh = getCookie(QUERY.COOKIE.REFRESH_NAME);
 
     const userName = Storage.getUserName();
-    // if (!cookie && refresh) {
-    //   postRefresh(refresh);
-    // } else
-
     if (cookie && pathname === ROUTER.PATH.LOGIN) {
       navigate(ROUTER.PATH.HOME);
     } else if (cookie && pathname === ROUTER.PATH.HOME) {
@@ -47,7 +43,7 @@ function App() {
     } else if (cookie && pathname === ROUTER.PATH.LIKE) {
       setShowLogOut(true);
     } else if (
-      (!cookie || !userName) ===
+      !cookie ===
       (pathname === ROUTER.PATH.MY ||
         pathname === ROUTER.PATH.LIKE ||
         showModal === true)

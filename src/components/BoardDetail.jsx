@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import styled, { css } from 'styled-components';
 import formatAgo from '../utils/formatDate';
 import { AiOutlineHeart, AiFillHeart } from 'react-icons/ai';
@@ -12,10 +12,10 @@ import { editMy, __getMy } from '../utils/redux/modules/my/getMy';
 import { editHomeLike } from '../utils/redux/modules/home/getHome';
 import Storage from '../utils/localStorage';
 
-export default function BoardDetail({
+export default React.memo(function BoardDetail({
   board: {
     id,
-    userName,
+    userNickName,
     title,
     content,
     imageUrl,
@@ -28,19 +28,24 @@ export default function BoardDetail({
   path,
   onBackClick,
 }) {
+  const cntRef = useRef(postLikeCount);
   const [likeClick, setLikeClick] = useState(false);
-  const [likeCnt, setLikeCnt] = useState(false);
+  const [likeClickHeart, setLikeClickHeart] = useState(false);
+  const [likeDetailClick, setLikeDetailClick] = useState(false);
   const [showComment, setShowComment] = useState(false);
   const { getComment, isLoading, isError } = useSelector(
     state => state.getComment,
   );
-
   const dispatch = useDispatch();
   const loginName = Storage.getUserName();
 
   useEffect(() => {
     dispatch(__getComment(id));
+
     setLikeClick(isLiked ? true : false);
+    setLikeClickHeart(isLiked ? true : false);
+    setLikeDetailClick(false);
+    cntRef.current = postLikeCount;
   }, [dispatch, id]);
 
   useEffect(() => {
@@ -58,10 +63,6 @@ export default function BoardDetail({
   };
 
   const setformatLike = cnt => {
-    if (likeCnt) {
-      cnt = likeClick ? cnt + 1 : cnt - 1;
-    }
-
     return formatLike(cnt);
   };
 
@@ -70,14 +71,30 @@ export default function BoardDetail({
   };
 
   const handleLike = async postId => {
-    setLikeClick(state => !state);
-    setLikeCnt(state => !state);
+    if (likeClick) {
+      cntRef.current = likeDetailClick
+        ? cntRef.current + 1
+        : cntRef.current - 1;
+    } else if (!likeClick) {
+      cntRef.current = likeDetailClick
+        ? cntRef.current - 1
+        : cntRef.current + 1;
+    }
+
     await postLike(postId);
     if (path) {
       dispatch(editMy({ postId, likeClick: !likeClick }));
     } else {
-      dispatch(editHomeLike({ postId, likeClick: !likeClick }));
+      dispatch(
+        editHomeLike({
+          postId,
+          likeClick: !likeClick,
+          likeCnt: cntRef.current,
+        }),
+      );
     }
+    setLikeClickHeart(state => !state);
+    setLikeDetailClick(state => !state);
   };
 
   return (
@@ -85,7 +102,7 @@ export default function BoardDetail({
       <DetailContainer>
         <Header>
           <TitleText>
-            <h3>{userName}</h3>
+            <h3>{userNickName}</h3>
             <Date>{setDate(createdAt, modifiedAt)}</Date>
           </TitleText>
           <Button width="4rem" height="1.5rem" type="sort" click={onBackClick}>
@@ -93,7 +110,7 @@ export default function BoardDetail({
           </Button>
         </Header>
         <Img srcImg={imageUrl} />
-        {likeClick ? (
+        {likeClickHeart ? (
           <HeartEmpty onClick={() => handleLike(id)} loginName={loginName}>
             <AiFillHeart />
           </HeartEmpty>
@@ -102,8 +119,8 @@ export default function BoardDetail({
             <AiOutlineHeart />
           </Heart>
         )}
-        <Like>{setformatLike(postLikeCount)}</Like>
-        <Title>{`${userName} ${title}`}</Title>
+        <Like>{setformatLike(cntRef.current)}</Like>
+        <Title>{`${userNickName} ${title}`}</Title>
         <Content>{content}</Content>
         {getComment.length ? (
           <Button click={handleShowComment} height="1.5rem" type="sort">
@@ -130,7 +147,7 @@ export default function BoardDetail({
       </DetailContainer>
     </>
   );
-}
+});
 
 const DetailContainer = styled.div`
   position: sticky;
