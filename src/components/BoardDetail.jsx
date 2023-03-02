@@ -119,13 +119,13 @@ export default React.memo(function BoardDetail({
         </Header>
         <Img srcImg={imageUrl} />
         {likeClickHeart ? (
-          <HeartEmpty onClick={() => handleLike(id)} loginName={loginName}>
-            <AiFillHeart />
-          </HeartEmpty>
-        ) : (
           <Heart onClick={() => handleLike(id)} loginName={loginName}>
-            <AiOutlineHeart />
+            <AiFillHeart />
           </Heart>
+        ) : (
+          <HeartEmpty onClick={() => handleLike(id)} loginName={loginName}>
+            <AiOutlineHeart />
+          </HeartEmpty>
         )}
         <Like>{setformatLike(cntRef.current)}</Like>
         <Title>{title}</Title>
@@ -246,22 +246,32 @@ const Content = styled.p`
 const Heart = styled.div`
   margin-top: 1rem;
   font-size: ${props => props.theme.fontSize.medium};
+  color: ${props => props.theme.color.red};
+  :hover {
+    transform: scale(1.2);
+  }
+
   ${props =>
     props.loginName
       ? css`
-          display: block;
+          display: inline-block;
         `
       : css`
           display: none;
         `}
 `;
 
-const HeartEmpty = styled(Heart)`
-  color: ${props => props.theme.color.red};
+const HeartEmpty = styled.div`
+  margin-top: 1rem;
+  font-size: ${props => props.theme.fontSize.medium};
+  :hover {
+    color: ${props => props.theme.color.ligth_pink};
+    transform: scale(1.2);
+  }
   ${props =>
     props.loginName
       ? css`
-          display: block;
+          display: inline-block;
         `
       : css`
           display: none;
