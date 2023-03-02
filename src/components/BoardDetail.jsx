@@ -232,7 +232,7 @@ const Title = styled.h4`
 
 const Content = styled.p`
   word-spacing: 1px;
-  line-height: 1.2rem;
+  line-height: 1.35rem;
 `;
 
 const Heart = styled.div`
