@@ -77,6 +77,15 @@ const Valid = {
 
     return true;
   },
+
+  emptyAddCheck(...input) {
+    if (!formEmpty(...input)) {
+      alert('공백은 추가할수 없습니다.');
+      return false;
+    }
+
+    return true;
+  },
 };
 
 function title(text) {
