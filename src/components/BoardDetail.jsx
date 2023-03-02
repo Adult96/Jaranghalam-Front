@@ -232,12 +232,8 @@ const Title = styled.h4`
 `;
 
 const Content = styled.p`
-  display: -webkit-box;
-
-  white-space: normal;
-  -webkit-line-clamp: 8;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
+  word-spacing: 1px;
+  line-height: 1.2rem;
 `;
 
 const Heart = styled.div`
