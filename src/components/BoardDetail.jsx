@@ -157,7 +157,7 @@ const DetailContainer = styled.div`
   width: 70rem;
   height: 100%;
   max-height: 50rem;
-  padding: 1rem;
+  padding: 3rem 1rem 1rem 1rem;
   overflow-y: scroll;
   &::-webkit-scrollbar {
     width: 8px;
@@ -178,6 +178,7 @@ const DetailContainer = styled.div`
     max-height: 100%;
     padding: 1rem;
     background-color: ${props => props.theme.bg};
+    z-index: 10000;
   }
 
   @media (min-width: 1024px) {
