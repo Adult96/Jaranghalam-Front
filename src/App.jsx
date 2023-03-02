@@ -11,7 +11,6 @@ import { getCookie, removeCookie } from './utils/cookie';
 import Storage from './utils/localStorage';
 import ContentAdd from './components/ContentAdd';
 import QUERY from './constants/query';
-import { postRefresh } from './utils/api/reFresh';
 
 function App() {
   const { pathname } = useLocation();
@@ -31,9 +30,6 @@ function App() {
 
   useEffect(() => {
     const cookie = getCookie(QUERY.COOKIE.COOKIE_NAME);
-    const refresh = getCookie(QUERY.COOKIE.REFRESH_NAME);
-
-    const userName = Storage.getUserName();
     if (cookie && pathname === ROUTER.PATH.LOGIN) {
       navigate(ROUTER.PATH.HOME);
     } else if (cookie && pathname === ROUTER.PATH.HOME) {
@@ -42,17 +38,18 @@ function App() {
       setShowLogOut(true);
     } else if (cookie && pathname === ROUTER.PATH.LIKE) {
       setShowLogOut(true);
-    } else if (
-      !cookie ===
-      (pathname === ROUTER.PATH.MY ||
-        pathname === ROUTER.PATH.LIKE ||
-        showModal === true)
-    ) {
-      Storage.removeUserName();
-      setShowModal(false);
-      setShowLogOut(false);
-      navigate(ROUTER.PATH.HOME);
     }
+    // else if (
+    //   !cookie ===
+    //   (pathname === ROUTER.PATH.MY ||
+    //     pathname === ROUTER.PATH.LIKE ||
+    //     showModal === true)
+    // ) {
+    //   Storage.removeUserName();
+    //   setShowModal(false);
+    //   setShowLogOut(false);
+    //   navigate(ROUTER.PATH.HOME);
+    // }
   }, [navigate, pathname, showModal]);
 
   const handleLogOut = () => {
@@ -66,12 +63,22 @@ function App() {
     setShowModal(prev => !prev);
   };
 
+  const handleTokenCheck = () => {
+    const cookie = getCookie(QUERY.COOKIE.COOKIE_NAME);
+    if (!cookie && showLogOut) {
+      removeCookie(QUERY.COOKIE.COOKIE_NAME);
+      Storage.removeUserName();
+      setShowLogOut(false);
+      navigate(ROUTER.PATH.HOME);
+    }
+  };
+
   return (
     <ThemeProvider theme={theme}>
       <GlobalStyle />
       <ThemeMode darkMode={darkMode} onDarkMode={setDarkMode} />
       {showModal ? <ContentAdd toggleModal={handleShowModal} /> : null}
-      <Wrapper>
+      <Wrapper onClick={handleTokenCheck}>
         <Navbar
           modal={showModal}
           onShowModal={handleShowModal}

@@ -6,7 +6,7 @@ const cookies = new Cookies();
 export const setCookie = (name, value, option) => {
   const expires = new Date();
   name === QUERY.COOKIE.COOKIE_NAME
-    ? expires.setTime(expires.getTime() + 60 * 60 * 1000)
+    ? expires.setTime(expires.getTime() + 10 * 1000)
     : expires.setTime(expires.getTime() + 31 * 24 * 60 * 60 * 1000);
   return cookies.set(name, value, {
     ...option,

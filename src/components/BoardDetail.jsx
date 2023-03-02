@@ -41,7 +41,6 @@ export default React.memo(function BoardDetail({
   const loginName = Storage.getUserName();
 
   useEffect(() => {
-    console.log(id, isLiked);
     dispatch(__getComment(id));
     setLikeClick(isLiked ? true : false);
     setLikeClickHeart(isLiked ? true : false);

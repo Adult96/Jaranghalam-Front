@@ -21,11 +21,10 @@ export default function BoardItem({
   handleEdit,
   handleDelete,
 }) {
-  console.log(postLikeCount);
   const setDate = (createDate, modifiedDate) => {
     return formatAgo(createDate, modifiedDate);
   };
-  console.log(isLiked, postLikeCount);
+
   const setformatLike = cnt => {
     return formatLike(cnt);
   };
