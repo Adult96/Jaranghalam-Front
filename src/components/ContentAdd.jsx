@@ -10,6 +10,8 @@ import { __getMy } from '../utils/redux/modules/my/getMy';
 import { useLocation } from 'react-router-dom';
 import Valid from '../validation/inputValidation';
 
+import { AiFillInstagram } from 'react-icons/ai';
+
 function ContentAdd({ toggleModal, edit, postId }) {
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
@@ -92,7 +94,13 @@ function ContentAdd({ toggleModal, edit, postId }) {
                 onChange={Flieonload}
                 ref={testRef}
               />
-              <StImg src={imgUrl ? imgUrl : `img/pngwing.com.png`} />
+              {imgUrl ? (
+                <StImg src={imgUrl} />
+              ) : (
+                <ImgInstar>
+                  <AiFillInstagram />
+                </ImgInstar>
+              )}
             </Stimgpush>
             <StTextpush>
               <StTitletext
@@ -136,7 +144,6 @@ function ContentAdd({ toggleModal, edit, postId }) {
 export default ContentAdd;
 
 const StH6 = styled.div`
-  color: black;
   padding: 1rem;
   text-align: center;
   font-size: 1.5rem;
@@ -152,8 +159,8 @@ const StModalBackground = styled.div`
   height: 100vh;
   justify-content: center;
   align-items: center;
-  background: #f0ededc5;
-  backdrop-filter: blur(3px);
+  background-color: ${props => props.theme.modalBg};
+  backdrop-filter: blur(0.2rem);
   z-index: 1;
 `;
 
@@ -163,9 +170,9 @@ const StModalContainer = styled.div`
   width: 100%;
   max-height: 400px;
   height: 100%;
-  border: 1px solid black;
+  border: 1px solid ${props => props.theme.text};
   border-radius: 10px;
-  background-color: white;
+  background-color: ${props => props.theme.bg};
 `;
 
 const FormContainer = styled.div`
@@ -194,7 +201,7 @@ const StTitletext = styled.input`
   width: 150px;
   height: 35px;
   outline: none;
-  border: 1px solid ${props => props.theme.borderColor};
+  border: 1px solid ${props => props.theme.text};
   border-radius: ${props => props.theme.borderRadius.small};
   outline: none;
   background-color: ${props => props.theme.bg};
@@ -207,7 +214,7 @@ const StTextArea = styled.textarea`
   width: 100%;
   height: 100%;
   margin-top: 10px;
-  border: 1px solid ${props => props.theme.borderColor};
+  border: 1px solid ${props => props.theme.text};
   border-radius: ${props => props.theme.borderRadius.small};
   background-color: ${props => props.theme.bg};
   border-radius: ${props => props.theme.borderRadius.small};
@@ -259,4 +266,8 @@ const StImg = styled.img`
   max-width: 200px;
   width: 200px;
   height: 200px;
+`;
+
+const ImgInstar = styled.div`
+  font-size: 10rem;
 `;
