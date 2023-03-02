@@ -71,7 +71,7 @@ export default function BoardItem({
       )}
       <ContentContainer>
         <Like>{setformatLike(postLikeCount)}</Like>
-        <Title>{`${userNickName} ${title}`}</Title>
+        <Title>{title}</Title>
         <Content>{content}</Content>
       </ContentContainer>
     </BoardContainer>

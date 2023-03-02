@@ -120,7 +120,7 @@ export default React.memo(function BoardDetail({
           </Heart>
         )}
         <Like>{setformatLike(cntRef.current)}</Like>
-        <Title>{`${userNickName} ${title}`}</Title>
+        <Title>{title}</Title>
         <Content>{content}</Content>
         {getComment.length ? (
           <Button click={handleShowComment} height="1.5rem" type="sort">
