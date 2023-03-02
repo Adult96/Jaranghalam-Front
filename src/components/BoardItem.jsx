@@ -161,7 +161,7 @@ const Content = styled.p`
   display: -webkit-box;
 
   white-space: normal;
-  -webkit-line-clamp: 2; /* 텍스트를 자를 때 원하는 단위 ex) 3줄 */
+  -webkit-line-clamp: 1; /* 텍스트를 자를 때 원하는 단위 ex) 3줄 */
   -webkit-box-orient: vertical;
   overflow: hidden;
 `;
