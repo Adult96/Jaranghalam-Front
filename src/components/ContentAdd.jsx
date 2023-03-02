@@ -8,6 +8,7 @@ import { postBoard, putBoard } from '../utils/api/myBoard';
 import ROUTER from '../constants/router';
 import { __getMy } from '../utils/redux/modules/my/getMy';
 import { useLocation } from 'react-router-dom';
+import Valid from '../validation/inputValidation';
 
 function ContentAdd({ toggleModal, edit, postId }) {
   const [title, setTitle] = useState('');
@@ -26,6 +27,9 @@ function ContentAdd({ toggleModal, edit, postId }) {
 
   //모달 속 추가 핸들러 (이미지 업로드, 데이터 업로드)
   const onConfirmButtonHandler = async () => {
+    if (!Valid.emptyAddCheck(imgUrl, title, content)) return;
+    if (!Valid.addLenghCheck(title, content)) return;
+
     const formData = new FormData();
 
     const post = {
