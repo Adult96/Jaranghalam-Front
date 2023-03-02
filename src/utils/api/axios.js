@@ -34,6 +34,7 @@ export default class Axios {
       error => {
         const errorMessage = error.response.data.errorMessage;
         if (errorMessage === 'Token Error') {
+          console.log(error);
         } else {
           alert(errorMessage);
         }

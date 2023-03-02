@@ -11,6 +11,7 @@ import { getCookie, removeCookie } from './utils/cookie';
 import Storage from './utils/localStorage';
 import ContentAdd from './components/ContentAdd';
 import QUERY from './constants/query';
+import { postRefresh } from './utils/api/reFresh';
 
 function App() {
   const { pathname } = useLocation();
@@ -54,6 +55,7 @@ function App() {
 
   const handleLogOut = () => {
     removeCookie(QUERY.COOKIE.COOKIE_NAME);
+    removeCookie(QUERY.COOKIE.REFRESH_NAME);
     Storage.removeUserName();
     setShowLogOut(false);
     navigate(ROUTER.PATH.HOME);
@@ -65,12 +67,23 @@ function App() {
 
   const handleTokenCheck = () => {
     const cookie = getCookie(QUERY.COOKIE.COOKIE_NAME);
-    if (!cookie && showLogOut) {
+    const refresh = getCookie(QUERY.COOKIE.REFRESH_NAME);
+    if (!cookie && refresh && showLogOut) {
+      return accessTokenReRoad(refresh);
+    }
+
+    if (!cookie && !refresh && showLogOut) {
       removeCookie(QUERY.COOKIE.COOKIE_NAME);
+      removeCookie(QUERY.COOKIE.REFRESH_NAME);
       Storage.removeUserName();
       setShowLogOut(false);
       navigate(ROUTER.PATH.HOME);
+      return;
     }
+  };
+
+  const accessTokenReRoad = async refresh => {
+    postRefresh(refresh);
   };
 
   return (
