@@ -4,6 +4,8 @@ import { AiOutlineHeart, AiFillHeart } from 'react-icons/ai';
 import formatAgo from '../utils/formatDate';
 import formatLike from '../utils/formatLike';
 import Button from '../elements/Button';
+import { useLocation } from 'react-router-dom';
+import ROUTER from '../constants/router';
 
 export default function BoardItem({
   board: {
@@ -17,10 +19,13 @@ export default function BoardItem({
     isLiked,
     postLikeCount,
   },
-  path,
+  userName,
   handleEdit,
   handleDelete,
 }) {
+  const { pathname } = useLocation();
+  const path = pathname === ROUTER.PATH.MY ? true : false;
+
   const setDate = (createDate, modifiedDate) => {
     return formatAgo(createDate, modifiedDate);
   };
@@ -57,14 +62,13 @@ export default function BoardItem({
           </ButtonContainer>
         )}
       </Header>
-      {/* <ImageContainer> */}
       <Img srcImg={imageUrl} alt="userimg" />
-      {/* </ImageContainer> */}
-      {isLiked ? (
+      {isLiked && userName && (
         <HeartEmpty>
           <AiFillHeart />
         </HeartEmpty>
-      ) : (
+      )}
+      {!isLiked && userName && (
         <Heart>
           <AiOutlineHeart />
         </Heart>

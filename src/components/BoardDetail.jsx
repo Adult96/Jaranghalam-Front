@@ -12,6 +12,9 @@ import { editMy, __getMy } from '../utils/redux/modules/my/getMy';
 import { editHomeLike } from '../utils/redux/modules/home/getHome';
 import Storage from '../utils/localStorage';
 import { __getDetail } from '../utils/redux/modules/home/getDetail';
+import { __getLike } from '../utils/redux/modules/like/getLike';
+import { useLocation } from 'react-router-dom';
+import ROUTER from '../constants/router';
 
 export default React.memo(function BoardDetail({
   board: {
@@ -26,19 +29,22 @@ export default React.memo(function BoardDetail({
     postLikeCount,
     // commentList,
   },
-  path,
   onBackClick,
 }) {
+  const { pathname } = useLocation();
   const cntRef = useRef(postLikeCount);
   const [likeClick, setLikeClick] = useState(false);
   const [likeClickHeart, setLikeClickHeart] = useState(false);
   const [likeDetailClick, setLikeDetailClick] = useState(false);
   const [showComment, setShowComment] = useState(false);
+
+  const dispatch = useDispatch();
+  const loginName = Storage.getUserName();
+  const path = pathname === ROUTER.PATH.MY ? true : false;
+
   const { getComment, isLoading, isError } = useSelector(
     state => state.getComment,
   );
-  const dispatch = useDispatch();
-  const loginName = Storage.getUserName();
 
   useEffect(() => {
     dispatch(__getComment(id));
@@ -82,15 +88,17 @@ export default React.memo(function BoardDetail({
     }
 
     await postLike(postId);
-    if (path) {
+    if (pathname === ROUTER.PATH.MY) {
       await dispatch(editMy({ postId, likeCnt: cntRef.current }));
-    } else {
+    } else if (pathname === ROUTER.PATH.HOME) {
       await dispatch(
         editHomeLike({
           postId,
           likeCnt: cntRef.current,
         }),
       );
+    } else {
+      await dispatch(__getLike());
     }
     dispatch(__getDetail(postId));
     setLikeClickHeart(state => !state);
