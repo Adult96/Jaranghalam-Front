@@ -109,6 +109,7 @@ const Date = styled.h4`
 
 const HeaderTitle = styled.div`
   display: flex;
+  gap: 0.5rem;
 `;
 
 const ButtonContainer = styled.div`

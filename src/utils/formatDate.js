@@ -22,5 +22,5 @@ export default function formatAgo(createdDate, modifiedDate) {
     return ` · ${m}분 전`;
   }
 
-  return `1분 전`;
+  return ` · 1분 전`;
 }
