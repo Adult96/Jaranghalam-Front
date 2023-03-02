@@ -11,6 +11,7 @@ import { postLike } from '../utils/api/like';
 import { editMy, __getMy } from '../utils/redux/modules/my/getMy';
 import { editHomeLike } from '../utils/redux/modules/home/getHome';
 import Storage from '../utils/localStorage';
+import { __getDetail } from '../utils/redux/modules/home/getDetail';
 
 export default React.memo(function BoardDetail({
   board: {
@@ -40,8 +41,8 @@ export default React.memo(function BoardDetail({
   const loginName = Storage.getUserName();
 
   useEffect(() => {
+    console.log(id, isLiked);
     dispatch(__getComment(id));
-
     setLikeClick(isLiked ? true : false);
     setLikeClickHeart(isLiked ? true : false);
     setLikeDetailClick(false);
@@ -83,16 +84,16 @@ export default React.memo(function BoardDetail({
 
     await postLike(postId);
     if (path) {
-      dispatch(editMy({ postId, likeClick: !likeClick }));
+      await dispatch(editMy({ postId, likeCnt: cntRef.current }));
     } else {
-      dispatch(
+      await dispatch(
         editHomeLike({
           postId,
-          likeClick: !likeClick,
           likeCnt: cntRef.current,
         }),
       );
     }
+    dispatch(__getDetail(postId));
     setLikeClickHeart(state => !state);
     setLikeDetailClick(state => !state);
   };

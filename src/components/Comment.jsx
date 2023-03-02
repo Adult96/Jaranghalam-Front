@@ -22,12 +22,11 @@ export default function Comment({ id, comment, loginName, path }) {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    textAreaRef.current.focus();
     if (comment.length) {
+      textAreaRef.current.focus();
       scrollRef.current.scrollIntoView({
         behavior: 'smooth',
         block: 'end',
-        inline: 'nearest',
       });
     }
   }, []);
